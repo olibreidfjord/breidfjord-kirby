@@ -1,0 +1,18 @@
+olafurbreidfjord.com Server SSH
+
+ssh root@209.97.188.65
+
+Git Pull
+
+cd /home/oli40/web/kirby.olafurbreidfjord.com/public_html
+git pull
+
+
+-----BEGIN OPENSSH PRIVATE KEY-----
+b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAAAMwAAAAtzc2gtZW
+QyNTUxOQAAACBXiLwO6/khvWgqwdQ5/oqyGhpJ/Aj3385mJ8fn8ejg9QAAAJgXTL2BF0y9
+gQAAAAtzc2gtZWQyNTUxOQAAACBXiLwO6/khvWgqwdQ5/oqyGhpJ/Aj3385mJ8fn8ejg9Q
+AAAEB1P/WQ1FOmEgfUvSP+ix0eGaqquYs/gT8cAk+4BocoD1eIvA7r+SG9aCrB1Dn+irIa
+Gkn8CPffzmYnx+fx6OD1AAAADmdpdGh1Yi1hY3Rpb25zAQIDBAUGBw==
+-----END OPENSSH PRIVATE KEY-----
+root@admin:~# 
