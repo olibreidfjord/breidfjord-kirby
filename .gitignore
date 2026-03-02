@@ -3,3 +3,4 @@ site/cache/
 site/sessions/
 *.log
 .DS_Store
+site/config/config.kirby.test.php
