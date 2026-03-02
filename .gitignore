@@ -1,0 +1,5 @@
+media/
+site/cache/
+site/sessions/
+*.log
+.DS_Store
