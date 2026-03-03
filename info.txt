@@ -16,3 +16,6 @@ AAAEB1P/WQ1FOmEgfUvSP+ix0eGaqquYs/gT8cAk+4BocoD1eIvA7r+SG9aCrB1Dn+irIa
 Gkn8CPffzmYnx+fx6OD1AAAADmdpdGh1Yi1hY3Rpb25zAQIDBAUGBw==
 -----END OPENSSH PRIVATE KEY-----
 root@admin:~# 
+
+New token:
+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
