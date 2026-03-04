@@ -1,0 +1,4 @@
+type: blocks
+fieldsets:
+  content: fields/blocks-content
+  features: fields/blocks-features

@@ -251,9 +251,6 @@ return function (App $app) {
 			Field $field,
 			string $separator = 'yaml'
 		) use ($app): Pages {
-			// always pass at least two arguments even if the
-			// data is empty so that `$site->find()` always
-			// returns a collection, not a single page
 			return $app->site()->find(
 				false,
 				false,
@@ -323,9 +320,6 @@ return function (App $app) {
 			Field $field,
 			string $separator = 'yaml'
 		) use ($app): Users {
-			// always pass at least two arguments even if the
-			// data is empty so that `$users->find()` always
-			// returns a collection, not a single user
 			return $app->users()->find(
 				false,
 				false,

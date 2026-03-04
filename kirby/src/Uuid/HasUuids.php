@@ -19,7 +19,7 @@ trait HasUuids
 	 */
 	protected function findByUuid(
 		string $uuid,
-		string|array|null $scheme = null
+		string|null $scheme = null
 	): Identifiable|null {
 		// handle UUID shortcuts with a leading @
 		if ($scheme !== null && str_starts_with($uuid, '@') === true) {

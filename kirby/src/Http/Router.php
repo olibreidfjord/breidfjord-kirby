@@ -158,9 +158,6 @@ class Router
 	 * The Route's arguments method is used to
 	 * find matches and return all the found
 	 * arguments in the path.
-	 *
-	 * @param array|null $ignore (Passing null has been deprecated)
-	 * @todo Remove support for `$ignore = null` in v6
 	 */
 	public function find(
 		string $path,
@@ -175,14 +172,16 @@ class Router
 		}
 
 		// remove leading and trailing slashes
-		$path     = trim($path, '/');
-		$ignore ??= [];
+		$path = trim($path, '/');
 
 		foreach ($this->routes[$method] as $route) {
 			$arguments = $route->parse($route->pattern(), $path);
 
 			if ($arguments !== false) {
-				if (in_array($route, $ignore, true) === false) {
+				if (
+					empty($ignore) === true ||
+					in_array($route, $ignore, true) === false
+				) {
 					return $this->route = $route;
 				}
 			}

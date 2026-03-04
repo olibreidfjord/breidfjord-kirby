@@ -1,0 +1,24 @@
+label: SEO
+icon: search
+fields:
+  tagline:
+    label: Tagline
+    type: text
+    help: >
+      Tagline will be displayed in title tag next to your site name.
+      (e.g. {{ site.title }} - Your Custom Tagline)
+
+  meta_description:
+    label: Meta Description
+    type: textarea
+    buttons: false
+
+  og_image:
+    label: Open Graph Image
+    type: files
+    multiple: false
+    empty: Generated automatically when no source is provided
+    info: "{{ file.width }} x {{ file.height }}"
+    image:
+      cover: false
+      back: white

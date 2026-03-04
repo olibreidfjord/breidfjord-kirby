@@ -7,7 +7,6 @@ use Kirby\Cms\ModelWithContent;
 use Kirby\Filesystem\Asset;
 use Kirby\Panel\Ui\Buttons\ViewButtons;
 use Kirby\Panel\Ui\FilePreview;
-use Kirby\Panel\Ui\Item\FileItem;
 use Kirby\Toolkit\I18n;
 use Throwable;
 
@@ -196,14 +195,13 @@ class File extends Model
 	 * Returns the setup for a dropdown option
 	 * which is used in the changes dropdown
 	 * for example
-	 *
-	 * @deprecated 5.1.4 Use the Kirby\Panel\Ui\Item\FileItem class instead
 	 */
 	public function dropdownOption(): array
 	{
-		return (new FileItem(file: $this->model))->props() + [
-			'icon' => 'image'
-		];
+		return [
+			'icon' => 'image',
+			'text' => $this->model->filename(),
+		] + parent::dropdownOption();
 	}
 
 	/**
@@ -230,17 +228,10 @@ class File extends Model
 			'xlsx'  => 'green-500',
 		];
 
-		if ($color = $extensions[$this->model->extension()] ?? null) {
-			return $color;
-		}
-
-		$type = $this->model->type();
-
-		if ($type && ($color = $types[$type] ?? null)) {
-			return $color;
-		}
-
-		return parent::imageDefaults()['color'];
+		return
+			$extensions[$this->model->extension()] ??
+			$types[$this->model->type()] ??
+			parent::imageDefaults()['color'];
 	}
 
 	/**
@@ -280,17 +271,10 @@ class File extends Model
 			'xlsx'  => 'table',
 		];
 
-		if ($icon = $extensions[$this->model->extension()] ?? null) {
-			return $icon;
-		}
-
-		$type = $this->model->type();
-
-		if ($type && ($icon = $types[$type] ?? null)) {
-			return $icon;
-		}
-
-		return 'file';
+		return
+			$extensions[$this->model->extension()] ??
+			$types[$this->model->type()] ??
+			'file';
 	}
 
 	/**
@@ -375,9 +359,8 @@ class File extends Model
 	 */
 	public function pickerData(array $params = []): array
 	{
-		$name     = $this->model->filename();
-		$id       = $this->model->id();
-		$absolute = false;
+		$name = $this->model->filename();
+		$id   = $this->model->id();
 
 		if (empty($params['model']) === false) {
 			$parent   = $this->model->parent();
@@ -391,20 +374,15 @@ class File extends Model
 			};
 		}
 
-		$item = new FileItem(
-			file: $this->model,
-			dragTextIsAbsolute: $absolute,
-			image: $params['image'] ?? null,
-			info: $params['info'] ?? null,
-			layout: $params['layout'] ?? null,
-			text: $params['text'] ?? null,
-		);
+		$params['text'] ??= '{{ file.filename }}';
 
 		return [
-			...$item->props(),
-			'id'       => $id,
-			'sortable' => true,
+			...parent::pickerData($params),
+			'dragText' => $this->dragText('auto', absolute: $absolute ?? false),
+			'filename' => $name,
+			'id'	   => $id,
 			'type'     => $this->model->type(),
+			'url'      => $this->model->url()
 		];
 	}
 

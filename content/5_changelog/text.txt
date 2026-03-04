@@ -1,0 +1,27 @@
+Title: Changelog
+
+----
+
+Text:
+
+Stay updated with the latest changes and improvements to the Tablo Arc Kirby CMS theme. Explore new features, bug fixes, and enhancements.
+
+## Release 20250908
+
+- initial release
+
+----
+
+Tagline: 
+
+----
+
+Meta-description: Stay updated with the latest changes and improvements to the Tablo Arc Kirby CMS theme. Explore new features, bug fixes, and enhancements.
+
+----
+
+Og-image: 
+
+----
+
+Uuid: lJMakhWPSKdB7p49

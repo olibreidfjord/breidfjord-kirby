@@ -26,7 +26,6 @@ use SensitiveParameter;
  * @license   https://getkirby.com/license
  *
  * @use \Kirby\Cms\HasSiblings<\Kirby\Cms\Users>
- * @method \Kirby\Uuid\UserUuid uuid()
  */
 class User extends ModelWithContent
 {
@@ -81,10 +80,6 @@ class User extends ModelWithContent
 		$this->name     = $set('name', fn ($name) => trim(strip_tags($name)));
 		$this->password = $props['password'] ?? null;
 		$this->role     = $set('role', fn ($role) => Str::lower(trim($role)));
-
-		if (isset($props['credentials'])) {
-			$this->credentials = $props['credentials'];
-		}
 
 		// Set blueprint before setting content
 		// or translations in the parent constructor.
@@ -233,21 +228,11 @@ class User extends ModelWithContent
 		#[SensitiveParameter]
 		string|null $password = null
 	): string|null {
-		if ($password !== null && $password !== '') {
+		if ($password !== null) {
 			$password = password_hash($password, PASSWORD_DEFAULT);
 		}
 
 		return $password;
-	}
-
-	/**
-	 * Checks if the user has a stored password
-	 * @since 5.3.0
-	 */
-	public function hasPassword(): bool
-	{
-		$password = $this->password();
-		return $password !== '' && $password !== null;
 	}
 
 	/**
@@ -713,7 +698,7 @@ class User extends ModelWithContent
 		#[SensitiveParameter]
 		string|null $password = null
 	): bool {
-		if ($this->hasPassword() === false) {
+		if (empty($this->password()) === true) {
 			throw new NotFoundException(
 				key: 'user.password.undefined'
 			);

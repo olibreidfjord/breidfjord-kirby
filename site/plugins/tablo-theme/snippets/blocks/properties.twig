@@ -1,0 +1,23 @@
+<dl class="flex flex-col md:flex-row md:flex-wrap gap-x-16 gap-y-4 md:gap-y-8 text-2xl">
+  {%~ for item in block.items.toStructure %}
+  <div>
+    <dt class="text-current/50">{{ item.title }}</dt>
+    <dd>
+      {%- if item.link.isNotEmpty -%}
+      {%-
+        include '@snippets/link.twig'
+        with {
+          link:      item.link,
+          title:     item.caption,
+          blank:     item.blank,
+          rel:       item.rel,
+          underline: true,
+        } only
+      -%}
+      {%- else -%}
+      {{- item.caption -}}
+      {%- endif -%}
+    </dd>
+  </div>
+  {%~ endfor %}
+</dl>

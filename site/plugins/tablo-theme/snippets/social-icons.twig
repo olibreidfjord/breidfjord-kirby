@@ -1,0 +1,32 @@
+<ul class="{{ clsx(class, 'p-2 flex flex-row flex-wrap', {
+    'justify-center': center,
+  }) }}"
+>
+  {%~ for link in links %}
+  {%~ with { icon: link.icon.toFile } ~%}
+  <li><a
+    class="p-2 flex flex-row"
+    href="{{ link.link.toUrl }}"
+    {%~ if link.blank.toBool %}
+    target="_blank"
+    {%~ endif %}
+    {%~ if link.rel.isNotEmpty %}
+    rel="{{ link.rel.split | join(' ') }}"
+    {%~ endif %}
+    >
+      {%- if icon.mime == 'image/svg+xml' -%}
+      {{ icon.read | raw }}
+      {%- else -%}
+      <img
+        src="{{ icon.url }}"
+        width="{{ icon.width }}"
+        height="{{ icon.height }}"
+        title="{{ link.title }}"
+        alt=""
+      >
+      {%- endif -%}
+    </a
+  ></li>
+  {%~ endwith %}
+  {%~ endfor %}
+</ul>

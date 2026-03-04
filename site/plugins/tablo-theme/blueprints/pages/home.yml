@@ -1,0 +1,12 @@
+title: Home
+icon: lucide-house
+
+tabs:
+  content:
+    label: Content
+    icon: text
+    fields:
+      layout: fields/layout
+
+  seo: tabs/seo
+  files: tabs/files

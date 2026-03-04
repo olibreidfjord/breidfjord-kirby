@@ -20,13 +20,6 @@ return [
 		'placeholder' => null,
 
 		/**
-		 * Whether to enable batch editing
-		 */
-		'batch' => function (bool $batch = false) {
-			return $batch;
-		},
-
-		/**
 		 * Optional columns definition to only show selected fields in the structure table.
 		 */
 		'columns' => function (array $columns = []) {
@@ -112,7 +105,7 @@ return [
 				return [];
 			}
 
-			return $this->form()->fields()->toProps();
+			return $this->form()->fields()->toArray();
 		},
 		'columns' => function () {
 			$columns   = [];
@@ -164,9 +157,6 @@ return [
 		}
 	],
 	'methods' => [
-		'emptyValue' => function () {
-			return [];
-		},
 		'rows' => function ($value) {
 			$rows  = Data::decode($value, 'yaml');
 			$value = [];

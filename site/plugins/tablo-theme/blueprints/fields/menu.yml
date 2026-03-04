@@ -1,0 +1,15 @@
+label: Menu
+type: structure
+fields:
+  link:
+    label: Link
+    type: link
+    required: true
+  title:
+    label: Title
+    type: text
+  blank: fields/ablank
+  rel: fields/arel
+columns:
+  link: true
+  title: true

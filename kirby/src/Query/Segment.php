@@ -16,8 +16,6 @@ use Kirby\Toolkit\Str;
  * @link      https://getkirby.com
  * @copyright Bastian Allgeier
  * @license   https://opensource.org/licenses/MIT
- *
- * @todo Deprecate in v6
  */
 class Segment
 {
@@ -38,11 +36,8 @@ class Segment
 	 *
 	 * @throws \Kirby\Exception\BadMethodCallException
 	 */
-	public static function error(
-		mixed $data,
-		string $name,
-		string $label
-	): never {
+	public static function error(mixed $data, string $name, string $label): void
+	{
 		$type = strtolower(gettype($data));
 
 		if ($type === 'double') {

@@ -1,0 +1,25 @@
+Title: Projects
+
+----
+
+Blocks: [{"content":{"level":"h1","text":"Projects","size":"size6xl","uppercase":"false"},"id":"6804fa6a-9bbb-45d1-b0d5-ecda5e3b80fc","isHidden":false,"type":"heading"},{"content":{"text":"<p>We bring architectural visions to life by focusing on both beauty and functionality, crafting environments that enhance the way people live, work, and experience their surroundings.</p>","size":"","uppercase":"false"},"id":"1dc6045c-c485-4010-97e2-28c6310c56bf","isHidden":false,"type":"text"}]
+
+----
+
+Tagline: 
+
+----
+
+Meta-description: Embark on a journey through a spectrum of projects. From creative expressions to innovative initiatives, find inspiration in the diversity of endeavors showcased here.
+
+----
+
+Og-image: 
+
+----
+
+Theme-props: 
+
+----
+
+Uuid: ih2OGTRiz78i4fTh

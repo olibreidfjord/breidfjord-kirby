@@ -47,14 +47,13 @@ class Remote
 	public string $errorMessage;
 	public array $headers = [];
 	public array $info = [];
+	public array $options = [];
 
 	/**
 	 * @throws \Exception when the curl request failed
 	 */
-	public function __construct(
-		string $url,
-		public array $options = []
-	) {
+	public function __construct(string $url, array $options = [])
+	{
 		$defaults = static::$defaults;
 
 		// use the system CA store by default if
@@ -72,8 +71,11 @@ class Remote
 			$defaults = [...$defaults, ...$app->option('remote', [])];
 		}
 
-		// set all options, incl. url
-		$this->options = [...$defaults, ...$options, 'url' => $url];
+		// set all options
+		$this->options = [...$defaults, ...$options];
+
+		// add the url
+		$this->options['url'] = $url;
 
 		// send the request
 		$this->fetch();
@@ -255,6 +257,8 @@ class Remote
 			throw new Exception($this->errorMessage, $this->errorCode);
 		}
 
+		curl_close($this->curl);
+
 		return $this;
 	}
 
@@ -273,7 +277,7 @@ class Remote
 
 		$query = http_build_query($options['data']);
 
-		if ($query !== '') {
+		if (empty($query) === false) {
 			$url = match (Url::hasQuery($url)) {
 				true    => $url . '&' . $query,
 				default => $url . '?' . $query
@@ -310,18 +314,7 @@ class Remote
 	 */
 	public function json(bool $array = true): array|stdClass|null
 	{
-		if ($content = $this->content()) {
-			$json = json_decode($content, $array);
-
-			if (
-				is_array($json) === true ||
-				$json instanceof stdClass === true
-			) {
-				return $json;
-			}
-		}
-
-		return null;
+		return json_decode($this->content(), $array);
 	}
 
 	/**
@@ -346,7 +339,7 @@ class Remote
 	 */
 	protected function postfields($data)
 	{
-		if (is_object($data) === true || is_array($data) === true) {
+		if (is_object($data) || is_array($data)) {
 			return http_build_query($data);
 		}
 

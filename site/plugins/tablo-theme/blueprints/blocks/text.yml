@@ -1,0 +1,22 @@
+name: field.blocks.text.name
+icon: text
+wysiwyg: true
+preview: text
+fields:
+  text:
+    type: writer
+    nodes: false
+    placeholder: field.blocks.text.placeholder
+  size:
+    label: Size
+    type: select
+    placeholder: default
+    options:
+      size3xl: 3XL
+      size4xl: 4XL
+      size5xl: 5XL
+      size6xl: 6XL
+      size7xl: 7XL
+  uppercase:
+    label: Uppercase
+    type: toggle

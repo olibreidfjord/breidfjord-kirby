@@ -1,0 +1,7 @@
+label: Features
+type: group
+fieldsets:
+  - actions
+  - descriptions
+  - numbers
+  - properties

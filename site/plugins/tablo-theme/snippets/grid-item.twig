@@ -1,0 +1,61 @@
+{%- if url -%}
+<a
+  class="flex flex-col group"
+  href="{{ url }}"
+>
+{%- endif -%}
+
+  {%- if not image -%}
+  <div
+    class="flex flex-row justify-center items-center bg-shade"
+    style="aspect-ratio: {{ ratio }};"
+    ><svg class="relative text-current/20" width="48" height="48" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"/>
+      <path d="M2.002 1a2 2 0 0 0-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V3a2 2 0 0 0-2-2h-12zm12 1a1 1 0 0 1 1 1v6.5l-3.777-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12V3a1 1 0 0 1 1-1h12z"/>
+    </svg></div
+  >
+  {%- elseif image.type == 'image' -%}
+  {%- set thumb = image.thumb({ width: 640, format: 'webp' }) -%}
+  {%- set ratio = ratio ?? '%d/%d' | format(thumb.width, thumb.height) -%}
+  <div
+    class="bg-current/5"
+    style="aspect-ratio: {{ ratio }};"
+    ><img
+      class="w-full h-full {{ crop ? 'object-cover' : 'object-contain' }}"
+      style="aspect-ratio: {{ ratio }};"
+      src="{{ thumb.url }}"
+      data-srcset="{{ image.srcset({
+         '640w': { width:  640, format: 'webp' },
+         '800w': { width:  800, format: 'webp' },
+         '960w': { width:  960, format: 'webp' },
+        '1120w': { width: 1120, format: 'webp' },
+        '1280w': { width: 1280, format: 'webp' },
+        '1600w': { width: 1600, format: 'webp' },
+        '2400w': { width: 2400, format: 'webp' },
+      }) }}"
+      width="{{ thumb.width }}"
+      height="{{ thumb.height }}"
+      alt="{{ image.alt }}"
+      data-grid-image
+    ></div
+  >
+  {%- elseif image.type == 'video' -%}
+  <div><video
+      class="w-full h-full {{ crop ? 'object-cover' : 'object-contain' }}"
+      {%~ if ratio ~%}
+      style="aspect-ratio: {{ ratio }};"
+      {%~ endif ~%}
+      autoplay muted loop playsinline
+      ><source
+        src="{{ image.url }}"
+        type="{{ image.mime }}"
+      ></video
+    ></div
+  >
+  {%- endif -%}
+
+  {%- block after none -%}
+
+{%- if url -%}
+</a>
+{%- endif -%}

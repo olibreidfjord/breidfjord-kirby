@@ -1,0 +1,10 @@
+type: pages
+label: Posts
+flip: true
+sortable: false
+templates: post
+image:
+  query: false
+  back: gray-100
+  color: blue
+info: "{{ page.date.toDate('M d, Y') }}"

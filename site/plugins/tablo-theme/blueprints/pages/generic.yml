@@ -1,0 +1,11 @@
+title: Generic
+icon: lucide-layers
+
+tabs:
+  content:
+    label: Content
+    fields:
+      layout: fields/layout
+
+  seo: tabs/seo
+  files: tabs/files

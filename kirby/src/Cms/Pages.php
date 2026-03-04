@@ -24,8 +24,7 @@ use Throwable;
  * @copyright Bastian Allgeier
  * @license   https://getkirby.com/license
  *
- * @template TPage of \Kirby\Cms\Page
- * @extends \Kirby\Cms\Collection<TPage>
+ * @extends \Kirby\Cms\Collection<\Kirby\Cms\Page>
  */
 class Pages extends Collection
 {
@@ -56,7 +55,7 @@ class Pages extends Collection
 	 * an entire second collection to the
 	 * current collection
 	 *
-	 * @param \Kirby\Cms\Pages<TPage>|TPage|string $object
+	 * @param \Kirby\Cms\Pages|\Kirby\Cms\Page|string $object
 	 * @return $this
 	 * @throws \Kirby\Exception\InvalidArgumentException When no `Page` or `Pages` object or an ID of an existing page is passed
 	 */
@@ -100,7 +99,6 @@ class Pages extends Collection
 
 	/**
 	 * Returns all children for each page in the array
-	 * @return \Kirby\Cms\Pages<TPage>
 	 */
 	public function children(): static
 	{
@@ -132,29 +130,19 @@ class Pages extends Collection
 	public function delete(array $ids): void
 	{
 		$exceptions = [];
-		$kirby      = App::instance();
 
 		// delete all pages and collect errors
 		foreach ($ids as $id) {
 			try {
-				// Explanation: We get the page object from the global context
-				// as the objects in the pages collection itself could have rendered
-				// outdated from a sibling delete action in this loop (e.g. resorting
-				// after deleting a sibling page and leaving the object in this collection
-				// with an old root path).
-				//
-				// TODO: We can remove this part as soon
-				// as we move away from our immutable object architecture.
-				$page = $kirby->page($id);
+				$model = $this->get($id);
 
-				if ($page === null || $this->get($id) instanceof Page === false) {
+				if ($model instanceof Page === false) {
 					throw new NotFoundException(
 						key: 'page.undefined',
 					);
 				}
 
-				$page->delete();
-				$this->remove($id);
+				$model->delete();
 			} catch (Throwable $e) {
 				$exceptions[$id] = $e;
 			}
@@ -178,7 +166,6 @@ class Pages extends Collection
 
 	/**
 	 * Fetch all drafts for all pages in the collection
-	 * @return \Kirby\Cms\Pages<TPage>
 	 */
 	public function drafts(): static
 	{
@@ -244,7 +231,6 @@ class Pages extends Collection
 	/**
 	 * Finds a page by its ID or URI
 	 * @internal Use `$pages->find()` instead
-	 * @return TPage|null
 	 */
 	public function findByKey(string|null $key = null): Page|null
 	{
@@ -300,7 +286,6 @@ class Pages extends Collection
 
 	/**
 	 * Finds a child or child of a child recursively
-	 * @return TPage|null
 	 */
 	protected function findByKeyRecursive(
 		string $id,
@@ -341,7 +326,6 @@ class Pages extends Collection
 
 	/**
 	 * Finds the currently open page
-	 * @return TPage|null
 	 */
 	public function findOpen(): Page|null
 	{
@@ -351,7 +335,6 @@ class Pages extends Collection
 	/**
 	 * Custom getter that is able to find
 	 * extension pages
-	 * @return TPage|null
 	 */
 	public function get(string $key, mixed $default = null): Page|null
 	{
@@ -409,7 +392,6 @@ class Pages extends Collection
 
 	/**
 	 * Returns all listed pages in the collection
-	 * @return \Kirby\Cms\Pages<TPage>
 	 */
 	public function listed(): static
 	{
@@ -418,7 +400,6 @@ class Pages extends Collection
 
 	/**
 	 * Returns all unlisted pages in the collection
-	 * @return \Kirby\Cms\Pages<TPage>
 	 */
 	public function unlisted(): static
 	{
@@ -508,10 +489,7 @@ class Pages extends Collection
 		return $this->pluck('num');
 	}
 
-	/**
-	 * Returns all listed and unlisted pages in the collection
-	 * @return \Kirby\Cms\Pages<TPage>
-	 */
+	// Returns all listed and unlisted pages in the collection
 	public function published(): static
 	{
 		return $this->filter('isDraft', '==', false);

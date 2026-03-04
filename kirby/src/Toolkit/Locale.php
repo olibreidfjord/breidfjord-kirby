@@ -84,7 +84,7 @@ class Locale
 
 		// no specific `$category` was passed, make a list of all locales
 		$array = [];
-		foreach (array_keys(static::supportedConstants()) as $constant) {
+		foreach (static::supportedConstants() as $constant => $name) {
 			// `setlocale(..., 0)` actually *gets* the locale
 			$array[$constant] = setlocale($constant, '0');
 		}
@@ -131,7 +131,6 @@ class Locale
 	/**
 	 * Sets the PHP locale with a locale string or
 	 * an array with constant or string keys
-	 * @psalm-suppress UnusedFunctionCall
 	 */
 	public static function set(array|string $locale): void
 	{

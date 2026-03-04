@@ -51,54 +51,30 @@ class Dom
 		$this->doc  = new DOMDocument();
 		$this->type = strtoupper($type);
 
-		// Switch libxml into internal error handling mode so warnings
-		// don’t leak into output or interrupt parsing
+		// switch to "user error handling"
 		$errors = libxml_use_internal_errors(true);
 
 		if ($this->type === 'HTML') {
-			// If this is an HTML fragment (no <html> or <body> root),
-			// wrap it in <body> so DOMDocument has a valid container.
+			// ensure proper parsing for HTML snippets
 			if (preg_match('/<(html|body)[> ]/i', $code) !== 1) {
 				$code = '<body>' . $code . '</body>';
 			}
 
-			// DOMDocument::loadHTML() historically assumes ISO-8859-1 input.
-			// To force UTF-8 parsing, Kirby injects an XML declaration.
-			// The random ID allows us to reliably identify *our* injected node
-			// later and remove it again.
+			// the loadHTML() method expects ISO-8859-1 by default;
+			// force parsing as UTF-8 by injecting an XML declaration
 			$xml  = 'encoding="UTF-8" id="' . Str::random(10) . '"';
 			$load = $this->doc->loadHTML('<?xml ' . $xml . '>' . $code);
 
+			// remove the injected XML declaration again
+			$pis = $this->query('//processing-instruction()');
 
-			// Newer libxml2 versions may not attach the injected XML node
-			// inside <html>. Instead, they may convert it into a top-level
-			// comment node that sits before <html>:
-			//   <!--?xml encoding="UTF-8" id="XYZ"--><html>...
-			//
-			//  XPath queries like //comment() or //processing-instruction()
-			//  often operate relative to the document element (<html>) and
-			//  therefore miss this node entirely.
-			//  To fix this, we must also inspect and clean up the document’s
-			//  top-level child nodes explicitly.
-			//
-			// Walk all top-level nodes of the document and remove
-			// any node that matches the injected XML marker
-			for ($node = $this->doc->firstChild; $node !== null; $node = $next) {
-				$next = $node->nextSibling;
-
-				if (
-					// Case 1: libxml preserved it as a processing instruction
-					($node->nodeType === XML_PI_NODE && $node->data === $xml) ||
-					// Case 2: libxml converted it into a comment node
-					// (<!--?xml encoding="UTF-8" id="..."-->)
-					($node->nodeType === XML_COMMENT_NODE && strpos($node->data, $xml) !== false)
-				) {
-					static::remove($node);
-					break;
+			foreach (iterator_to_array($pis, false) as $pi) {
+				if ($pi->data === $xml) {
+					static::remove($pi);
 				}
 			}
 
-			// Remove the default doctype
+			// remove the default doctype
 			if (Str::contains($code, '<!DOCTYPE ', true) === false) {
 				static::remove($this->doc->doctype);
 			}
@@ -474,14 +450,15 @@ class Dom
 		// we need to consider the namespaces
 		foreach ($list as $item) {
 			// try to find the expected origin namespace URI
-			$itemLocal = $item;
-
-			// list items without namespace are from the default namespace
-			$namespaceUri = $allowedNamespaces[''] ?? null;
+			$namespaceUri = null;
+			$itemLocal    = $item;
 
 			if (Str::contains($item, ':') === true) {
 				[$namespaceName, $itemLocal] = explode(':', $item);
 				$namespaceUri = $allowedNamespaces[$namespaceName] ?? null;
+			} else {
+				// list items without namespace are from the default namespace
+				$namespaceUri = $allowedNamespaces[''] ?? null;
 			}
 
 			// try if we can find an exact namespaced match
@@ -678,17 +655,6 @@ class Dom
 		// remove the <meta> tag from the document and from the output
 		static::remove($metaTag);
 		$html = str_replace($this->doc->saveHTML($metaTag), '', $html);
-
-		// if the original input contained an HTML doctype, some libxml
-		// implementations expand it to the long HTML4 transitional doctype
-		// when saving. Normalize it back to the short `<!DOCTYPE html>`
-		// to keep behavior consistent across environments.
-		if (
-			Str::contains($this->code, '<!DOCTYPE ', true) === true &&
-			preg_match('/<!doctype\s+html/i', $this->code) === 1
-		) {
-			$html = preg_replace('/^<!DOCTYPE[^>]*>\s*/i', '<!DOCTYPE html>' . "\n", $html, 1);
-		}
 
 		return trim($html);
 	}

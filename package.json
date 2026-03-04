@@ -1,0 +1,16 @@
+{
+  "devDependencies": {
+    "@tailwindcss/cli": "~4.1",
+    "animejs": "~4.1",
+    "clamp": "~1",
+    "esbuild": "0.25",
+    "tailwindcss": "~4.1"
+  },
+  "scripts": {
+    "dev:css": "tailwindcss -i src/css/index.css -o site/plugins/tablo-theme/assets/main.css --watch",
+    "dev:js": "esbuild src/js/index.js --bundle --outfile=site/plugins/tablo-theme/assets/main.js --watch",
+    "build:css": "tailwindcss -i src/css/index.css -o site/plugins/tablo-theme/assets/main.css --minify",
+    "build:js": "esbuild src/js/index.js --bundle --outfile=site/plugins/tablo-theme/assets/main.js --minify --target=es2020,chrome90,firefox90,safari14",
+    "build": "npm run build:css && npm run build:js"
+  }
+}

@@ -1,0 +1,42 @@
+name: field.blocks.heading.name
+icon: title
+wysiwyg: true
+preview: heading
+fields:
+  level:
+    label: field.blocks.heading.level
+    type: select
+    empty: false
+    default: "h2"
+    labels: false
+    options:
+      - value: h1
+        icon: h1
+        text: H1
+      - value: h2
+        icon: h2
+        text: H2
+      - value: h3
+        icon: h3
+        text: H3
+      - value: h4
+        icon: h4
+        text: H4
+  text:
+    label: field.blocks.heading.text
+    type: writer
+    inline: true
+    placeholder: field.blocks.heading.placeholder
+  size:
+    label: Size
+    type: select
+    placeholder: default
+    options:
+      size3xl: 3XL
+      size4xl: 4XL
+      size5xl: 5XL
+      size6xl: 6XL
+      size7xl: 7XL
+  uppercase:
+    label: Uppercase
+    type: toggle

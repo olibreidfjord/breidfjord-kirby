@@ -36,7 +36,6 @@ use Kirby\Toolkit\LazyValue;
 use Kirby\Toolkit\Locale;
 use Kirby\Toolkit\Str;
 use Kirby\Uuid\Uuid;
-use Kirby\Uuid\Uuids;
 use Throwable;
 
 /**
@@ -103,12 +102,8 @@ class App
 		$this->core   = new Core($this);
 		$this->events = new Events($this);
 
-		// start with a fresh snippet and version cache
-		Snippet::$cache = [];
+		// start with a fresh version cache
 		VersionCache::reset();
-
-		// reset the UUIDs option cache
-		Uuids::$enabled = null;
 
 		// register all roots to be able to load stuff afterwards
 		$this->bakeRoots($props['roots'] ?? []);
@@ -425,7 +420,6 @@ class App
 	public function contentToken(object|null $model, string $value): string
 	{
 		$default = $this->root('content');
-		$default = realpath($default) ?: $default;
 
 		if ($model !== null && method_exists($model, 'id') === true) {
 			$default .= '/' . $model->id();
@@ -449,15 +443,15 @@ class App
 		array $arguments = [],
 		string $contentType = 'html'
 	): array {
-		$name = strtolower($name);
+		$name = basename(strtolower($name));
 		$data = [];
 
 		// always use the site controller as defaults, if available
-		// (unless the controller is a snippet controller)
-		if (strpos($name, '/') === false) {
-			$site   = $this->controllerLookup('site', $contentType);
-			$site ??= $this->controllerLookup('site');
-			$data   = (array)$site?->call($this, $arguments) ?? [];
+		$site   = $this->controllerLookup('site', $contentType);
+		$site ??= $this->controllerLookup('site');
+
+		if ($site !== null) {
+			$data = (array)$site->call($this, $arguments);
 		}
 
 		// try to find a specific representation controller
@@ -466,10 +460,14 @@ class App
 		// let's try the html controller instead
 		$controller ??= $this->controllerLookup($name);
 
-		return [
-			...$data,
-			...(array)$controller?->call($this, $arguments) ?? []
-		];
+		if ($controller !== null) {
+			return [
+				...$data,
+				...(array)$controller->call($this, $arguments)
+			];
+		}
+
+		return $data;
 	}
 
 	/**
@@ -484,11 +482,7 @@ class App
 		}
 
 		// controller from site root
-		$controller = Controller::load(
-			file: $this->root('controllers') . '/' . $name . '.php',
-			in:   $this->root('controllers')
-		);
-
+		$controller   = Controller::load($this->root('controllers') . '/' . $name . '.php', $this->root('controllers'));
 		// controller from extension
 		$controller ??= $this->extension('controllers', $name);
 
@@ -550,15 +544,6 @@ class App
 	}
 
 	/**
-	 * Checks if CORS support is enabled
-	 * @since 5.2.0
-	 */
-	public function isCorsEnabled(): bool
-	{
-		return $this->option('cors', false) !== false;
-	}
-
-	/**
 	 * Returns the current language, if set by `static::setCurrentLanguage`
 	 */
 	public function currentLanguage(): Language|null
@@ -595,25 +580,22 @@ class App
 		$visitor   = $this->visitor();
 
 		foreach ($visitor->acceptedLanguages() as $acceptedLang) {
-			$acceptedCode   = $acceptedLang->code();
-			$acceptedLocale = $acceptedLang->locale();
+			$closure = static function ($language) use ($acceptedLang) {
+				$languageLocale = $language->locale(LC_ALL);
+				$acceptedLocale = $acceptedLang->locale();
 
-			$match = fn (Language $language, int $precision) =>
-				Str::substr($language->locale(LC_ALL), 0, $precision) ===
-				Str::substr($acceptedLocale, 0, $precision);
+				return
+					$languageLocale === $acceptedLocale ||
+					$acceptedLocale === Str::substr($languageLocale, 0, 2);
+			};
 
-			// Find exact locale matches (e.g. en_GB => en_GB)
-			if ($language = $languages->filter(fn ($language) => $match($language, 5))?->first()) {
+			if ($language = $languages->filter($closure)?->first()) {
 				return $language;
 			}
+		}
 
-			// Find exact code matches
-			if ($language = $languages->findBy('code', $acceptedCode)) {
-				return $language;
-			}
-
-			// Find broad locale matches (e.g. en_GB => en)
-			if ($language = $languages->filter(fn ($language) => $match($language, 2))?->first()) {
+		foreach ($visitor->acceptedLanguages() as $acceptedLang) {
+			if ($language = $languages->findBy('code', $acceptedLang->code())) {
 				return $language;
 			}
 		}
@@ -786,7 +768,15 @@ class App
 
 		// Responses
 		if ($input instanceof Response) {
-			return $response->send($input);
+			$data = $input->toArray();
+
+			// inject headers from the global response configuration
+			// lazily (only if they are not already set);
+			// the case-insensitive nature of headers will be
+			// handled by PHP's `header()` function
+			$data['headers'] = [...$response->headers(), ...$data['headers']];
+
+			return new Response($data);
 		}
 
 		// Pages
@@ -1034,7 +1024,7 @@ class App
 
 		// load the main config options
 		$root    = $this->root('config');
-		$options = F::load($root . '/config.php', [], allowOutput: false, cache: true);
+		$options = F::load($root . '/config.php', [], allowOutput: false);
 
 		// merge into one clean options array
 		return $this->options = array_replace_recursive(Config::$data, $options);
@@ -1049,7 +1039,7 @@ class App
 		$root = $this->root('config');
 
 		// first load `config/env.php` to access its `url` option
-		$envOptions = F::load($root . '/env.php', [], allowOutput: false, cache: true);
+		$envOptions = F::load($root . '/env.php', [], allowOutput: false);
 
 		// use the option from the main `config.php`,
 		// but allow the `env.php` to override it

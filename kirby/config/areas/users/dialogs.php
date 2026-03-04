@@ -15,6 +15,8 @@ $fields = require __DIR__ . '/../fields/dialogs.php';
 $files = require __DIR__ . '/../files/dialogs.php';
 
 return [
+
+	// create
 	'user.create' => [
 		'pattern' => 'users/create',
 		'load' => function () {
@@ -77,6 +79,7 @@ return [
 		}
 	],
 
+	// change email
 	'user.changeEmail' => [
 		'pattern' => 'users/(:any)/changeEmail',
 		'load' => function (string $id) {
@@ -111,6 +114,7 @@ return [
 		}
 	],
 
+	// change language
 	'user.changeLanguage' => [
 		'pattern' => 'users/(:any)/changeLanguage',
 		'load' => function (string $id) {
@@ -143,6 +147,7 @@ return [
 		}
 	],
 
+	// change name
 	'user.changeName' => [
 		'pattern' => 'users/(:any)/changeName',
 		'load' => function (string $id) {
@@ -174,63 +179,45 @@ return [
 		}
 	],
 
+	// change password
 	'user.changePassword' => [
 		'pattern' => 'users/(:any)/changePassword',
 		'load' => function (string $id) {
-			$kirby = App::instance();
-			$user  = Find::user($id);
-
-			$fields = [
-				'currentPassword' => Field::password([
-					'label'        => I18n::translate('user.changePassword.' . ($kirby->user()->is($user) ? 'current' : 'own')),
-					'autocomplete' => 'current-password',
-					'help'         => I18n::translate('account') . ': ' . App::instance()->user()->email(),
-				]),
-				'line' => [
-					'type' => 'line',
-				],
-				'password' => Field::password([
-					'label'        => I18n::translate('user.changePassword.new'),
-					'autocomplete' => 'new-password',
-					'help'         => I18n::translate('account') . ': ' . $user->email(),
-				]),
-				'passwordConfirmation' => Field::password([
-					'label'        => I18n::translate('user.changePassword.new.confirm'),
-					'autocomplete' => 'new-password'
-				])
-			];
-
-			// if the currently logged in user tries to change their own password
-			// and has no password so far, password confirmation can be skipped
-			if ($user->isLoggedIn() === true && $user->hasPassword() === false) {
-				unset($fields['currentPassword'], $fields['line']);
-			}
+			Find::user($id);
 
 			return [
 				'component' => 'k-form-dialog',
 				'props' => [
-					'fields'       => $fields,
+					'fields'       => [
+						'currentPassword' => Field::password([
+							'label'        => I18n::translate('user.changePassword.current'),
+							'autocomplete' => 'current-password'
+						]),
+						'password' => Field::password([
+							'label'        => I18n::translate('user.changePassword.new'),
+							'autocomplete' => 'new-password'
+						]),
+						'passwordConfirmation' => Field::password([
+							'label'        => I18n::translate('user.changePassword.new.confirm'),
+							'autocomplete' => 'new-password'
+						])
+					],
 					'submitButton' => I18n::translate('change'),
 				]
 			];
 		},
 		'submit' => function (string $id) {
-			$kirby                = App::instance();
-			$request              = $kirby->request();
+			$kirby   = App::instance();
+			$request = $kirby->request();
+
 			$user                 = Find::user($id);
 			$currentPassword      = $request->get('currentPassword');
 			$password             = $request->get('password');
 			$passwordConfirmation = $request->get('passwordConfirmation');
 
-			// if the currently logged in user tries to change their own password
-			// and has no password so far, password confirmation can be skipped
-			$canSkipConfirmation = $user->isLoggedIn() === true && $user->hasPassword() === false;
-
 			// validate the current password of the acting user
 			try {
-				if ($canSkipConfirmation === false) {
-					$kirby->user()->validatePassword($currentPassword);
-				}
+				$kirby->user()->validatePassword($currentPassword);
 			} catch (Exception) {
 				// catching and re-throwing exception to avoid automatic
 				// sign-out of current user from the Panel
@@ -258,6 +245,7 @@ return [
 		}
 	],
 
+	// change role
 	'user.changeRole' => [
 		'pattern' => 'users/(:any)/changeRole',
 		'load' => function (string $id) {
@@ -294,6 +282,7 @@ return [
 		}
 	],
 
+	// delete
 	'user.delete' => [
 		'pattern' => 'users/(:any)/delete',
 		'load' => function (string $id) {
@@ -335,36 +324,49 @@ return [
 		}
 	],
 
+	// user field dialogs
 	'user.fields' => [
-		...$fields['model'],
-		'pattern' => '(users/[^/]+)/fields/(:any)/(:all?)',
+		'pattern' => '(users/.*?)/fields/(:any)/(:all?)',
+		'load'    => $fields['model']['load'],
+		'submit'  => $fields['model']['submit']
 	],
 
+	// change file name
 	'user.file.changeName' => [
-		...$files['changeName'],
-		'pattern' => '(users/[^/]+)/files/(:any)/changeName',
+		'pattern' => '(users/.*?)/files/(:any)/changeName',
+		'load'    => $files['changeName']['load'],
+		'submit'  => $files['changeName']['submit'],
 	],
 
+	// change file sort
 	'user.file.changeSort' => [
-		...$files['changeSort'],
-		'pattern' => '(users/[^/]+)/files/(:any)/changeSort',
+		'pattern' => '(users/.*?)/files/(:any)/changeSort',
+		'load'    => $files['changeSort']['load'],
+		'submit'  => $files['changeSort']['submit'],
 	],
 
+	// change file template
 	'user.file.changeTemplate' => [
-		...$files['changeTemplate'],
-		'pattern' => '(users/[^/]+)/files/(:any)/changeTemplate',
+		'pattern' => '(users/.*?)/files/(:any)/changeTemplate',
+		'load'    => $files['changeTemplate']['load'],
+		'submit'  => $files['changeTemplate']['submit'],
 	],
 
+	// delete file
 	'user.file.delete' => [
-		...$files['delete'],
-		'pattern' => '(users/[^/]+)/files/(:any)/delete',
+		'pattern' => '(users/.*?)/files/(:any)/delete',
+		'load'    => $files['delete']['load'],
+		'submit'  => $files['delete']['submit'],
 	],
 
+	// user file fields dialogs
 	'user.file.fields' => [
-		...$fields['file'],
-		'pattern' => '(users/[^/]+)/files/(:any)/fields/(:any)/(:all?)',
+		'pattern' => '(users/.*?)/files/(:any)/fields/(:any)/(:all?)',
+		'load'    => $fields['file']['load'],
+		'submit'  => $fields['file']['submit']
 	],
 
+	// user disable TOTP
 	'user.totp.disable' => [
 		'pattern' => 'users/(:any)/totp/disable',
 		'load'    => fn (string $id) => (new UserTotpDisableDialog($id))->load(),

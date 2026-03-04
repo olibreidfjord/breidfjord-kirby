@@ -1,0 +1,17 @@
+{% with { posts: posts ?? block.source.toPage.posts(option('tablo.posts.previewLimit')) } %}
+<div>
+  <ul class="space-y-6 md:space-y-0 -my-1 text-3xl">
+    {%~ for item in posts %}
+    <li class="md:flex md:flex-row justify-between items-start gap-4"><a class="py-1 flex flex-row gap-2" href="{{ item.url }}">
+      {%- if item.pinned.toBool -%}
+      <span class="flex flex-row">
+        {%- include '@snippets/icon-pin.twig' -%}
+      </span>
+      {%- endif -%}
+      <span class="flex-1 basis-full underline">{{ item.title }}</span></a>
+      <span class="mt-6 flex-1 min-w-10 border-b text-gray-500/20"></span>
+      <span class="my-1 whitespace-nowrap text-current/50 md:text-current">{{ item.date.toDate(option('tablo.posts.dateFormat')) }}</span></li>
+    {%~ endfor %}
+  </ul>
+</div>
+{% endwith %}

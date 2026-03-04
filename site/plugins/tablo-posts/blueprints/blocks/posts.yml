@@ -1,0 +1,14 @@
+name: Posts
+icon: lucide-newspaper
+preview: fields
+wysiwyg: true
+fields:
+  source:
+    label: Source
+    type: pages
+    query: site.index.template('posts')
+    multiple: false
+    link: false
+    image:
+      query: false
+      back: gray-100

@@ -1,0 +1,18 @@
+name: Projects
+icon: lucide-building-2
+preview: fields
+wysiwyg: true
+fields:
+  projects:
+    label: Projects
+    type: pages
+    query: site.index.template('project')
+    multiple: true
+    layout: cards
+    size: small
+    link: false
+    empty: All listed child projects will be displayed if no selection is made
+    image:
+      query: page.getCoverImage()
+      icon: image
+      back: white

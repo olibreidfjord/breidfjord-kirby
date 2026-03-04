@@ -465,12 +465,9 @@ class Session
 
 		// (re)transmit session token
 		if ($this->mode === 'cookie') {
-			$cookieDomain = $this->sessions->cookieDomain();
-
 			Cookie::set($this->sessions->cookieName(), $this->token(), [
 				'lifetime' => $this->tokenExpiry,
-				'path'     => $cookieDomain ? '/' : Url::index(['host' => null, 'trailingSlash' => true]),
-				'domain'   => $cookieDomain,
+				'path'     => Url::index(['host' => null, 'trailingSlash' => true]),
 				'secure'   => Url::scheme() === 'https',
 				'httpOnly' => true,
 				'sameSite' => 'Lax'

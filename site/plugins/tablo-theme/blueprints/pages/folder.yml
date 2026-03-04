@@ -1,0 +1,30 @@
+title: Folder
+icon: lucide-folder-closed
+
+tabs:
+  gallery:
+    label: Gallery
+    sections:
+      projects:
+        headline: Projects
+        type: pages
+        layout: cards
+        size: large
+        info: "{{ page.description }}"
+        image:
+          query: page.getCoverImage()
+          ratio: 5/4
+          cover: true
+          back: white
+        templates:
+          - project
+
+  layout:
+    label: Layout
+    fields:
+      blocks:
+        label: Intro
+        extends: fields/blocks
+
+  seo: tabs/seo
+  files: tabs/files

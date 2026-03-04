@@ -1,0 +1,13 @@
+<a
+  class="{{ clsx(class, 'flex flex-row items-center gap-0.5 group', {
+    'justify-center': center,
+  }) }}"
+  href="{{ link.toUrl }}"
+  {%~ if blank.toBool %}
+  target="_blank"
+  {%~ endif %}
+  {%~ if rel.isNotEmpty %}
+  rel="{{ rel.split | join(' ') }}"
+  {%~ endif %}
+  ><span class="{{ underline ? 'underline' : 'group-hover:underline' }}">{{ title.isNotEmpty ? title.value : link.toTitle }}</span>{% if 'external' in rel.split %}<span class="text-current/20">&#8599;</span>{% endif %}</a
+>

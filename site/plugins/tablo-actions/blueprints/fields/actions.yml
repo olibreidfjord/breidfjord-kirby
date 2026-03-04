@@ -1,0 +1,23 @@
+label: Actions
+type: structure
+fields:
+  title:
+    label: Title
+    type: text
+    width: 2/3
+  primary:
+    label: Primary
+    type: toggle
+    text:
+      - "no"
+      - "yes"
+    width: 1/3
+  link:
+    label: Link
+    type: link
+    required: true
+  blank: fields/ablank
+  rel: fields/arel
+columns:
+  title:
+  link:

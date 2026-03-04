@@ -1,0 +1,21 @@
+Title: Articles
+
+----
+
+Blocks: [{"content":{"level":"h1","text":"Insights and Inspiration","size":"size6xl","uppercase":"false"},"id":"efa87221-4cf5-4532-b8e9-6b6aea30a108","isHidden":false,"type":"heading"},{"content":{"text":"<p>Explore our collection of articles, where we delve into the latest trends, ideas, and innovations shaping architecture and design. From sustainable solutions to creative inspirations, discover stories that inform and inspire.</p>","size":"","uppercase":"false"},"id":"45a6adbf-af98-4cb5-be8b-f18b3705e427","isHidden":false,"type":"text"}]
+
+----
+
+Tagline: 
+
+----
+
+Meta-description: Discover insights on architecture and design trends, sustainable spaces, and innovative solutions that inspire and connect communities.
+
+----
+
+Og-image: 
+
+----
+
+Uuid: oWbSEUtIHbgb29Ol

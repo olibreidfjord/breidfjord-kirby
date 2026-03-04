@@ -13,9 +13,6 @@ use Kirby\Cms\Language;
  */
 trait Translatable
 {
-	/**
-	 * Should the field be translatable?
-	 */
 	protected bool $translate = true;
 
 	/**
@@ -32,11 +29,17 @@ trait Translatable
 		return true;
 	}
 
+	/**
+	 * Set the translatable status
+	 */
 	protected function setTranslate(bool $translate = true): void
 	{
 		$this->translate = $translate;
 	}
 
+	/**
+	 * Should the field be translatable?
+	 */
 	public function translate(): bool
 	{
 		return $this->translate;

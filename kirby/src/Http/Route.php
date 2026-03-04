@@ -14,9 +14,24 @@ use Closure;
 class Route
 {
 	/**
+	 * The callback action function
+	 */
+	protected Closure $action;
+
+	/**
 	 * Listed of parsed arguments
 	 */
 	protected array $arguments = [];
+
+	/**
+	 * An array of all passed attributes
+	 */
+	protected array $attributes = [];
+
+	/**
+	 * The registered request method
+	 */
+	protected string $method;
 
 	/**
 	 * The registered pattern
@@ -59,11 +74,14 @@ class Route
 	 */
 	public function __construct(
 		string $pattern,
-		protected string $method,
-		protected Closure $action,
-		protected array $attributes = []
+		string $method,
+		Closure $action,
+		array $attributes = []
 	) {
-		$this->pattern = $this->regex(ltrim($pattern, '/'));
+		$this->action     = $action;
+		$this->attributes = $attributes;
+		$this->method     = $method;
+		$this->pattern    = $this->regex(ltrim($pattern, '/'));
 	}
 
 	/**

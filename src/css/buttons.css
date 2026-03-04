@@ -1,0 +1,30 @@
+@layer components {
+  .button {
+    --border-width: 1.5px;
+    --vpadding: 1.25rem;
+    --hpadding: 1.5rem;
+    display: block;
+    padding: var(--vpadding) var(--hpadding);
+    outline: var(--border-width) solid;
+    outline-offset: calc(var(--border-width) * -1);
+    border-radius: 9999px;
+    min-width: 8rem;
+    text-align: center;
+    &:hover {
+      color: var(--color-background);
+      background-color: var(--color-text);
+      border-color: transparent;
+    }
+  }
+
+  .button--smaller {
+    --vpadding: 1rem;
+    --hpadding: 1.25rem;
+  }
+
+  .button--primary {
+    color: var(--color-background);
+    background-color: var(--color-text);
+    outline: none;
+  }
+}

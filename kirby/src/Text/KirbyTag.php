@@ -20,6 +20,9 @@ use Kirby\Uuid\Uuid;
  * @link      https://getkirby.com
  * @copyright Bastian Allgeier
  * @license   https://opensource.org/licenses/MIT
+ *
+ * @todo remove the following psalm suppress when PHP >= 8.2 required
+ * @psalm-suppress UndefinedAttributeClass
  */
 #[AllowDynamicProperties]
 class KirbyTag

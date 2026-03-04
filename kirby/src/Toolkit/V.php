@@ -446,7 +446,6 @@ V::$validators = [
 
 	/**
 	 * Checks for valid json
-	 * @psalm-suppress UnusedFunctionCall
 	 */
 	'json' => function ($value): bool {
 		if (!is_string($value) || $value === '') {
@@ -639,7 +638,7 @@ V::$validators = [
 	/**
 	 * Checks for a valid Uuid, optionally for specific model type
 	 */
-	'uuid' => function (string $value, string|array|null $type = null): bool {
+	'uuid' => function (string $value, string|null $type = null): bool {
 		return Uuid::is($value, $type);
 	}
 ];

@@ -4,7 +4,6 @@ namespace Kirby\Toolkit;
 
 use ArrayIterator;
 use Countable;
-use Iterator as PhpIterator;
 use IteratorAggregate;
 
 /**
@@ -17,6 +16,11 @@ use IteratorAggregate;
  * @link      https://getkirby.com
  * @copyright Bastian Allgeier
  * @license   https://opensource.org/licenses/MIT
+ *
+ * @psalm-suppress MissingTemplateParam Implementing template params
+ *                                      in this class would require
+ *                                      implementing them throughout
+ *                                      the code base: https://github.com/getkirby/kirby/pull/4886#pullrequestreview-1203577545
  *
  * @template TKey of array-key
  * @template TValue
@@ -35,18 +39,16 @@ class Iterator implements Countable, IteratorAggregate
 	}
 
 	/**
-	 * Returns an iterator for the elements
+	 * Get an iterator for the items.
 	 * @return \ArrayIterator<TKey, TValue>
 	 */
-	public function getIterator(): PhpIterator
+	public function getIterator(): ArrayIterator
 	{
 		return new ArrayIterator($this->data);
 	}
 
 	/**
 	 * Returns the current key
-	 * @deprecated
-	 * @todo Remove in v6
 	 */
 	public function key(): int|string|null
 	{
@@ -63,8 +65,6 @@ class Iterator implements Countable, IteratorAggregate
 
 	/**
 	 * Returns the current element
-	 * @deprecated
-	 * @todo Remove in v6
 	 * @return TValue
 	 */
 	public function current(): mixed
@@ -75,8 +75,6 @@ class Iterator implements Countable, IteratorAggregate
 	/**
 	 * Moves the cursor to the previous element
 	 * and returns it
-	 * @deprecated
-	 * @todo Remove in v6
 	 * @return TValue
 	 */
 	public function prev(): mixed
@@ -87,8 +85,6 @@ class Iterator implements Countable, IteratorAggregate
 	/**
 	 * Moves the cursor to the next element
 	 * and returns it
-	 * @deprecated
-	 * @todo Remove in v6
 	 * @return TValue
 	 */
 	public function next(): mixed
@@ -98,8 +94,6 @@ class Iterator implements Countable, IteratorAggregate
 
 	/**
 	 * Moves the cursor to the first element
-	 * @deprecated
-	 * @todo Remove in v6
 	 */
 	public function rewind(): void
 	{
@@ -108,8 +102,6 @@ class Iterator implements Countable, IteratorAggregate
 
 	/**
 	 * Checks if the current element is valid
-	 * @deprecated
-	 * @todo Remove in v6
 	 */
 	public function valid(): bool
 	{
@@ -152,7 +144,7 @@ class Iterator implements Countable, IteratorAggregate
 	 */
 	public function has(mixed $key): bool
 	{
-		return array_key_exists($key, $this->data) === true;
+		return isset($this->data[$key]) === true;
 	}
 
 	/**

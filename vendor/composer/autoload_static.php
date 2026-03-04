@@ -4,24 +4,32 @@
 
 namespace Composer\Autoload;
 
-class ComposerStaticInite83051bd01e12ca5593a1404caded7cb
+class ComposerStaticInit8471cb034a17496d012153f3d989f1b2
 {
     public static $files = array (
         '6e3fae29631ef280660b3cdad06f25a8' => __DIR__ . '/..' . '/symfony/deprecation-contracts/function.php',
         '320cde22f66dd4f5d3fd621d3e88b98f' => __DIR__ . '/..' . '/symfony/polyfill-ctype/bootstrap.php',
         'e69f7f6ee287b969198c3c9d6777bd38' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/bootstrap.php',
-        'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/bootstrap.php',
+        'f598d06aa772fa33d905e87be6398fb1' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/bootstrap.php',
         'f864ae44e8154e5ff6f4eec32f46d37f' => __DIR__ . '/../..' . '/kirby/config/setup.php',
         '87988fc7b1c1f093da22a1a3de972f3a' => __DIR__ . '/../..' . '/kirby/config/helpers.php',
+        '89efb1254ef2d1c5d80096acd12c4098' => __DIR__ . '/..' . '/twig/twig/src/Resources/core.php',
+        'ffecb95d45175fd40f75be8a23b34f90' => __DIR__ . '/..' . '/twig/twig/src/Resources/debug.php',
+        'c7baa00073ee9c61edf148c51917cfb4' => __DIR__ . '/..' . '/twig/twig/src/Resources/escaper.php',
+        'f844ccf1d25df8663951193c3fc307c8' => __DIR__ . '/..' . '/twig/twig/src/Resources/string_loader.php',
     );
 
     public static $prefixLengthsPsr4 = array (
-        'W' =>
+        'W' => 
         array (
             'Whoops\\' => 7,
         ),
-        'S' =>
+        'T' => 
+        array (
+            'Twig\\' => 5,
+        ),
+        'S' => 
         array (
             'Symfony\\Polyfill\\Mbstring\\' => 26,
             'Symfony\\Polyfill\\Intl\\Normalizer\\' => 33,
@@ -29,97 +37,101 @@ class ComposerStaticInite83051bd01e12ca5593a1404caded7cb
             'Symfony\\Polyfill\\Ctype\\' => 23,
             'Symfony\\Component\\Yaml\\' => 23,
         ),
-        'P' =>
+        'P' => 
         array (
             'Psr\\Log\\' => 8,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
-        'L' =>
+        'L' => 
         array (
             'League\\ColorExtractor\\' => 22,
             'Laminas\\Escaper\\' => 16,
         ),
-        'K' =>
+        'K' => 
         array (
             'Kirby\\' => 6,
         ),
-        'C' =>
+        'C' => 
         array (
             'Composer\\Semver\\' => 16,
         ),
-        'B' =>
+        'B' => 
         array (
             'Base32\\' => 7,
         ),
     );
 
     public static $prefixDirsPsr4 = array (
-        'Whoops\\' =>
+        'Whoops\\' => 
         array (
             0 => __DIR__ . '/..' . '/filp/whoops/src/Whoops',
         ),
-        'Symfony\\Polyfill\\Mbstring\\' =>
+        'Twig\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/twig/twig/src',
+        ),
+        'Symfony\\Polyfill\\Mbstring\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-mbstring',
         ),
-        'Symfony\\Polyfill\\Intl\\Normalizer\\' =>
+        'Symfony\\Polyfill\\Intl\\Normalizer\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer',
         ),
-        'Symfony\\Polyfill\\Intl\\Idn\\' =>
+        'Symfony\\Polyfill\\Intl\\Idn\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-intl-idn',
         ),
-        'Symfony\\Polyfill\\Ctype\\' =>
+        'Symfony\\Polyfill\\Ctype\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/polyfill-ctype',
         ),
-        'Symfony\\Component\\Yaml\\' =>
+        'Symfony\\Component\\Yaml\\' => 
         array (
             0 => __DIR__ . '/..' . '/symfony/yaml',
         ),
-        'Psr\\Log\\' =>
+        'Psr\\Log\\' => 
         array (
             0 => __DIR__ . '/..' . '/psr/log/src',
         ),
-        'PHPMailer\\PHPMailer\\' =>
+        'PHPMailer\\PHPMailer\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpmailer/phpmailer/src',
         ),
-        'League\\ColorExtractor\\' =>
+        'League\\ColorExtractor\\' => 
         array (
             0 => __DIR__ . '/..' . '/league/color-extractor/src',
         ),
-        'Laminas\\Escaper\\' =>
+        'Laminas\\Escaper\\' => 
         array (
             0 => __DIR__ . '/..' . '/laminas/laminas-escaper/src',
         ),
-        'Kirby\\' =>
+        'Kirby\\' => 
         array (
             0 => __DIR__ . '/../..' . '/kirby/src',
             1 => __DIR__ . '/..' . '/getkirby/composer-installer/src',
         ),
-        'Composer\\Semver\\' =>
+        'Composer\\Semver\\' => 
         array (
             0 => __DIR__ . '/..' . '/composer/semver/src',
         ),
-        'Base32\\' =>
+        'Base32\\' => 
         array (
             0 => __DIR__ . '/..' . '/christian-riesen/base32/src',
         ),
     );
 
     public static $prefixesPsr0 = array (
-        'c' =>
+        'c' => 
         array (
-            'claviska' =>
+            'claviska' => 
             array (
                 0 => __DIR__ . '/..' . '/claviska/simpleimage/src',
             ),
         ),
-        'M' =>
+        'M' => 
         array (
-            'Michelf' =>
+            'Michelf' => 
             array (
                 0 => __DIR__ . '/..' . '/michelf/php-smartypants',
             ),
@@ -174,7 +186,6 @@ class ComposerStaticInite83051bd01e12ca5593a1404caded7cb
         'Kirby\\Cms\\Collection' => __DIR__ . '/../..' . '/kirby/src/Cms/Collection.php',
         'Kirby\\Cms\\Collections' => __DIR__ . '/../..' . '/kirby/src/Cms/Collections.php',
         'Kirby\\Cms\\Core' => __DIR__ . '/../..' . '/kirby/src/Cms/Core.php',
-        'Kirby\\Cms\\Cors' => __DIR__ . '/../..' . '/kirby/src/Cms/Cors.php',
         'Kirby\\Cms\\Email' => __DIR__ . '/../..' . '/kirby/src/Cms/Email.php',
         'Kirby\\Cms\\Event' => __DIR__ . '/../..' . '/kirby/src/Cms/Event.php',
         'Kirby\\Cms\\Events' => __DIR__ . '/../..' . '/kirby/src/Cms/Events.php',
@@ -211,7 +222,6 @@ class ComposerStaticInite83051bd01e12ca5593a1404caded7cb
         'Kirby\\Cms\\LayoutColumn' => __DIR__ . '/../..' . '/kirby/src/Cms/LayoutColumn.php',
         'Kirby\\Cms\\LayoutColumns' => __DIR__ . '/../..' . '/kirby/src/Cms/LayoutColumns.php',
         'Kirby\\Cms\\Layouts' => __DIR__ . '/../..' . '/kirby/src/Cms/Layouts.php',
-        'Kirby\\Cms\\LazyCollection' => __DIR__ . '/../..' . '/kirby/src/Cms/LazyCollection.php',
         'Kirby\\Cms\\License' => __DIR__ . '/../..' . '/kirby/src/Cms/License.php',
         'Kirby\\Cms\\LicenseStatus' => __DIR__ . '/../..' . '/kirby/src/Cms/LicenseStatus.php',
         'Kirby\\Cms\\LicenseType' => __DIR__ . '/../..' . '/kirby/src/Cms/LicenseType.php',
@@ -324,26 +334,17 @@ class ComposerStaticInite83051bd01e12ca5593a1404caded7cb
         'Kirby\\Form\\Field\\BlocksField' => __DIR__ . '/../..' . '/kirby/src/Form/Field/BlocksField.php',
         'Kirby\\Form\\Field\\EntriesField' => __DIR__ . '/../..' . '/kirby/src/Form/Field/EntriesField.php',
         'Kirby\\Form\\Field\\LayoutField' => __DIR__ . '/../..' . '/kirby/src/Form/Field/LayoutField.php',
-        'Kirby\\Form\\Field\\StatsField' => __DIR__ . '/../..' . '/kirby/src/Form/Field/StatsField.php',
         'Kirby\\Form\\Fields' => __DIR__ . '/../..' . '/kirby/src/Form/Fields.php',
         'Kirby\\Form\\Form' => __DIR__ . '/../..' . '/kirby/src/Form/Form.php',
-        'Kirby\\Form\\Mixin\\After' => __DIR__ . '/../..' . '/kirby/src/Form/Mixin/After.php',
         'Kirby\\Form\\Mixin\\Api' => __DIR__ . '/../..' . '/kirby/src/Form/Mixin/Api.php',
-        'Kirby\\Form\\Mixin\\Autofocus' => __DIR__ . '/../..' . '/kirby/src/Form/Mixin/Autofocus.php',
-        'Kirby\\Form\\Mixin\\Before' => __DIR__ . '/../..' . '/kirby/src/Form/Mixin/Before.php',
         'Kirby\\Form\\Mixin\\EmptyState' => __DIR__ . '/../..' . '/kirby/src/Form/Mixin/EmptyState.php',
-        'Kirby\\Form\\Mixin\\Help' => __DIR__ . '/../..' . '/kirby/src/Form/Mixin/Help.php',
-        'Kirby\\Form\\Mixin\\Icon' => __DIR__ . '/../..' . '/kirby/src/Form/Mixin/Icon.php',
-        'Kirby\\Form\\Mixin\\Label' => __DIR__ . '/../..' . '/kirby/src/Form/Mixin/Label.php',
         'Kirby\\Form\\Mixin\\Max' => __DIR__ . '/../..' . '/kirby/src/Form/Mixin/Max.php',
         'Kirby\\Form\\Mixin\\Min' => __DIR__ . '/../..' . '/kirby/src/Form/Mixin/Min.php',
         'Kirby\\Form\\Mixin\\Model' => __DIR__ . '/../..' . '/kirby/src/Form/Mixin/Model.php',
-        'Kirby\\Form\\Mixin\\Placeholder' => __DIR__ . '/../..' . '/kirby/src/Form/Mixin/Placeholder.php',
         'Kirby\\Form\\Mixin\\Translatable' => __DIR__ . '/../..' . '/kirby/src/Form/Mixin/Translatable.php',
         'Kirby\\Form\\Mixin\\Validation' => __DIR__ . '/../..' . '/kirby/src/Form/Mixin/Validation.php',
         'Kirby\\Form\\Mixin\\Value' => __DIR__ . '/../..' . '/kirby/src/Form/Mixin/Value.php',
         'Kirby\\Form\\Mixin\\When' => __DIR__ . '/../..' . '/kirby/src/Form/Mixin/When.php',
-        'Kirby\\Form\\Mixin\\Width' => __DIR__ . '/../..' . '/kirby/src/Form/Mixin/Width.php',
         'Kirby\\Form\\Validations' => __DIR__ . '/../..' . '/kirby/src/Form/Validations.php',
         'Kirby\\Http\\Cookie' => __DIR__ . '/../..' . '/kirby/src/Http/Cookie.php',
         'Kirby\\Http\\Environment' => __DIR__ . '/../..' . '/kirby/src/Http/Environment.php',
@@ -353,7 +354,6 @@ class ComposerStaticInite83051bd01e12ca5593a1404caded7cb
         'Kirby\\Http\\Params' => __DIR__ . '/../..' . '/kirby/src/Http/Params.php',
         'Kirby\\Http\\Path' => __DIR__ . '/../..' . '/kirby/src/Http/Path.php',
         'Kirby\\Http\\Query' => __DIR__ . '/../..' . '/kirby/src/Http/Query.php',
-        'Kirby\\Http\\Range' => __DIR__ . '/../..' . '/kirby/src/Http/Range.php',
         'Kirby\\Http\\Remote' => __DIR__ . '/../..' . '/kirby/src/Http/Remote.php',
         'Kirby\\Http\\Request' => __DIR__ . '/../..' . '/kirby/src/Http/Request.php',
         'Kirby\\Http\\Request\\Auth' => __DIR__ . '/../..' . '/kirby/src/Http/Request/Auth.php',
@@ -370,16 +370,13 @@ class ComposerStaticInite83051bd01e12ca5593a1404caded7cb
         'Kirby\\Http\\Uri' => __DIR__ . '/../..' . '/kirby/src/Http/Uri.php',
         'Kirby\\Http\\Url' => __DIR__ . '/../..' . '/kirby/src/Http/Url.php',
         'Kirby\\Http\\Visitor' => __DIR__ . '/../..' . '/kirby/src/Http/Visitor.php',
-        'Kirby\\Http\\VolatileHeaders' => __DIR__ . '/../..' . '/kirby/src/Http/VolatileHeaders.php',
         'Kirby\\Image\\Camera' => __DIR__ . '/../..' . '/kirby/src/Image/Camera.php',
         'Kirby\\Image\\Darkroom' => __DIR__ . '/../..' . '/kirby/src/Image/Darkroom.php',
         'Kirby\\Image\\Darkroom\\GdLib' => __DIR__ . '/../..' . '/kirby/src/Image/Darkroom/GdLib.php',
         'Kirby\\Image\\Darkroom\\ImageMagick' => __DIR__ . '/../..' . '/kirby/src/Image/Darkroom/ImageMagick.php',
-        'Kirby\\Image\\Darkroom\\Imagick' => __DIR__ . '/../..' . '/kirby/src/Image/Darkroom/Imagick.php',
         'Kirby\\Image\\Dimensions' => __DIR__ . '/../..' . '/kirby/src/Image/Dimensions.php',
         'Kirby\\Image\\Exif' => __DIR__ . '/../..' . '/kirby/src/Image/Exif.php',
         'Kirby\\Image\\Focus' => __DIR__ . '/../..' . '/kirby/src/Image/Focus.php',
-        'Kirby\\Image\\Gravity' => __DIR__ . '/../..' . '/kirby/src/Image/Gravity.php',
         'Kirby\\Image\\Image' => __DIR__ . '/../..' . '/kirby/src/Image/Image.php',
         'Kirby\\Image\\Location' => __DIR__ . '/../..' . '/kirby/src/Image/Location.php',
         'Kirby\\Image\\QrCode' => __DIR__ . '/../..' . '/kirby/src/Image/QrCode.php',
@@ -390,10 +387,6 @@ class ComposerStaticInite83051bd01e12ca5593a1404caded7cb
         'Kirby\\Option\\OptionsQuery' => __DIR__ . '/../..' . '/kirby/src/Option/OptionsQuery.php',
         'Kirby\\Panel\\Assets' => __DIR__ . '/../..' . '/kirby/src/Panel/Assets.php',
         'Kirby\\Panel\\ChangesDialog' => __DIR__ . '/../..' . '/kirby/src/Panel/ChangesDialog.php',
-        'Kirby\\Panel\\Collector\\FilesCollector' => __DIR__ . '/../..' . '/kirby/src/Panel/Collector/FilesCollector.php',
-        'Kirby\\Panel\\Collector\\ModelsCollector' => __DIR__ . '/../..' . '/kirby/src/Panel/Collector/ModelsCollector.php',
-        'Kirby\\Panel\\Collector\\PagesCollector' => __DIR__ . '/../..' . '/kirby/src/Panel/Collector/PagesCollector.php',
-        'Kirby\\Panel\\Collector\\UsersCollector' => __DIR__ . '/../..' . '/kirby/src/Panel/Collector/UsersCollector.php',
         'Kirby\\Panel\\Controller\\PageTree' => __DIR__ . '/../..' . '/kirby/src/Panel/Controller/PageTree.php',
         'Kirby\\Panel\\Controller\\Search' => __DIR__ . '/../..' . '/kirby/src/Panel/Controller/Search.php',
         'Kirby\\Panel\\Dialog' => __DIR__ . '/../..' . '/kirby/src/Panel/Dialog.php',
@@ -413,7 +406,6 @@ class ComposerStaticInite83051bd01e12ca5593a1404caded7cb
         'Kirby\\Panel\\Lab\\Doc\\Slot' => __DIR__ . '/../..' . '/kirby/src/Panel/Lab/Doc/Slot.php',
         'Kirby\\Panel\\Lab\\Docs' => __DIR__ . '/../..' . '/kirby/src/Panel/Lab/Docs.php',
         'Kirby\\Panel\\Lab\\Example' => __DIR__ . '/../..' . '/kirby/src/Panel/Lab/Example.php',
-        'Kirby\\Panel\\Lab\\Responses' => __DIR__ . '/../..' . '/kirby/src/Panel/Lab/Responses.php',
         'Kirby\\Panel\\Lab\\Snippet' => __DIR__ . '/../..' . '/kirby/src/Panel/Lab/Snippet.php',
         'Kirby\\Panel\\Lab\\Template' => __DIR__ . '/../..' . '/kirby/src/Panel/Lab/Template.php',
         'Kirby\\Panel\\Menu' => __DIR__ . '/../..' . '/kirby/src/Panel/Menu.php',
@@ -445,13 +437,6 @@ class ComposerStaticInite83051bd01e12ca5593a1404caded7cb
         'Kirby\\Panel\\Ui\\FilePreviews\\ImageFilePreview' => __DIR__ . '/../..' . '/kirby/src/Panel/Ui/FilePreviews/ImageFilePreview.php',
         'Kirby\\Panel\\Ui\\FilePreviews\\PdfFilePreview' => __DIR__ . '/../..' . '/kirby/src/Panel/Ui/FilePreviews/PdfFilePreview.php',
         'Kirby\\Panel\\Ui\\FilePreviews\\VideoFilePreview' => __DIR__ . '/../..' . '/kirby/src/Panel/Ui/FilePreviews/VideoFilePreview.php',
-        'Kirby\\Panel\\Ui\\Item\\FileItem' => __DIR__ . '/../..' . '/kirby/src/Panel/Ui/Item/FileItem.php',
-        'Kirby\\Panel\\Ui\\Item\\ModelItem' => __DIR__ . '/../..' . '/kirby/src/Panel/Ui/Item/ModelItem.php',
-        'Kirby\\Panel\\Ui\\Item\\PageItem' => __DIR__ . '/../..' . '/kirby/src/Panel/Ui/Item/PageItem.php',
-        'Kirby\\Panel\\Ui\\Item\\UserItem' => __DIR__ . '/../..' . '/kirby/src/Panel/Ui/Item/UserItem.php',
-        'Kirby\\Panel\\Ui\\Stat' => __DIR__ . '/../..' . '/kirby/src/Panel/Ui/Stat.php',
-        'Kirby\\Panel\\Ui\\Stats' => __DIR__ . '/../..' . '/kirby/src/Panel/Ui/Stats.php',
-        'Kirby\\Panel\\Ui\\Upload' => __DIR__ . '/../..' . '/kirby/src/Panel/Ui/Upload.php',
         'Kirby\\Panel\\User' => __DIR__ . '/../..' . '/kirby/src/Panel/User.php',
         'Kirby\\Panel\\UserTotpDisableDialog' => __DIR__ . '/../..' . '/kirby/src/Panel/UserTotpDisableDialog.php',
         'Kirby\\Panel\\UserTotpEnableDialog' => __DIR__ . '/../..' . '/kirby/src/Panel/UserTotpEnableDialog.php',
@@ -467,35 +452,12 @@ class ComposerStaticInite83051bd01e12ca5593a1404caded7cb
         'Kirby\\Plugin\\License' => __DIR__ . '/../..' . '/kirby/src/Plugin/License.php',
         'Kirby\\Plugin\\LicenseStatus' => __DIR__ . '/../..' . '/kirby/src/Plugin/LicenseStatus.php',
         'Kirby\\Plugin\\Plugin' => __DIR__ . '/../..' . '/kirby/src/Plugin/Plugin.php',
-        'Kirby\\Query\\AST\\ArgumentListNode' => __DIR__ . '/../..' . '/kirby/src/Query/AST/ArgumentListNode.php',
-        'Kirby\\Query\\AST\\ArithmeticNode' => __DIR__ . '/../..' . '/kirby/src/Query/AST/ArithmeticNode.php',
-        'Kirby\\Query\\AST\\ArrayListNode' => __DIR__ . '/../..' . '/kirby/src/Query/AST/ArrayListNode.php',
-        'Kirby\\Query\\AST\\ClosureNode' => __DIR__ . '/../..' . '/kirby/src/Query/AST/ClosureNode.php',
-        'Kirby\\Query\\AST\\CoalesceNode' => __DIR__ . '/../..' . '/kirby/src/Query/AST/CoalesceNode.php',
-        'Kirby\\Query\\AST\\ComparisonNode' => __DIR__ . '/../..' . '/kirby/src/Query/AST/ComparisonNode.php',
-        'Kirby\\Query\\AST\\GlobalFunctionNode' => __DIR__ . '/../..' . '/kirby/src/Query/AST/GlobalFunctionNode.php',
-        'Kirby\\Query\\AST\\LiteralNode' => __DIR__ . '/../..' . '/kirby/src/Query/AST/LiteralNode.php',
-        'Kirby\\Query\\AST\\LogicalNode' => __DIR__ . '/../..' . '/kirby/src/Query/AST/LogicalNode.php',
-        'Kirby\\Query\\AST\\MemberAccessNode' => __DIR__ . '/../..' . '/kirby/src/Query/AST/MemberAccessNode.php',
-        'Kirby\\Query\\AST\\Node' => __DIR__ . '/../..' . '/kirby/src/Query/AST/Node.php',
-        'Kirby\\Query\\AST\\TernaryNode' => __DIR__ . '/../..' . '/kirby/src/Query/AST/TernaryNode.php',
-        'Kirby\\Query\\AST\\VariableNode' => __DIR__ . '/../..' . '/kirby/src/Query/AST/VariableNode.php',
         'Kirby\\Query\\Argument' => __DIR__ . '/../..' . '/kirby/src/Query/Argument.php',
         'Kirby\\Query\\Arguments' => __DIR__ . '/../..' . '/kirby/src/Query/Arguments.php',
         'Kirby\\Query\\Expression' => __DIR__ . '/../..' . '/kirby/src/Query/Expression.php',
-        'Kirby\\Query\\Parser\\Parser' => __DIR__ . '/../..' . '/kirby/src/Query/Parser/Parser.php',
-        'Kirby\\Query\\Parser\\Token' => __DIR__ . '/../..' . '/kirby/src/Query/Parser/Token.php',
-        'Kirby\\Query\\Parser\\TokenType' => __DIR__ . '/../..' . '/kirby/src/Query/Parser/TokenType.php',
-        'Kirby\\Query\\Parser\\Tokenizer' => __DIR__ . '/../..' . '/kirby/src/Query/Parser/Tokenizer.php',
         'Kirby\\Query\\Query' => __DIR__ . '/../..' . '/kirby/src/Query/Query.php',
-        'Kirby\\Query\\Runners\\DefaultRunner' => __DIR__ . '/../..' . '/kirby/src/Query/Runners/DefaultRunner.php',
-        'Kirby\\Query\\Runners\\Runner' => __DIR__ . '/../..' . '/kirby/src/Query/Runners/Runner.php',
-        'Kirby\\Query\\Runners\\Scope' => __DIR__ . '/../..' . '/kirby/src/Query/Runners/Scope.php',
         'Kirby\\Query\\Segment' => __DIR__ . '/../..' . '/kirby/src/Query/Segment.php',
         'Kirby\\Query\\Segments' => __DIR__ . '/../..' . '/kirby/src/Query/Segments.php',
-        'Kirby\\Query\\Visitors\\DefaultVisitor' => __DIR__ . '/../..' . '/kirby/src/Query/Visitors/DefaultVisitor.php',
-        'Kirby\\Query\\Visitors\\Visitor' => __DIR__ . '/../..' . '/kirby/src/Query/Visitors/Visitor.php',
-        'Kirby\\Reflection\\Constructor' => __DIR__ . '/../..' . '/kirby/src/Reflection/Constructor.php',
         'Kirby\\Sane\\DomHandler' => __DIR__ . '/../..' . '/kirby/src/Sane/DomHandler.php',
         'Kirby\\Sane\\Handler' => __DIR__ . '/../..' . '/kirby/src/Sane/Handler.php',
         'Kirby\\Sane\\Html' => __DIR__ . '/../..' . '/kirby/src/Sane/Html.php',
@@ -602,6 +564,259 @@ class ComposerStaticInite83051bd01e12ca5593a1404caded7cb
         'Symfony\\Polyfill\\Intl\\Idn\\Resources\\unidata\\Regex' => __DIR__ . '/..' . '/symfony/polyfill-intl-idn/Resources/unidata/Regex.php',
         'Symfony\\Polyfill\\Intl\\Normalizer\\Normalizer' => __DIR__ . '/..' . '/symfony/polyfill-intl-normalizer/Normalizer.php',
         'Symfony\\Polyfill\\Mbstring\\Mbstring' => __DIR__ . '/..' . '/symfony/polyfill-mbstring/Mbstring.php',
+        'Twig\\AbstractTwigCallable' => __DIR__ . '/..' . '/twig/twig/src/AbstractTwigCallable.php',
+        'Twig\\Attribute\\AsTwigFilter' => __DIR__ . '/..' . '/twig/twig/src/Attribute/AsTwigFilter.php',
+        'Twig\\Attribute\\AsTwigFunction' => __DIR__ . '/..' . '/twig/twig/src/Attribute/AsTwigFunction.php',
+        'Twig\\Attribute\\AsTwigTest' => __DIR__ . '/..' . '/twig/twig/src/Attribute/AsTwigTest.php',
+        'Twig\\Attribute\\FirstClassTwigCallableReady' => __DIR__ . '/..' . '/twig/twig/src/Attribute/FirstClassTwigCallableReady.php',
+        'Twig\\Attribute\\YieldReady' => __DIR__ . '/..' . '/twig/twig/src/Attribute/YieldReady.php',
+        'Twig\\Cache\\CacheInterface' => __DIR__ . '/..' . '/twig/twig/src/Cache/CacheInterface.php',
+        'Twig\\Cache\\ChainCache' => __DIR__ . '/..' . '/twig/twig/src/Cache/ChainCache.php',
+        'Twig\\Cache\\FilesystemCache' => __DIR__ . '/..' . '/twig/twig/src/Cache/FilesystemCache.php',
+        'Twig\\Cache\\NullCache' => __DIR__ . '/..' . '/twig/twig/src/Cache/NullCache.php',
+        'Twig\\Cache\\ReadOnlyFilesystemCache' => __DIR__ . '/..' . '/twig/twig/src/Cache/ReadOnlyFilesystemCache.php',
+        'Twig\\Cache\\RemovableCacheInterface' => __DIR__ . '/..' . '/twig/twig/src/Cache/RemovableCacheInterface.php',
+        'Twig\\Compiler' => __DIR__ . '/..' . '/twig/twig/src/Compiler.php',
+        'Twig\\DeprecatedCallableInfo' => __DIR__ . '/..' . '/twig/twig/src/DeprecatedCallableInfo.php',
+        'Twig\\Environment' => __DIR__ . '/..' . '/twig/twig/src/Environment.php',
+        'Twig\\Error\\Error' => __DIR__ . '/..' . '/twig/twig/src/Error/Error.php',
+        'Twig\\Error\\LoaderError' => __DIR__ . '/..' . '/twig/twig/src/Error/LoaderError.php',
+        'Twig\\Error\\RuntimeError' => __DIR__ . '/..' . '/twig/twig/src/Error/RuntimeError.php',
+        'Twig\\Error\\SyntaxError' => __DIR__ . '/..' . '/twig/twig/src/Error/SyntaxError.php',
+        'Twig\\ExpressionParser' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser.php',
+        'Twig\\ExpressionParser\\AbstractExpressionParser' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/AbstractExpressionParser.php',
+        'Twig\\ExpressionParser\\ExpressionParserDescriptionInterface' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/ExpressionParserDescriptionInterface.php',
+        'Twig\\ExpressionParser\\ExpressionParserInterface' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/ExpressionParserInterface.php',
+        'Twig\\ExpressionParser\\ExpressionParserType' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/ExpressionParserType.php',
+        'Twig\\ExpressionParser\\ExpressionParsers' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/ExpressionParsers.php',
+        'Twig\\ExpressionParser\\InfixAssociativity' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/InfixAssociativity.php',
+        'Twig\\ExpressionParser\\InfixExpressionParserInterface' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/InfixExpressionParserInterface.php',
+        'Twig\\ExpressionParser\\Infix\\ArgumentsTrait' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/Infix/ArgumentsTrait.php',
+        'Twig\\ExpressionParser\\Infix\\ArrowExpressionParser' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/Infix/ArrowExpressionParser.php',
+        'Twig\\ExpressionParser\\Infix\\BinaryOperatorExpressionParser' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/Infix/BinaryOperatorExpressionParser.php',
+        'Twig\\ExpressionParser\\Infix\\ConditionalTernaryExpressionParser' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/Infix/ConditionalTernaryExpressionParser.php',
+        'Twig\\ExpressionParser\\Infix\\DotExpressionParser' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/Infix/DotExpressionParser.php',
+        'Twig\\ExpressionParser\\Infix\\FilterExpressionParser' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/Infix/FilterExpressionParser.php',
+        'Twig\\ExpressionParser\\Infix\\FunctionExpressionParser' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/Infix/FunctionExpressionParser.php',
+        'Twig\\ExpressionParser\\Infix\\IsExpressionParser' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/Infix/IsExpressionParser.php',
+        'Twig\\ExpressionParser\\Infix\\IsNotExpressionParser' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/Infix/IsNotExpressionParser.php',
+        'Twig\\ExpressionParser\\Infix\\SquareBracketExpressionParser' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/Infix/SquareBracketExpressionParser.php',
+        'Twig\\ExpressionParser\\PrecedenceChange' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/PrecedenceChange.php',
+        'Twig\\ExpressionParser\\PrefixExpressionParserInterface' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/PrefixExpressionParserInterface.php',
+        'Twig\\ExpressionParser\\Prefix\\GroupingExpressionParser' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/Prefix/GroupingExpressionParser.php',
+        'Twig\\ExpressionParser\\Prefix\\LiteralExpressionParser' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/Prefix/LiteralExpressionParser.php',
+        'Twig\\ExpressionParser\\Prefix\\UnaryOperatorExpressionParser' => __DIR__ . '/..' . '/twig/twig/src/ExpressionParser/Prefix/UnaryOperatorExpressionParser.php',
+        'Twig\\ExtensionSet' => __DIR__ . '/..' . '/twig/twig/src/ExtensionSet.php',
+        'Twig\\Extension\\AbstractExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/AbstractExtension.php',
+        'Twig\\Extension\\AttributeExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/AttributeExtension.php',
+        'Twig\\Extension\\CoreExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/CoreExtension.php',
+        'Twig\\Extension\\DebugExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/DebugExtension.php',
+        'Twig\\Extension\\EscaperExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/EscaperExtension.php',
+        'Twig\\Extension\\ExtensionInterface' => __DIR__ . '/..' . '/twig/twig/src/Extension/ExtensionInterface.php',
+        'Twig\\Extension\\GlobalsInterface' => __DIR__ . '/..' . '/twig/twig/src/Extension/GlobalsInterface.php',
+        'Twig\\Extension\\LastModifiedExtensionInterface' => __DIR__ . '/..' . '/twig/twig/src/Extension/LastModifiedExtensionInterface.php',
+        'Twig\\Extension\\OptimizerExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/OptimizerExtension.php',
+        'Twig\\Extension\\ProfilerExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/ProfilerExtension.php',
+        'Twig\\Extension\\RuntimeExtensionInterface' => __DIR__ . '/..' . '/twig/twig/src/Extension/RuntimeExtensionInterface.php',
+        'Twig\\Extension\\SandboxExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/SandboxExtension.php',
+        'Twig\\Extension\\StagingExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/StagingExtension.php',
+        'Twig\\Extension\\StringLoaderExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/StringLoaderExtension.php',
+        'Twig\\Extension\\YieldNotReadyExtension' => __DIR__ . '/..' . '/twig/twig/src/Extension/YieldNotReadyExtension.php',
+        'Twig\\FileExtensionEscapingStrategy' => __DIR__ . '/..' . '/twig/twig/src/FileExtensionEscapingStrategy.php',
+        'Twig\\Lexer' => __DIR__ . '/..' . '/twig/twig/src/Lexer.php',
+        'Twig\\Loader\\ArrayLoader' => __DIR__ . '/..' . '/twig/twig/src/Loader/ArrayLoader.php',
+        'Twig\\Loader\\ChainLoader' => __DIR__ . '/..' . '/twig/twig/src/Loader/ChainLoader.php',
+        'Twig\\Loader\\FilesystemLoader' => __DIR__ . '/..' . '/twig/twig/src/Loader/FilesystemLoader.php',
+        'Twig\\Loader\\LoaderInterface' => __DIR__ . '/..' . '/twig/twig/src/Loader/LoaderInterface.php',
+        'Twig\\Markup' => __DIR__ . '/..' . '/twig/twig/src/Markup.php',
+        'Twig\\NodeTraverser' => __DIR__ . '/..' . '/twig/twig/src/NodeTraverser.php',
+        'Twig\\NodeVisitor\\AbstractNodeVisitor' => __DIR__ . '/..' . '/twig/twig/src/NodeVisitor/AbstractNodeVisitor.php',
+        'Twig\\NodeVisitor\\EscaperNodeVisitor' => __DIR__ . '/..' . '/twig/twig/src/NodeVisitor/EscaperNodeVisitor.php',
+        'Twig\\NodeVisitor\\NodeVisitorInterface' => __DIR__ . '/..' . '/twig/twig/src/NodeVisitor/NodeVisitorInterface.php',
+        'Twig\\NodeVisitor\\OptimizerNodeVisitor' => __DIR__ . '/..' . '/twig/twig/src/NodeVisitor/OptimizerNodeVisitor.php',
+        'Twig\\NodeVisitor\\SafeAnalysisNodeVisitor' => __DIR__ . '/..' . '/twig/twig/src/NodeVisitor/SafeAnalysisNodeVisitor.php',
+        'Twig\\NodeVisitor\\SandboxNodeVisitor' => __DIR__ . '/..' . '/twig/twig/src/NodeVisitor/SandboxNodeVisitor.php',
+        'Twig\\NodeVisitor\\YieldNotReadyNodeVisitor' => __DIR__ . '/..' . '/twig/twig/src/NodeVisitor/YieldNotReadyNodeVisitor.php',
+        'Twig\\Node\\AutoEscapeNode' => __DIR__ . '/..' . '/twig/twig/src/Node/AutoEscapeNode.php',
+        'Twig\\Node\\BlockNode' => __DIR__ . '/..' . '/twig/twig/src/Node/BlockNode.php',
+        'Twig\\Node\\BlockReferenceNode' => __DIR__ . '/..' . '/twig/twig/src/Node/BlockReferenceNode.php',
+        'Twig\\Node\\BodyNode' => __DIR__ . '/..' . '/twig/twig/src/Node/BodyNode.php',
+        'Twig\\Node\\CaptureNode' => __DIR__ . '/..' . '/twig/twig/src/Node/CaptureNode.php',
+        'Twig\\Node\\CheckSecurityCallNode' => __DIR__ . '/..' . '/twig/twig/src/Node/CheckSecurityCallNode.php',
+        'Twig\\Node\\CheckSecurityNode' => __DIR__ . '/..' . '/twig/twig/src/Node/CheckSecurityNode.php',
+        'Twig\\Node\\CheckToStringNode' => __DIR__ . '/..' . '/twig/twig/src/Node/CheckToStringNode.php',
+        'Twig\\Node\\DeprecatedNode' => __DIR__ . '/..' . '/twig/twig/src/Node/DeprecatedNode.php',
+        'Twig\\Node\\DoNode' => __DIR__ . '/..' . '/twig/twig/src/Node/DoNode.php',
+        'Twig\\Node\\EmbedNode' => __DIR__ . '/..' . '/twig/twig/src/Node/EmbedNode.php',
+        'Twig\\Node\\EmptyNode' => __DIR__ . '/..' . '/twig/twig/src/Node/EmptyNode.php',
+        'Twig\\Node\\Expression\\AbstractExpression' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/AbstractExpression.php',
+        'Twig\\Node\\Expression\\ArrayExpression' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/ArrayExpression.php',
+        'Twig\\Node\\Expression\\ArrowFunctionExpression' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/ArrowFunctionExpression.php',
+        'Twig\\Node\\Expression\\AssignNameExpression' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/AssignNameExpression.php',
+        'Twig\\Node\\Expression\\Binary\\AbstractBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/AbstractBinary.php',
+        'Twig\\Node\\Expression\\Binary\\AddBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/AddBinary.php',
+        'Twig\\Node\\Expression\\Binary\\AndBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/AndBinary.php',
+        'Twig\\Node\\Expression\\Binary\\BinaryInterface' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/BinaryInterface.php',
+        'Twig\\Node\\Expression\\Binary\\BitwiseAndBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/BitwiseAndBinary.php',
+        'Twig\\Node\\Expression\\Binary\\BitwiseOrBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/BitwiseOrBinary.php',
+        'Twig\\Node\\Expression\\Binary\\BitwiseXorBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/BitwiseXorBinary.php',
+        'Twig\\Node\\Expression\\Binary\\ConcatBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/ConcatBinary.php',
+        'Twig\\Node\\Expression\\Binary\\DivBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/DivBinary.php',
+        'Twig\\Node\\Expression\\Binary\\ElvisBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/ElvisBinary.php',
+        'Twig\\Node\\Expression\\Binary\\EndsWithBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/EndsWithBinary.php',
+        'Twig\\Node\\Expression\\Binary\\EqualBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/EqualBinary.php',
+        'Twig\\Node\\Expression\\Binary\\FloorDivBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/FloorDivBinary.php',
+        'Twig\\Node\\Expression\\Binary\\GreaterBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/GreaterBinary.php',
+        'Twig\\Node\\Expression\\Binary\\GreaterEqualBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/GreaterEqualBinary.php',
+        'Twig\\Node\\Expression\\Binary\\HasEveryBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/HasEveryBinary.php',
+        'Twig\\Node\\Expression\\Binary\\HasSomeBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/HasSomeBinary.php',
+        'Twig\\Node\\Expression\\Binary\\InBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/InBinary.php',
+        'Twig\\Node\\Expression\\Binary\\LessBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/LessBinary.php',
+        'Twig\\Node\\Expression\\Binary\\LessEqualBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/LessEqualBinary.php',
+        'Twig\\Node\\Expression\\Binary\\MatchesBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/MatchesBinary.php',
+        'Twig\\Node\\Expression\\Binary\\ModBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/ModBinary.php',
+        'Twig\\Node\\Expression\\Binary\\MulBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/MulBinary.php',
+        'Twig\\Node\\Expression\\Binary\\NotEqualBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/NotEqualBinary.php',
+        'Twig\\Node\\Expression\\Binary\\NotInBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/NotInBinary.php',
+        'Twig\\Node\\Expression\\Binary\\NullCoalesceBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/NullCoalesceBinary.php',
+        'Twig\\Node\\Expression\\Binary\\OrBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/OrBinary.php',
+        'Twig\\Node\\Expression\\Binary\\PowerBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/PowerBinary.php',
+        'Twig\\Node\\Expression\\Binary\\RangeBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/RangeBinary.php',
+        'Twig\\Node\\Expression\\Binary\\SpaceshipBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/SpaceshipBinary.php',
+        'Twig\\Node\\Expression\\Binary\\StartsWithBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/StartsWithBinary.php',
+        'Twig\\Node\\Expression\\Binary\\SubBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/SubBinary.php',
+        'Twig\\Node\\Expression\\Binary\\XorBinary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Binary/XorBinary.php',
+        'Twig\\Node\\Expression\\BlockReferenceExpression' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/BlockReferenceExpression.php',
+        'Twig\\Node\\Expression\\CallExpression' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/CallExpression.php',
+        'Twig\\Node\\Expression\\ConditionalExpression' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/ConditionalExpression.php',
+        'Twig\\Node\\Expression\\ConstantExpression' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/ConstantExpression.php',
+        'Twig\\Node\\Expression\\FilterExpression' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/FilterExpression.php',
+        'Twig\\Node\\Expression\\Filter\\DefaultFilter' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Filter/DefaultFilter.php',
+        'Twig\\Node\\Expression\\Filter\\RawFilter' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Filter/RawFilter.php',
+        'Twig\\Node\\Expression\\FunctionExpression' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/FunctionExpression.php',
+        'Twig\\Node\\Expression\\FunctionNode\\EnumCasesFunction' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/FunctionNode/EnumCasesFunction.php',
+        'Twig\\Node\\Expression\\FunctionNode\\EnumFunction' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/FunctionNode/EnumFunction.php',
+        'Twig\\Node\\Expression\\GetAttrExpression' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/GetAttrExpression.php',
+        'Twig\\Node\\Expression\\InlinePrint' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/InlinePrint.php',
+        'Twig\\Node\\Expression\\ListExpression' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/ListExpression.php',
+        'Twig\\Node\\Expression\\MacroReferenceExpression' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/MacroReferenceExpression.php',
+        'Twig\\Node\\Expression\\MethodCallExpression' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/MethodCallExpression.php',
+        'Twig\\Node\\Expression\\NameExpression' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/NameExpression.php',
+        'Twig\\Node\\Expression\\NullCoalesceExpression' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/NullCoalesceExpression.php',
+        'Twig\\Node\\Expression\\OperatorEscapeInterface' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/OperatorEscapeInterface.php',
+        'Twig\\Node\\Expression\\ParentExpression' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/ParentExpression.php',
+        'Twig\\Node\\Expression\\ReturnArrayInterface' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/ReturnArrayInterface.php',
+        'Twig\\Node\\Expression\\ReturnBoolInterface' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/ReturnBoolInterface.php',
+        'Twig\\Node\\Expression\\ReturnNumberInterface' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/ReturnNumberInterface.php',
+        'Twig\\Node\\Expression\\ReturnPrimitiveTypeInterface' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/ReturnPrimitiveTypeInterface.php',
+        'Twig\\Node\\Expression\\ReturnStringInterface' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/ReturnStringInterface.php',
+        'Twig\\Node\\Expression\\SupportDefinedTestDeprecationTrait' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/SupportDefinedTestDeprecationTrait.php',
+        'Twig\\Node\\Expression\\SupportDefinedTestInterface' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/SupportDefinedTestInterface.php',
+        'Twig\\Node\\Expression\\SupportDefinedTestTrait' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/SupportDefinedTestTrait.php',
+        'Twig\\Node\\Expression\\TempNameExpression' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/TempNameExpression.php',
+        'Twig\\Node\\Expression\\Ternary\\ConditionalTernary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Ternary/ConditionalTernary.php',
+        'Twig\\Node\\Expression\\TestExpression' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/TestExpression.php',
+        'Twig\\Node\\Expression\\Test\\ConstantTest' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Test/ConstantTest.php',
+        'Twig\\Node\\Expression\\Test\\DefinedTest' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Test/DefinedTest.php',
+        'Twig\\Node\\Expression\\Test\\DivisiblebyTest' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Test/DivisiblebyTest.php',
+        'Twig\\Node\\Expression\\Test\\EvenTest' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Test/EvenTest.php',
+        'Twig\\Node\\Expression\\Test\\NullTest' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Test/NullTest.php',
+        'Twig\\Node\\Expression\\Test\\OddTest' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Test/OddTest.php',
+        'Twig\\Node\\Expression\\Test\\SameasTest' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Test/SameasTest.php',
+        'Twig\\Node\\Expression\\Test\\TrueTest' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Test/TrueTest.php',
+        'Twig\\Node\\Expression\\Unary\\AbstractUnary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Unary/AbstractUnary.php',
+        'Twig\\Node\\Expression\\Unary\\NegUnary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Unary/NegUnary.php',
+        'Twig\\Node\\Expression\\Unary\\NotUnary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Unary/NotUnary.php',
+        'Twig\\Node\\Expression\\Unary\\PosUnary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Unary/PosUnary.php',
+        'Twig\\Node\\Expression\\Unary\\SpreadUnary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Unary/SpreadUnary.php',
+        'Twig\\Node\\Expression\\Unary\\StringCastUnary' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Unary/StringCastUnary.php',
+        'Twig\\Node\\Expression\\Unary\\UnaryInterface' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Unary/UnaryInterface.php',
+        'Twig\\Node\\Expression\\Variable\\AssignContextVariable' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Variable/AssignContextVariable.php',
+        'Twig\\Node\\Expression\\Variable\\AssignTemplateVariable' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Variable/AssignTemplateVariable.php',
+        'Twig\\Node\\Expression\\Variable\\ContextVariable' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Variable/ContextVariable.php',
+        'Twig\\Node\\Expression\\Variable\\LocalVariable' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Variable/LocalVariable.php',
+        'Twig\\Node\\Expression\\Variable\\TemplateVariable' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/Variable/TemplateVariable.php',
+        'Twig\\Node\\Expression\\VariadicExpression' => __DIR__ . '/..' . '/twig/twig/src/Node/Expression/VariadicExpression.php',
+        'Twig\\Node\\FlushNode' => __DIR__ . '/..' . '/twig/twig/src/Node/FlushNode.php',
+        'Twig\\Node\\ForElseNode' => __DIR__ . '/..' . '/twig/twig/src/Node/ForElseNode.php',
+        'Twig\\Node\\ForLoopNode' => __DIR__ . '/..' . '/twig/twig/src/Node/ForLoopNode.php',
+        'Twig\\Node\\ForNode' => __DIR__ . '/..' . '/twig/twig/src/Node/ForNode.php',
+        'Twig\\Node\\IfNode' => __DIR__ . '/..' . '/twig/twig/src/Node/IfNode.php',
+        'Twig\\Node\\ImportNode' => __DIR__ . '/..' . '/twig/twig/src/Node/ImportNode.php',
+        'Twig\\Node\\IncludeNode' => __DIR__ . '/..' . '/twig/twig/src/Node/IncludeNode.php',
+        'Twig\\Node\\MacroNode' => __DIR__ . '/..' . '/twig/twig/src/Node/MacroNode.php',
+        'Twig\\Node\\ModuleNode' => __DIR__ . '/..' . '/twig/twig/src/Node/ModuleNode.php',
+        'Twig\\Node\\NameDeprecation' => __DIR__ . '/..' . '/twig/twig/src/Node/NameDeprecation.php',
+        'Twig\\Node\\Node' => __DIR__ . '/..' . '/twig/twig/src/Node/Node.php',
+        'Twig\\Node\\NodeCaptureInterface' => __DIR__ . '/..' . '/twig/twig/src/Node/NodeCaptureInterface.php',
+        'Twig\\Node\\NodeOutputInterface' => __DIR__ . '/..' . '/twig/twig/src/Node/NodeOutputInterface.php',
+        'Twig\\Node\\Nodes' => __DIR__ . '/..' . '/twig/twig/src/Node/Nodes.php',
+        'Twig\\Node\\PrintNode' => __DIR__ . '/..' . '/twig/twig/src/Node/PrintNode.php',
+        'Twig\\Node\\SandboxNode' => __DIR__ . '/..' . '/twig/twig/src/Node/SandboxNode.php',
+        'Twig\\Node\\SetNode' => __DIR__ . '/..' . '/twig/twig/src/Node/SetNode.php',
+        'Twig\\Node\\TextNode' => __DIR__ . '/..' . '/twig/twig/src/Node/TextNode.php',
+        'Twig\\Node\\TypesNode' => __DIR__ . '/..' . '/twig/twig/src/Node/TypesNode.php',
+        'Twig\\Node\\WithNode' => __DIR__ . '/..' . '/twig/twig/src/Node/WithNode.php',
+        'Twig\\OperatorPrecedenceChange' => __DIR__ . '/..' . '/twig/twig/src/OperatorPrecedenceChange.php',
+        'Twig\\Parser' => __DIR__ . '/..' . '/twig/twig/src/Parser.php',
+        'Twig\\Profiler\\Dumper\\BaseDumper' => __DIR__ . '/..' . '/twig/twig/src/Profiler/Dumper/BaseDumper.php',
+        'Twig\\Profiler\\Dumper\\BlackfireDumper' => __DIR__ . '/..' . '/twig/twig/src/Profiler/Dumper/BlackfireDumper.php',
+        'Twig\\Profiler\\Dumper\\HtmlDumper' => __DIR__ . '/..' . '/twig/twig/src/Profiler/Dumper/HtmlDumper.php',
+        'Twig\\Profiler\\Dumper\\TextDumper' => __DIR__ . '/..' . '/twig/twig/src/Profiler/Dumper/TextDumper.php',
+        'Twig\\Profiler\\NodeVisitor\\ProfilerNodeVisitor' => __DIR__ . '/..' . '/twig/twig/src/Profiler/NodeVisitor/ProfilerNodeVisitor.php',
+        'Twig\\Profiler\\Node\\EnterProfileNode' => __DIR__ . '/..' . '/twig/twig/src/Profiler/Node/EnterProfileNode.php',
+        'Twig\\Profiler\\Node\\LeaveProfileNode' => __DIR__ . '/..' . '/twig/twig/src/Profiler/Node/LeaveProfileNode.php',
+        'Twig\\Profiler\\Profile' => __DIR__ . '/..' . '/twig/twig/src/Profiler/Profile.php',
+        'Twig\\RuntimeLoader\\ContainerRuntimeLoader' => __DIR__ . '/..' . '/twig/twig/src/RuntimeLoader/ContainerRuntimeLoader.php',
+        'Twig\\RuntimeLoader\\FactoryRuntimeLoader' => __DIR__ . '/..' . '/twig/twig/src/RuntimeLoader/FactoryRuntimeLoader.php',
+        'Twig\\RuntimeLoader\\RuntimeLoaderInterface' => __DIR__ . '/..' . '/twig/twig/src/RuntimeLoader/RuntimeLoaderInterface.php',
+        'Twig\\Runtime\\EscaperRuntime' => __DIR__ . '/..' . '/twig/twig/src/Runtime/EscaperRuntime.php',
+        'Twig\\Sandbox\\SecurityError' => __DIR__ . '/..' . '/twig/twig/src/Sandbox/SecurityError.php',
+        'Twig\\Sandbox\\SecurityNotAllowedFilterError' => __DIR__ . '/..' . '/twig/twig/src/Sandbox/SecurityNotAllowedFilterError.php',
+        'Twig\\Sandbox\\SecurityNotAllowedFunctionError' => __DIR__ . '/..' . '/twig/twig/src/Sandbox/SecurityNotAllowedFunctionError.php',
+        'Twig\\Sandbox\\SecurityNotAllowedMethodError' => __DIR__ . '/..' . '/twig/twig/src/Sandbox/SecurityNotAllowedMethodError.php',
+        'Twig\\Sandbox\\SecurityNotAllowedPropertyError' => __DIR__ . '/..' . '/twig/twig/src/Sandbox/SecurityNotAllowedPropertyError.php',
+        'Twig\\Sandbox\\SecurityNotAllowedTagError' => __DIR__ . '/..' . '/twig/twig/src/Sandbox/SecurityNotAllowedTagError.php',
+        'Twig\\Sandbox\\SecurityPolicy' => __DIR__ . '/..' . '/twig/twig/src/Sandbox/SecurityPolicy.php',
+        'Twig\\Sandbox\\SecurityPolicyInterface' => __DIR__ . '/..' . '/twig/twig/src/Sandbox/SecurityPolicyInterface.php',
+        'Twig\\Sandbox\\SourcePolicyInterface' => __DIR__ . '/..' . '/twig/twig/src/Sandbox/SourcePolicyInterface.php',
+        'Twig\\Source' => __DIR__ . '/..' . '/twig/twig/src/Source.php',
+        'Twig\\Template' => __DIR__ . '/..' . '/twig/twig/src/Template.php',
+        'Twig\\TemplateWrapper' => __DIR__ . '/..' . '/twig/twig/src/TemplateWrapper.php',
+        'Twig\\Test\\IntegrationTestCase' => __DIR__ . '/..' . '/twig/twig/src/Test/IntegrationTestCase.php',
+        'Twig\\Test\\NodeTestCase' => __DIR__ . '/..' . '/twig/twig/src/Test/NodeTestCase.php',
+        'Twig\\Token' => __DIR__ . '/..' . '/twig/twig/src/Token.php',
+        'Twig\\TokenParser\\AbstractTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/AbstractTokenParser.php',
+        'Twig\\TokenParser\\ApplyTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/ApplyTokenParser.php',
+        'Twig\\TokenParser\\AutoEscapeTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/AutoEscapeTokenParser.php',
+        'Twig\\TokenParser\\BlockTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/BlockTokenParser.php',
+        'Twig\\TokenParser\\DeprecatedTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/DeprecatedTokenParser.php',
+        'Twig\\TokenParser\\DoTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/DoTokenParser.php',
+        'Twig\\TokenParser\\EmbedTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/EmbedTokenParser.php',
+        'Twig\\TokenParser\\ExtendsTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/ExtendsTokenParser.php',
+        'Twig\\TokenParser\\FlushTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/FlushTokenParser.php',
+        'Twig\\TokenParser\\ForTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/ForTokenParser.php',
+        'Twig\\TokenParser\\FromTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/FromTokenParser.php',
+        'Twig\\TokenParser\\GuardTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/GuardTokenParser.php',
+        'Twig\\TokenParser\\IfTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/IfTokenParser.php',
+        'Twig\\TokenParser\\ImportTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/ImportTokenParser.php',
+        'Twig\\TokenParser\\IncludeTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/IncludeTokenParser.php',
+        'Twig\\TokenParser\\MacroTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/MacroTokenParser.php',
+        'Twig\\TokenParser\\SandboxTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/SandboxTokenParser.php',
+        'Twig\\TokenParser\\SetTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/SetTokenParser.php',
+        'Twig\\TokenParser\\TokenParserInterface' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/TokenParserInterface.php',
+        'Twig\\TokenParser\\TypesTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/TypesTokenParser.php',
+        'Twig\\TokenParser\\UseTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/UseTokenParser.php',
+        'Twig\\TokenParser\\WithTokenParser' => __DIR__ . '/..' . '/twig/twig/src/TokenParser/WithTokenParser.php',
+        'Twig\\TokenStream' => __DIR__ . '/..' . '/twig/twig/src/TokenStream.php',
+        'Twig\\TwigCallableInterface' => __DIR__ . '/..' . '/twig/twig/src/TwigCallableInterface.php',
+        'Twig\\TwigFilter' => __DIR__ . '/..' . '/twig/twig/src/TwigFilter.php',
+        'Twig\\TwigFunction' => __DIR__ . '/..' . '/twig/twig/src/TwigFunction.php',
+        'Twig\\TwigTest' => __DIR__ . '/..' . '/twig/twig/src/TwigTest.php',
+        'Twig\\Util\\CallableArgumentsExtractor' => __DIR__ . '/..' . '/twig/twig/src/Util/CallableArgumentsExtractor.php',
+        'Twig\\Util\\DeprecationCollector' => __DIR__ . '/..' . '/twig/twig/src/Util/DeprecationCollector.php',
+        'Twig\\Util\\ReflectionCallable' => __DIR__ . '/..' . '/twig/twig/src/Util/ReflectionCallable.php',
+        'Twig\\Util\\TemplateDirIterator' => __DIR__ . '/..' . '/twig/twig/src/Util/TemplateDirIterator.php',
         'Whoops\\Exception\\ErrorException' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Exception/ErrorException.php',
         'Whoops\\Exception\\Formatter' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Exception/Formatter.php',
         'Whoops\\Exception\\Frame' => __DIR__ . '/..' . '/filp/whoops/src/Whoops/Exception/Frame.php',
@@ -629,10 +844,10 @@ class ComposerStaticInite83051bd01e12ca5593a1404caded7cb
     public static function getInitializer(ClassLoader $loader)
     {
         return \Closure::bind(function () use ($loader) {
-            $loader->prefixLengthsPsr4 = ComposerStaticInite83051bd01e12ca5593a1404caded7cb::$prefixLengthsPsr4;
-            $loader->prefixDirsPsr4 = ComposerStaticInite83051bd01e12ca5593a1404caded7cb::$prefixDirsPsr4;
-            $loader->prefixesPsr0 = ComposerStaticInite83051bd01e12ca5593a1404caded7cb::$prefixesPsr0;
-            $loader->classMap = ComposerStaticInite83051bd01e12ca5593a1404caded7cb::$classMap;
+            $loader->prefixLengthsPsr4 = ComposerStaticInit8471cb034a17496d012153f3d989f1b2::$prefixLengthsPsr4;
+            $loader->prefixDirsPsr4 = ComposerStaticInit8471cb034a17496d012153f3d989f1b2::$prefixDirsPsr4;
+            $loader->prefixesPsr0 = ComposerStaticInit8471cb034a17496d012153f3d989f1b2::$prefixesPsr0;
+            $loader->classMap = ComposerStaticInit8471cb034a17496d012153f3d989f1b2::$classMap;
 
         }, null, ClassLoader::class);
     }

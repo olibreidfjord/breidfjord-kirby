@@ -4,9 +4,6 @@ namespace Kirby\Form\Mixin;
 
 trait Min
 {
-	/**
-	 * Sets the minimum number of required items in the field
-	 */
 	protected int|null $min;
 
 	public function min(): int|null

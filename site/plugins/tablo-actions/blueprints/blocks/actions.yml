@@ -1,0 +1,6 @@
+name: Actions
+icon: lucide-zap
+preview: actions
+wysiwyg: false
+fields:
+  actions: fields/actions

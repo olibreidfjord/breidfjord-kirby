@@ -1,0 +1,49 @@
+{% extends 'default.twig' %}
+
+{% block pagetitle %}
+
+  {%- if author %}{{ author.name.or(author.username) }}{{ option('tablo.theme.titleSeparator') }}{% endif -%}
+  {%- if tag %}{{ tag }}{{ option('tablo.theme.titleSeparator') }}{% endif -%}
+  {{- parent() -}}
+
+{% endblock %}
+
+{% block main %}
+
+  <section class="px-4 py-16 md:px-8">
+
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+      <div class="xl:col-start-2 xl:col-span-2">
+
+        {% include '@snippets/blocks.twig' %}
+
+      </div>
+    </div>
+
+  </section>
+
+  {%~ with { tags: page.tags } %}
+  {%~ if tags or author %}
+  <nav class="px-4 py-16 md:px-8">
+
+    <ul class="-mx-2 flex flex-row flex-wrap items-center gap-2 text-4xl">
+      <li><a class="block px-2 py-1 -my-1 hover:underline {{ tag or author ? 'text-current/40 hover:text-current' : '' }}" href="{{ page.url }}">{{ t('tablo.posts.all') }}</a></li>
+      {%~ if author %}
+      <li><a class="block px-2 py-1 -my-1 hover:underline" href="{{ page.url({ params: { author: author.id } }) }}">{{ author.name.or(author.username) }}</a></li>
+      {%~ endif %}
+      {%~ for curr in tags %}
+      <li><a class="block px-2 py-1 -my-1 hover:underline {{ curr != tag ? 'text-current/40 hover:text-current' : '' }}" href="{{ page.url({ params: { tag: curr } }) }}">{{ curr }}</a></li>
+      {%~ endfor %}
+    </ul>
+
+  </nav>
+  {%~ endif %}
+  {%~ endwith %}
+
+  <section class="px-4 py-16 md:px-8">
+
+    {% include '@snippets/blocks/posts.twig' %}
+
+  </section>
+
+{% endblock main %}

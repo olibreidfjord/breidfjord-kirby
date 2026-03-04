@@ -1,0 +1,68 @@
+{% extends 'default.twig' %}
+
+{% block main %}
+
+  <section class="px-4 py-16 md:px-8 space-y-10">
+
+    {% include '@snippets/title.twig' %}
+
+    {%~ if page.date.isNotEmpty %}
+    <aside>
+      <div class="flex flex-row flex-wrap gap-x-8 text-neutral-500 text-2xl max-w-copy">
+        <a class="flex flex-row gap-2" href="{{ page.url }}"><span class="flex flex-row1 my-0.5">
+          {%- if page.pinned.toBool -%}
+          {%- include '@snippets/icon-pin.twig' -%}
+          {%- else -%}
+          {%- include '@snippets/icon-calendar.twig' -%}
+          {%- endif -%}
+        </span><span class="my-0.5 underline">{{ page.date.toDate(option('tablo.posts.dateFormat')) }}</span></a>
+        {%~ if page.author.isNotEmpty %}
+        {%~ with { author: page.author.toUser } %}
+        {%~ if author %}
+        <a class="flex flex-row gap-2" href="{{ page.parent.url({ params: { author: author.id } }) }}"><span class="flex flex-row1 my-0.5">
+          {%- include '@snippets/icon-pen.twig' -%}
+        </span><span class="my-0.5 underline">{{ author.name.or(author.username) }}</span></a>
+        {%~ endif %}
+        {%~ endwith %}
+        {%~ endif %}
+        {%~ if page.tags.isNotEmpty %}
+        <div class="flex flex-row items-start gap-2">
+          <div class="flex flex-row my-0.5">
+            {%- include '@snippets/icon-tag.twig' -%}
+          </div>
+          <div class="my-0.5">
+            {%- for tag in page.tags.split -%}
+            {%- if loop.index0 %}, {% endif -%}
+            <a class="inline-block underline" href="{{ url ?? page.parent.url({ params: { tag } }) }}">{{ tag }}</a>
+            {%- endfor -%}
+          </div>
+        </div>
+        {%~ endif %}
+      </div>
+    </aside>
+    {%~ endif %}
+
+    {%~ if page.text.isNotEmpty %}
+    <div class="copy text-2xl max-w-copy">
+      {{ page.text.kirbytext | raw }}
+    </div>
+    {%~ endif %}
+
+    {% block after none %}
+
+  </section>
+
+  {%~ with { section: page.parent } %}
+  <section class="px-4 py-16 md:px-8 space-y-10">
+
+    {% include '@snippets/title.twig' with { title: t('tablo.posts.more.title', section.title) } %}
+    {% include '@snippets/blocks/posts.twig' with { posts: section.posts(option('tablo.posts.previewLimit')) } %}
+
+    <aside class="flex flex-row flex-wrap items-center gap-4 text-action">
+      <a class="button" href="{{ section.url }}">{{ t('tablo.posts.more.action') }}</a>
+    </aside>
+
+  </section>
+  {%~ endwith %}
+
+{% endblock %}

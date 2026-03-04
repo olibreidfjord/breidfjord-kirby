@@ -1,7 +1,6 @@
 <?php
 
 use Kirby\Toolkit\I18n;
-use Kirby\Toolkit\Str;
 
 return [
 	'props' => [
@@ -31,7 +30,7 @@ return [
 				return $this->model()->toString($this->headline);
 			}
 
-			return Str::label($this->name);
+			return ucfirst($this->name);
 		}
 	]
 ];

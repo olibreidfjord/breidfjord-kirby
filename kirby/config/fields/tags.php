@@ -77,9 +77,6 @@ return [
 		}
 	],
 	'methods' => [
-		'emptyValue' => function () {
-			return [];
-		},
 		'toValues' => function ($value) {
 			if (is_null($value) === true) {
 				return [];

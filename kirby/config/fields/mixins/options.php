@@ -14,9 +14,6 @@ return [
 		 * An array with options
 		 */
 		'options' => function ($options = []) {
-			// make sure to flush the options cache when
-			// new options are being passed
-			$this->optionsCache = null;
 			return $options;
 		},
 		/**
@@ -28,7 +25,7 @@ return [
 	],
 	'computed' => [
 		'options' => function (): array {
-			return $this->optionsCache ??= $this->getOptions();
+			return $this->getOptions();
 		}
 	],
 	'methods' => [

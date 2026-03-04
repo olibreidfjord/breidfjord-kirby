@@ -1,0 +1,106 @@
+label: Layout
+fields:
+  h_layout_branding:
+    label: Branding
+    type: headline
+
+  logo:
+    label: Logo
+    type: files
+    multiple: false
+    info: "{{ file.width }} x {{ file.height }}"
+    image:
+      cover: false
+      back: white
+    width: 1/2
+
+  favicon:
+    label: Favicon
+    type: files
+    multiple: false
+    info: "{{ file.width }} x {{ file.height }}"
+    image:
+      ratio: 1/1
+      cover: false
+      back: white
+    width: 1/2
+
+  logo_embed:
+    label: Embed Logo
+    type: toggle
+    help: Embed inline within the HTML structure. Applies to SVG files only.
+    width: 1/3
+
+  logo_width:
+    label: Logo Width
+    type: number
+    placeholder: auto
+    min: 1
+    after: px
+    when:
+      logo_embed: false
+    width: 1/3
+
+  logo_height:
+    label: Logo Height
+    type: number
+    placeholder: auto
+    min: 1
+    after: px
+    when:
+      logo_embed: false
+    width: 1/3
+
+  logo_title:
+    label: Include Site Title
+    type: toggle
+    help: Applies only when a logo is present.
+    width: 1/3
+
+  logo_title_size:
+    label: Site Title Size
+    type: number
+    min: 1
+    after: px
+    required: true
+    width: 1/3
+
+  h_layout_navigation:
+    label: Navigation
+    type: headline
+
+  mainMenu:
+    extends: fields/menu
+    label: Main Menu
+
+  actions: fields/actions
+
+  socialLinks:
+    extends: fields/socials
+
+  mobileMenu:
+    extends: fields/menu
+    label: Mobile Menu
+    empty: Main menu will be used if left empty.
+
+  footerMenu:
+    extends: fields/menu
+    label: Footer Menu
+
+  h_layout_footer:
+    label: Footer
+    type: headline
+
+  footerCTA:
+    label: Call to Action
+    extends: fields/blocks
+
+  footerCopyright:
+    label: Footer Copyright
+    type: text
+
+  footerClaim:
+    label: Footer Claim
+    type: textarea
+    buttons: false
+    size: tiny

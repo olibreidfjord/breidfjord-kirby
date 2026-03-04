@@ -1,0 +1,22 @@
+{% with { items: block.items.toStructure } %}
+<div class="grid grid-cols-fill-128 gap-12">
+  {%~ for item in items %}
+  <article>
+    {%~ embed '@snippets/grid-item.twig' with {
+      item:  item,
+      image: item.image.toFile,
+      ratio: 1.25,
+      crop:  true,
+      url:   item.link.toUrl,
+    } only %}
+      {%- block after -%}
+      <h2 class="mt-4 text-2xl underline">{{ item.title }}</h2>
+      {%~ if item.caption.isNotEmpty %}
+      <h3 class="text-2xl text-current/50">{{ item.caption }}</h3>
+      {%~ endif %}
+      {%- endblock -%}
+    {%~ endembed %}
+  </article>
+  {%~ endfor %}
+</div>
+{% endwith %}

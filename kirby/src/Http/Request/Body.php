@@ -21,6 +21,11 @@ class Body implements Stringable
 	use Data;
 
 	/**
+	 * The raw body content
+	 */
+	protected string|array|null $contents;
+
+	/**
 	 * The parsed content as array
 	 */
 	protected array|null $data = null;
@@ -31,12 +36,10 @@ class Body implements Stringable
 	 * If null is being passed, the class will
 	 * fetch the body either from the $_POST global
 	 * or from php://input.
-	 *
-	 * @param array|string|null $contents The raw body content
 	 */
-	public function __construct(
-		protected array|string|null $contents = null
-	) {
+	public function __construct(array|string|null $contents = null)
+	{
+		$this->contents = $contents;
 	}
 
 	/**
@@ -49,7 +52,7 @@ class Body implements Stringable
 			return $this->contents;
 		}
 
-		if ($_POST !== []) {
+		if (empty($_POST) === false) {
 			return $this->contents = $_POST;
 		}
 
@@ -87,7 +90,7 @@ class Body implements Stringable
 			// try to parse the body as query string
 			parse_str($contents, $parsed);
 
-			if (is_array($parsed) === true) {
+			if (is_array($parsed)) {
 				return $this->data = $parsed;
 			}
 		}

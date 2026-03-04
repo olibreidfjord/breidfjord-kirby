@@ -75,7 +75,9 @@ trait AppTranslations
 		if ($slugs = $this->option('slugs')) {
 			// two ways that the option can be defined:
 			// "slugs" => "de" or "slugs" => ["language" => "de"]
-			Str::$language = Language::loadRules($slugs['language'] ?? $slugs);
+			if ($slugs = $slugs['language'] ?? $slugs ?? null) {
+				Str::$language = Language::loadRules($slugs);
+			}
 		}
 	}
 
@@ -86,12 +88,6 @@ trait AppTranslations
 	 */
 	public function panelLanguage(): string
 	{
-		$translation = $this->request()->get('translation');
-
-		if ($translation !== null && $this->translations()->find($translation)) {
-			return $translation;
-		}
-
 		if ($this->multilang() === true) {
 			$defaultCode = $this->defaultLanguage()->code();
 

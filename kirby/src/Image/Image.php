@@ -144,9 +144,9 @@ class Image extends File
 	/**
 	 * Returns the PHP imagesize array
 	 */
-	public function imagesize(): array|false
+	public function imagesize(): array
 	{
-		return @getimagesize($this->root);
+		return getimagesize($this->root);
 	}
 
 	/**
@@ -178,19 +178,7 @@ class Image extends File
 	 */
 	public function isResizable(): bool
 	{
-		// check extension first to avoid expensive dimension calculation
-		if (in_array($this->extension(), static::$resizableTypes, true) === false) {
-			return false;
-		}
-
-		$dimensions = $this->dimensions();
-
-		// invalid or corrupted images return 0x0 dimensions
-		if ($dimensions->width() === 0 || $dimensions->height() === 0) {
-			return false;
-		}
-
-		return true;
+		return in_array($this->extension(), static::$resizableTypes, true) === true;
 	}
 
 	/**

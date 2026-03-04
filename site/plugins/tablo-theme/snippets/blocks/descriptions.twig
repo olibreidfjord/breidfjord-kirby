@@ -1,0 +1,10 @@
+{% for item in block.items.toStructure %}
+<article class="ordered-entry copy text-2xl max-w-copy">
+  <h3>{{ item.title }}</h3>
+  {%~ if item.details.isNotEmpty %}
+  <div class="text-current/50">
+    {{ item.details.kirbytext | raw }}
+  </div>
+  {%~ endif %}
+</article>
+{% endfor %}

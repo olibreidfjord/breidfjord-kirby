@@ -1,0 +1,16 @@
+name: Descriptions
+icon: lucide-letter-text
+preview: fields
+wysiwyg: true
+fields:
+  items:
+    type: structure
+    fields:
+      title:
+        label: Title
+        type: text
+      details:
+        label: Details
+        type: textarea
+    columns:
+      title: true

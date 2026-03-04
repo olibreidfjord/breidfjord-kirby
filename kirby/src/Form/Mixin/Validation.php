@@ -18,9 +18,6 @@ use Kirby\Toolkit\V;
  */
 trait Validation
 {
-	/**
-	 * If `true`, the field has to be filled in correctly to be saved.
-	 */
 	protected bool $required;
 
 	/**
@@ -97,6 +94,9 @@ trait Validation
 		return $this->errors() === [];
 	}
 
+	/**
+	 * Getter for the required property
+	 */
 	public function required(): bool
 	{
 		return $this->required;

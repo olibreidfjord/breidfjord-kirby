@@ -1,0 +1,33 @@
+label: Structure
+sections:
+  pages:
+    headline: Pages
+    type: pages
+    image:
+      query: false
+      back: gray-100
+      color: blue
+    templates:
+      - folder
+      - generic
+      - posts
+      - project
+      - services
+      - text
+    create:
+      - generic
+      - folder
+      - posts
+      - project
+      - text
+
+  systempages:
+    headline: System Pages
+    type: pages
+    image:
+      query: false
+      back: gray-100
+      color: blue
+    templates:
+      - error
+    create: false

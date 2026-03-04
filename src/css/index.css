@@ -1,0 +1,43 @@
+/*! Tablo Theme | https://www.tablo.me */
+
+@import "tailwindcss";
+
+@import "./debug.css";
+@import "./buttons.css";
+@import "./copy.css";
+@import "./lightbox.css";
+
+@theme {
+  --color-text: orange;
+  --color-background: var(--color-white);
+  --color-shade: color-mix(in srgb, var(--color-text), transparent 95%);
+
+  --spacing-container: none;
+  --spacing-copy: none;
+
+  --text-metadata: 20px;
+  --text-metadata--line-height: 24px;
+  --text-action: 24px;
+  --text-action--line-height: 24px;
+  --text-xl--line-height: 1.25;
+  --text-2xl--line-height: 1.25;
+}
+
+@layer base {
+  body {
+    color: var(--color-text);
+    background-color: var(--color-background);
+    line-height: 1;
+    text-underline-offset: 2px;
+    & * {
+      text-decoration-thickness: 1px;
+    }
+  }
+}
+
+@utility grid-cols-fill-* {
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(min(calc(var(--spacing) * --value(integer)), 100%), 1fr)
+  );
+}

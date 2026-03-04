@@ -1,0 +1,25 @@
+<figure data-block="{{ block.id }}">
+  <div class="grid grid-cols-fill-48 gap-12">
+    {%~ for image in block.images.toFiles %}
+    <a
+      class="block aspect-square"
+      href="{{ image.url }}"
+      data-lightbox
+      ><img
+        class="block w-full h-full object-contain"
+        src="{{ image.thumb({ width: 480, height: 480, crop: false, format: 'webp' }).url }}"
+        data-srcset="{{ image.srcset({
+          '480w': { width: 480, height: 480, crop: false, format: 'webp' },
+          '640w': { width: 640, height: 640, crop: false, format: 'webp' },
+          '800w': { width: 800, height: 800, crop: false, format: 'webp' },
+          '960w': { width: 960, height: 960, crop: false, format: 'webp' },
+        }) }}"
+        alt=""
+      ></a
+    >
+    {%~ endfor %}
+  </div>
+  {%~ if block.caption.isNotEmpty %}
+  <figcaption class="mt-12 text-center text-current/50 text-xl">{{ block.caption.value }}</figcaption>
+  {%~ endif %}
+</figure>

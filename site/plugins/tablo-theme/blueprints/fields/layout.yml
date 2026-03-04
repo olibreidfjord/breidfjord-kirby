@@ -1,0 +1,29 @@
+label: Layout
+type: layout
+layouts:
+  - "1/1"
+selector:
+  size: small
+  columns: 2
+settings:
+fieldsets:
+  content: fields/blocks-content
+  features: fields/blocks-features
+  widgets:
+    label: Widgets
+    type: group
+    fieldsets:
+      - people
+      - posts
+      - projects
+      - showcase
+  helpers:
+    label: Helpers
+    type: group
+    fieldsets:
+      - space
+settings:
+  fields:
+    fullwidth:
+      label: Fullwidth
+      type: toggle

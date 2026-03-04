@@ -1,0 +1,11 @@
+label: Content
+type: group
+fieldsets:
+  - heading
+  - text
+  - list
+  - image
+  - gallery
+  - video
+  - code
+  - markdown

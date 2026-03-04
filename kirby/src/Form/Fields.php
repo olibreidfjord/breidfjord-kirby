@@ -268,11 +268,7 @@ class Fields extends Collection
 
 		// reset the values of each field
 		foreach ($this->data as $field) {
-			if ($field instanceof Field) {
-				$field->fillWithEmptyValue();
-			} else {
-				$field->reset();
-			}
+			$field->fill(null);
 		}
 
 		return $this;

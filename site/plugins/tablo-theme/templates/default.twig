@@ -1,0 +1,134 @@
+{% extends 'blank.twig' %}
+
+{% block head %}
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/glightbox/dist/css/glightbox.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/mcstudios/glightbox/dist/js/glightbox.min.js" defer></script>
+{% endblock head %}
+
+{% block body %}
+
+  {% include '@snippets/mobile-menu.twig' %}
+
+  <header class="py-4 md:p-4 flex flex-row justify-between items-center gap-8 sticky top-0 z-9999 lg:static">
+    {% include '@snippets/site-title.twig' %}
+
+    {%~ if site.actions.isNotEmpty %}
+    <aside class="px-4 hidden lg:flex md:flex-row-reverse md:flex-wrap items-center gap-2 text-metadata">
+      {% include '@snippets/actions.twig' with {
+        actions: site.actions.toStructure,
+        smaller: true,
+      } %}
+    </aside>
+    {%~ endif %}
+
+    <button id="mobile-menu-toggle" type="button" class="flex p-4 cursor-pointer lg:hidden" aria-label="Toggle menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <line x1="2" x2="22" y1="6" y2="6" />
+        <line x1="2" x2="22" y1="12" y2="12" />
+        <line x1="2" x2="22" y1="18" y2="18" />
+      </svg>
+    </button>
+  </header>
+
+  {%~ if site.mainMenu.isNotEmpty %}
+  <nav class="hidden lg:block py-4 md:p-4 text-metadata underline-offset-8 **:decoration-2">
+    <ul class="p-2 flex flex-row flex-wrap gap-x-6">
+      {%~ for item in site.mainMenu.toStructure %}
+      <li>{%
+        include '@snippets/link.twig'
+        with {
+          class:     'p-2',
+          link:      item.link,
+          title:     item.title,
+          blank:     item.blank,
+          rel:       item.rel,
+          underline: item.link.toPage.isOpen,
+        }
+      %}</li>
+      {%~ endfor %}
+    </ul>
+  </nav>
+  {%~ endif %}
+
+  <main class="flex-1">
+  {% block main %}
+  {% endblock main %}
+  </main>
+
+  {%~ if site.footerCTA.isNotEmpty
+      or site.footerMenu.isNotEmpty
+      or site.footerCopyright.isNotEmpty
+      or site.footerClaim.isNotEmpty
+  %}
+  <footer class="mt-8">
+    <hr class="mx-4 md:mx-8 my-8 text-current/10">
+
+    {%~ if site.footerCTA.isNotEmpty ~%}
+    <section class="px-4 py-8 md:p-8">
+      <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+        <div class="xl:col-start-2 xl:col-span-2 text-balance">
+
+          {% include '@snippets/blocks.twig' with { blocks: site.footerCTA.toBlocks } %}
+
+        </div>
+      </div>
+    </section>
+
+    <hr class="mx-4 md:mx-8 my-8 text-current/10">
+    {%~ endif ~%}
+
+    {%~ if site.footerMenu.isNotEmpty %}
+    <nav class="py-4 md:p-4 text-metadata">
+      <ul class="p-2 md:flex md:flex-row md:flex-wrap gap-x-6">
+        {%~ for item in site.footerMenu.toStructure %}
+        <li>{%
+          include '@snippets/link.twig'
+          with {
+            class:     'p-2',
+            link:      item.link,
+            title:     item.title,
+            blank:     item.blank,
+            rel:       item.rel,
+            underline: true,
+          }
+        %}</li>
+        {%~ endfor %}
+      </ul>
+    </nav>
+    {%~ endif %}
+
+    {%~ if site.footerCopyright.isNotEmpty
+        or site.footerClaim.isNotEmpty
+        or site.socialLinks.isNotEmpty
+    %}
+    <div class="lg:flex lg:flex-row justify-between">
+      {%~ if site.footerCopyright.isNotEmpty or site.footerClaim.isNotEmpty %}
+      <div class="px-4 py-8 md:p-8">
+        <div class="copy text-xl">
+          <p>
+            {%- if site.footerCopyright.isNotEmpty %}
+            {{- site.footerCopyright | kirbytextinline -}}
+            {%- endif -%}
+            {%- if site.footerCopyright.isNotEmpty and site.footerClaim.isNotEmpty %}
+            <span class="inline-block mx-2 text-current/20">|</span>
+            {% endif -%}
+            {% if site.footerClaim.isNotEmpty %}
+            {{- site.footerClaim | kirbytextinline -}}
+            {% endif -%}
+          </p>
+        </div>
+      </div>
+      {%~ endif %}
+
+      {%~ if site.socialLinks.isNotEmpty ~%}
+      <nav class="py-4 md:p-4">
+        {%~ include '@snippets/social-icons.twig' with { links: site.socialLinks.toStructure, class: 'p-2' } only ~%}
+      </nav>
+      {%~ endif ~%}
+    </div>
+    {%~ endif %}
+
+  </footer>
+  {%~ endif %}
+
+{% endblock %}

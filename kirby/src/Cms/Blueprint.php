@@ -10,7 +10,6 @@ use Kirby\Filesystem\F;
 use Kirby\Form\Field;
 use Kirby\Toolkit\A;
 use Kirby\Toolkit\I18n;
-use Kirby\Toolkit\Str;
 use Throwable;
 
 /**
@@ -71,7 +70,7 @@ class Blueprint
 		$props['name'] ??= 'default';
 
 		// normalize and translate the title
-		$props['title'] ??= Str::label($props['name']);
+		$props['title'] ??= ucfirst($props['name']);
 		$props['title']   = $this->i18n($props['title']);
 
 		// convert all shortcuts
@@ -100,7 +99,7 @@ class Blueprint
 	 */
 	public function __debugInfo(): array
 	{
-		return $this->props;
+		return $this->props ?? [];
 	}
 
 	/**
@@ -124,14 +123,8 @@ class Blueprint
 				continue;
 			}
 
-			$template  = $section->template();
 			$templates = match ($section->type()) {
-				'files'  => [
-					...$templates,
-					...($template
-						? [$template]
-						: App::instance()->blueprints('files'))
-				],
+				'files'  => [...$templates, $section->template() ?? 'default'],
 				'fields' => [
 					...$templates,
 					...$this->acceptedFileTemplatesFromFields($section->fields())
@@ -448,7 +441,7 @@ class Blueprint
 		$props['name'] ??= $name;
 
 		// normalize the title
-		$title = $props['title'] ?? Str::label($props['name']);
+		$title = $props['title'] ?? ucfirst($props['name']);
 
 		// translate the title
 		$props['title'] = I18n::translate($title) ?? $title;
@@ -574,7 +567,7 @@ class Blueprint
 		// add some useful defaults
 		return [
 			...$props,
-			'label' => $props['label'] ?? Str::label($name),
+			'label' => $props['label'] ?? ucfirst($name),
 			'name'  => $name,
 			'type'  => $type,
 			'width' => $props['width'] ?? '1/1',
@@ -802,7 +795,7 @@ class Blueprint
 				...$tabProps,
 				'columns' => $this->normalizeColumns($tabName, $tabProps['columns'] ?? []),
 				'icon'    => $tabProps['icon']  ?? null,
-				'label'   => $this->i18n($tabProps['label'] ?? Str::label($tabName)),
+				'label'   => $this->i18n($tabProps['label'] ?? ucfirst($tabName)),
 				'link'    => $this->model->panel()->url(true) . '/?tab=' . $tabName,
 				'name'    => $tabName,
 			];

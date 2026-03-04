@@ -1,0 +1,19 @@
+title: Site
+
+tabs:
+  main: tabs/site-structure
+  layout: tabs/site-layout
+  theme: tabs/theme
+
+  advanced:
+    label: Advanced
+    icon: code
+    fields:
+      head:
+        label: Custom <HEAD> Code
+        type: textarea
+        buttons: false
+        font: monospace
+        size: tiny
+
+  files: tabs/files

@@ -1,0 +1,8 @@
+.-d,
+.-d *.-d {
+  outline: 1px dashed var(--color-purple-500);
+}
+
+.-d * {
+  outline: 1px dashed var(--color-cyan-500);
+}

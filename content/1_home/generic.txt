@@ -1,0 +1,38 @@
+Title: Home
+
+----
+
+Layout: [{"attrs":{"fullwidth":"false"},"columns":[{"blocks":[{"content":[],"id":"183f9d26-43ae-4524-9b00-85c74d82bff6","isHidden":false,"type":"space"},{"content":{"level":"h2","text":"Shaping the Future of Urban and Natural Spaces","size":"size7xl","uppercase":"false"},"id":"a64a8d6c-0c8d-4752-9158-6cda8523a69a","isHidden":false,"type":"heading"},{"content":{"text":"<p>We craft spaces that blend beauty and functionality, enhancing how people live, work, and experience their world.</p>","size":"size3xl","uppercase":"false"},"id":"9bf4152f-f24b-4ad4-9385-e64558b8e4f5","isHidden":false,"type":"text"},{"content":{"items":[{"number":"20+","description":"Completed Projects"},{"number":"10","description":"Years of Experience"},{"number":"15","description":"Green Initiatives"}],"size":"size7xl"},"id":"59d2c692-8bf2-4ce7-9355-9c06a7ebb1b7","isHidden":false,"type":"numbers"},{"content":[],"id":"79c89cc8-e608-4705-be74-ab30399f2090","isHidden":false,"type":"space"}],"id":"1edfe3cd-92d0-42b0-9a86-48648937a253","width":"1/1"}],"id":"94bd6259-9939-436b-8d79-8b05c1907142"},{"attrs":{"fullwidth":"true"},"columns":[{"blocks":[{"content":{"projects":["page://T9RnIoBmOJRaA8nK","page://mRH5oKqHezqQnkFC","page://7tfvscu9JwME57nS","page://4wdG9SPvqP20SEDC"]},"id":"31aeffad-ffd9-45d4-b56f-4102a892aae0","isHidden":false,"type":"projects"}],"id":"5979d384-fd59-4bf9-83fa-1884432c13c6","width":"1/1"}],"id":"aff7d499-6597-411d-9b52-966f5cbeace2"},{"attrs":{"fullwidth":"false"},"columns":[{"blocks":[{"content":{"text":"<p>Discover our diverse projects from around the world. Each case highlights innovative designs and creative solutions that bring visions to life.</p>","size":"","uppercase":"false"},"id":"57071332-de6a-49aa-a334-b7bc7f0fdf36","isHidden":false,"type":"text"},{"content":{"actions":[{"kind":"button","primary":"false","title":"View all our projects","link":"page://ih2OGTRiz78i4fTh","blank":"false","rel":""}]},"id":"4407a17d-4cfb-4903-bc2d-aac6b8af9b17","isHidden":false,"type":"actions"},{"content":[],"id":"1251f410-60db-4b81-b126-ead51fccf040","isHidden":false,"type":"space"}],"id":"bfbedb43-dcf6-4a1d-8286-55d0d7520020","width":"1/1"}],"id":"bf7e8593-ecae-4836-9e0f-3b0af539e0b4"},{"attrs":{"fullwidth":"false"},"columns":[{"blocks":[{"content":{"level":"h2","text":"What We Offer","size":"size6xl","uppercase":"false"},"id":"e76c42d3-7a7c-460b-acc2-9eec41a0947e","isHidden":false,"type":"heading"},{"content":{"text":"<p>We bring bold ideas to life through thoughtful design and sustainable practices. Our services are tailored to shape inspiring spaces that elevate communities and connect people with their environments.</p>","size":"","uppercase":"false"},"id":"38d40df7-7dce-44d0-a5a2-3df7d2904466","isHidden":false,"type":"text"},{"content":{"items":[{"title":"Architectural Design","details":"We design striking and functional buildings that balance beauty with practicality. Each structure is carefully crafted to harmonize with its surroundings, creating spaces that inspire and elevate everyday experiences."},{"title":"Urban Planning","details":"Our approach to urban planning focuses on creating vibrant, livable communities. From efficient layouts to green spaces and public infrastructure, we prioritize connectivity, sustainability, and the well-being of people."},{"title":"Landscape Architecture","details":"We shape outdoor spaces into thriving environments where people and nature coexist. From lush parks to urban courtyards, we design landscapes that are as sustainable as they are beautiful, enriching the lives of those who use them."},{"title":"Sustainable Solutions","details":"Sustainability is at the core of what we do. We integrate eco-friendly technologies, renewable materials, and energy-efficient designs to reduce environmental impact while maintaining exceptional quality and functionality."}]},"id":"a76d7aca-a7ce-4a18-9fcc-657932802190","isHidden":false,"type":"descriptions"},{"content":[],"id":"3a4367ac-7a40-4990-9b0f-75ade54749e9","isHidden":false,"type":"space"}],"id":"30c386d0-938f-4757-9e4a-da0d0c95e737","width":"1/1"}],"id":"ca0730f4-cb1d-4975-b573-c6c4079dca01"},{"attrs":{"fullwidth":"true"},"columns":[{"blocks":[{"content":{"level":"h2","text":"Meet Our Team","size":"size6xl","uppercase":"false"},"id":"b7c4757e-8028-40b3-8fbc-f6584d4fb364","isHidden":false,"type":"heading"},{"content":{"text":"<p>A fusion of creativity and technical expertise drives our passion for innovation and design excellence. United by a common vision, we craft spaces that inspire and connect.</p>","size":"","uppercase":"false"},"id":"94224186-3cd3-4e8c-aee6-9774638bfdf3","isHidden":false,"type":"text"},{"content":{"items":[{"title":"Jane Matthews","caption":"Lead Architect","photo":["file://nVifRfHdUIfigpoL"]},{"title":"Liam Chen","caption":"Urban Planner","photo":["file://mgGpjxRvFW1zqdVh"]},{"title":"Amara Singh","caption":"Landscape Architect","photo":["file://jnI7QFDzgAbB7QUw"]},{"title":"Daniel Foster","caption":"Sustainability Specialist","photo":["file://iW9gdEa6w0C7zR1b"]},{"title":"Sophia Carter","caption":"Project Designer","photo":["file://L4ERE6NQDiRdOEdZ"]},{"title":"Arjun Patel","caption":"Structural Engineer","photo":["file://g70GaaKpCGQP9WlZ"]},{"title":"Elena Morales","caption":"Materials Specialist","photo":["file://bJK6K5zY8zoWRIcJ"]},{"title":"Tomislav Novak","caption":"Visualization Artist","photo":["file://rINMvJoxvWNmBsVi"]}]},"id":"89a6b96d-8636-4c90-889e-97c77d91c5bf","isHidden":false,"type":"people"},{"content":[],"id":"a57e9fc6-3d74-4eac-a8b2-7e94c723666c","isHidden":false,"type":"space"}],"id":"fee66443-6a06-4e0f-b127-ffc31cf80c7f","width":"1/1"}],"id":"01cdc0b9-b1ea-4f0d-b9f5-b82864659baf"},{"attrs":{"fullwidth":"false"},"columns":[{"blocks":[{"content":{"level":"h2","text":"Explore Our Latest Insights","size":"size6xl","uppercase":"false"},"id":"54a9b879-b395-440c-8ef4-bdddf8ebd94e","isHidden":false,"type":"heading"},{"content":{"text":"<p>Stay updated with trends and innovations in architecture, sustainability, and design. Dive into ideas that shape the future of our spaces.</p>","size":"","uppercase":"false"},"id":"fb691e05-2d61-46ac-b722-f7dfaffd6c9b","isHidden":false,"type":"text"},{"content":{"source":["page://oWbSEUtIHbgb29Ol"]},"id":"5529f930-977f-485d-b1b9-0394d04498df","isHidden":false,"type":"posts"},{"content":{"actions":[{"kind":"button","primary":"false","title":"Read more articles","link":"page://oWbSEUtIHbgb29Ol","blank":"false","rel":""}]},"id":"d3aa3f64-31f6-4c86-b662-17e11b20f13d","isHidden":false,"type":"actions"}],"id":"f04cc30d-13e5-47d2-a8e6-2c4a5290b2db","width":"1/1"}],"id":"962674f0-c9de-420f-81ae-22a2c1254348"}]
+
+----
+
+Tagline: Designs that Inspire Possibilities
+
+----
+
+Meta-description: Modern Kirby CMS theme for architects and designers. Showcase innovative spaces with elegance and functionality. Elevate your design portfolio effortlessly.
+
+----
+
+Og-image: 
+
+----
+
+Theme-props: 
+
+----
+
+Uuid: zgacmeQdwYjDrcpe
+
+----
+
+Intro:
+
+-
+  content:
+    text: '<p>We are a scandinavian architectural company. We work within residential architecture, commercial interiors and industrial design.</p>'
+    size: size5xl
+    uppercase: false
+  id: 4db10a38-0bb0-44c2-89da-5be45318a5ad
+  isHidden: false
+  type: text

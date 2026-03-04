@@ -1,0 +1,75 @@
+<nav id="mobile-menu" class="fixed inset-0 z-999 w-full h-full flex flex-col lg:hidden" role="dialog" aria-modal="true" hidden>
+  <div id="mobile-menu-overlay" class="absolute inset-0 bg-background/98"></div>
+  <div id="mobile-menu-content" class="absolute inset-0">
+    <div class="px-4 py-8 md:p-8">
+      {%~ with {
+        logo:        site.logo.toFile,
+        logo_height: site.logo_height.toInt,
+        title_size:  site.logo_title_size.toInt,
+      } %}
+      <div style="height: {{ logo ? (logo_height ?: logo.height) : title_size }}px"></div>
+      {%~ endwith %}
+    </div>
+
+    <div class="flex-1 flex flex-col justify-center">
+      <div class="py-4 md:p-4">
+        <ul class="p-2 text-5xl break-words">
+          {%~ if site.mobileMenu.isNotEmpty %}
+          {%~ for link in site.mobileMenu.toStructure %}
+          <li>{%
+            include '@snippets/link.twig'
+            with {
+              class:     'p-2',
+              center:    true,
+              link:      item.link,
+              title:     item.title,
+              blank:     item.blank,
+              rel:       item.rel,
+              underline: item.link.toPage.isOpen,
+            }
+          %}</li>
+          {%~ endfor %}
+          {%~ elseif site.mainMenu.isNotEmpty %}
+          {%~ for item in site.mainMenu.toStructure %}
+          <li>{%
+            include '@snippets/link.twig'
+            with {
+              class:     'p-2',
+              center:    true,
+              link:      item.link,
+              title:     item.title,
+              blank:     item.blank,
+              rel:       item.rel,
+              underline: item.link.toPage.isOpen,
+            }
+          %}</li>
+          {%~ endfor %}
+          {%~ else %}
+          {%~ with { pages: site.pages.listed } %}
+          {%~ if pages.count %}
+          {%~ for page in pages %}
+          <li><a class="block p-2 text-center {{ page.isOpen ? 'underline' : 'hover:underline' }}" href="{{ page.url }}">{{ page.title }}</a></li>
+          {%~ endfor %}
+          {%~ endif %}
+          {%~ endwith %}
+          {%~ endif %}
+        </ul>
+      </div>
+      {%~ if site.actions.isNotEmpty %}
+      <div class="py-4 md:p-4">
+        <aside class="p-4 flex flex-col gap-2 text-action max-w-md mx-auto">
+          {% include '@snippets/actions.twig' with {
+            actions: site.actions.toStructure,
+            center: true,
+          } %}
+        </aside>
+      </div>
+      {%~ endif %}
+      {%~ if site.socialLinks.isNotEmpty ~%}
+      <div class="py-4 md:p-4">
+        {%~ include '@snippets/social-icons.twig' with { links: site.socialLinks.toStructure, class: 'p-2', center: true } only ~%}
+      </div>
+      {%~ endif ~%}
+    </div>
+  </div>
+</nav>

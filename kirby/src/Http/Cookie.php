@@ -222,6 +222,7 @@ class Cookie
 	protected static function trackUsage(string $key): void
 	{
 		// lazily request the instance for non-CMS use cases
-		App::instance(lazy: true)?->response()->usesCookie($key);
+		$kirby = App::instance(null, true);
+		$kirby?->response()->usesCookie($key);
 	}
 }

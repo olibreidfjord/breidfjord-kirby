@@ -181,7 +181,7 @@ class Field
 		return [
 			'label'    => I18n::translate('page.changeStatus.position'),
 			'type'     => 'select',
-			'required' => true,
+			'empty'    => false,
 			'options'  => $options,
 			...$props
 		];

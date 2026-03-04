@@ -1,0 +1,7 @@
+label: Pages
+type: pages
+sortable: false
+image:
+  query: page.getCoverImage()
+  cover: true
+  back: gray-100

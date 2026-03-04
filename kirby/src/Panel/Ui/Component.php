@@ -84,10 +84,7 @@ abstract class Component
 		return [
 			'component' => $this->component,
 			'key'       => $this->key(),
-			'props'     => array_filter(
-				$this->props(),
-				fn ($prop) => $prop !== null
-			)
+			'props'     => array_filter($this->props())
 		];
 	}
 }

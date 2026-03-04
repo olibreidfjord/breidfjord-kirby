@@ -4,7 +4,6 @@ namespace Kirby\Http;
 
 use Closure;
 use Exception;
-use Kirby\Cms\App;
 use Kirby\Exception\LogicException;
 use Kirby\Filesystem\F;
 use Stringable;
@@ -162,23 +161,6 @@ class Response implements Stringable
 	}
 
 	/**
-	 * Ensures safe MIME type handling by forcing plain text
-	 * for files without recognizable MIME types to harden
-	 * against attacks from malicious file uploads
-	 * @since 5.3.0
-	 * @internal
-	 */
-	public static function ensureSafeMimeType(array $props): array
-	{
-		if ($props['type'] === null) {
-			$props['type'] = 'text/plain';
-			$props['headers']['X-Content-Type-Options'] = 'nosniff';
-		}
-
-		return $props;
-	}
-
-	/**
 	 * Creates a response for a file and
 	 * sends the file content to the browser
 	 *
@@ -186,24 +168,23 @@ class Response implements Stringable
 	 */
 	public static function file(string $file, array $props = []): static
 	{
-		$request = App::instance(lazy: true)?->request();
-
-		// handle byte-range requests (e.g., for video streaming in Safari)
-		if ($range = $request?->header('Range')) {
-			return Range::response($file, $range, $props);
-		}
-
-		// always indicate that byte-range requests are supported
-		$props['headers'] = [
-			'Accept-Ranges' => 'bytes',
-			...$props['headers'] ?? []
-		];
-
-		$props = static::ensureSafeMimeType([
+		$props = [
 			'body' => F::read($file),
 			'type' => F::extensionToMime(F::extension($file)),
 			...$props
-		]);
+		];
+
+		// if we couldn't serve a correct MIME type, force
+		// the browser to display the file as plain text to
+		// harden against attacks from malicious file uploads
+		if ($props['type'] === null) {
+			if (isset($props['headers']) !== true) {
+				$props['headers'] = [];
+			}
+
+			$props['type'] = 'text/plain';
+			$props['headers']['X-Content-Type-Options'] = 'nosniff';
+		}
 
 		return new static($props);
 	}
@@ -300,11 +281,8 @@ class Response implements Stringable
 	 *
 	 * @since 5.0.3
 	 */
-	public static function refresh(
-		string $location = '/',
-		int $code = 302,
-		int $refresh = 0
-	): static {
+	public static function refresh(string $location = '/', int $code = 302, int $refresh = 0): static
+	{
 		return new static([
 			'code'    => $code,
 			'headers' => [
@@ -332,19 +310,6 @@ class Response implements Stringable
 
 		// print the response body
 		return $this->body();
-	}
-
-	/**
-	 * Sets the provided headers in case they are not already set
-	 * @internal
-	 * @return $this
-	 */
-	public function setHeaderFallbacks(array $headers): static
-	{
-		// the case-insensitive nature of headers will be
-		// handled by PHP's `header()` functions
-		$this->headers = [...$headers, ...$this->headers];
-		return $this;
 	}
 
 	/**

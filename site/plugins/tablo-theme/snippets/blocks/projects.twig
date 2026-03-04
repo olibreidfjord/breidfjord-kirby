@@ -1,0 +1,22 @@
+{% with { projects: projects ?? block.projects.toPages } %}
+{% with { projects: projects.isNotEmpty ? projects : page.children().template('project').listed } %}
+<div class="grid grid-cols-fill-128 gap-12">
+  {%~ for project in projects %}
+  {%~ embed '@snippets/grid-item.twig' with {
+    project: project,
+    image:   project.getCoverImage,
+    ratio:   1.25,
+    crop:    true,
+    url:     project.url,
+  } only ~%}
+    {%- block after -%}
+    <h2 class="mt-4 text-2xl underline">{{ project.title }}</h2>
+    {%~ if project.description.isNotEmpty %}
+    <h3 class="text-2xl text-current/50">{{ project.description }}</h3>
+    {%~ endif %}
+    {%- endblock -%}
+  {%~ endembed ~%}
+  {%~ endfor %}
+</div>
+{% endwith %}
+{% endwith %}

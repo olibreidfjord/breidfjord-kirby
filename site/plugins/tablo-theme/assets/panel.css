@@ -1,0 +1,10 @@
+.k-collection .k-icon-frame {
+  --color-blue: #00f;
+  background-color: transparent;
+}
+
+@media (prefers-color-scheme: dark) {
+  .k-collection .k-icon-frame {
+    --color-blue: #24f;
+  }
+}

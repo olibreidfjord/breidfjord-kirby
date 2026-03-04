@@ -113,11 +113,6 @@ return [
 			]
 		];
 	},
-	'methods' => [
-		'emptyValue' => function () {
-			return '';
-		}
-	],
 	'validations' => [
 		'minlength',
 		'maxlength'

@@ -13,7 +13,6 @@ use Kirby\Cms\User;
 use Kirby\Exception\InvalidArgumentException;
 use Kirby\Exception\LogicException;
 use Kirby\Exception\NotFoundException;
-use Kirby\Toolkit\A;
 use Kirby\Toolkit\Str;
 use Stringable;
 
@@ -100,8 +99,18 @@ abstract class Uuid implements Stringable
 	 * Removes the current UUID from cache,
 	 * recursively including all children if needed
 	 */
-	public function clear(): bool
+	public function clear(bool $recursive = false): bool
 	{
+		// For all models with children: if $recursive,
+		// also clear UUIDs from cache for all children
+		if ($recursive === true && $model = $this->model()) {
+			if (method_exists($model, 'children') === true) {
+				foreach ($model->children() as $child) {
+					$child->uuid()->clear(true);
+				}
+			}
+		}
+
 		if ($key = $this->key()) {
 			return Uuids::cache()->remove($key);
 		}
@@ -273,16 +282,14 @@ abstract class Uuid implements Stringable
 	 */
 	final public static function is(
 		string $string,
-		string|array|null $type = null
+		string|null $type = null
 	): bool {
 		// always return false when UUIDs have been disabled
 		if (Uuids::enabled() === false) {
 			return false;
 		}
 
-		// use all available schemes by default
-		$type  ??= Uri::$schemes;
-		$type    = implode('|', A::wrap($type));
+		$type  ??= implode('|', Uri::$schemes);
 		$pattern = sprintf('!^(%s)://(.*)!', $type);
 
 		if (preg_match($pattern, $string, $matches) !== 1) {
@@ -400,32 +407,6 @@ abstract class Uuid implements Stringable
 		$this->populate();
 
 		return $this->uri->toString();
-	}
-
-	/**
-	 * Returns the URL of the model, including the query and fragment
-	 * @since 5.1.0
-	 */
-	public function toUrl(): string|null
-	{
-		$model = $this->model();
-
-		if ($model === null) {
-			return null;
-		}
-
-		if (method_exists($model, 'url') === false) {
-			return null;
-		}
-
-		$url  = $model->url();
-		$url .= $this->uri->query()->toString(true);
-
-		if ($this->uri->hasFragment() === true) {
-			$url .= '#' . $this->uri->fragment();
-		}
-
-		return $url;
 	}
 
 	/**

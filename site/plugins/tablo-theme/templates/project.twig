@@ -1,0 +1,67 @@
+{% extends 'default.twig' %}
+
+{% block main %}
+
+  <section class="px-4 py-16 md:px-8">
+
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+      <div class="xl:col-start-2 xl:col-span-2 space-y-10">
+
+        {% include '@snippets/title.twig' %}
+        {% include '@snippets/blocks.twig' %}
+
+      </div>
+    </div>
+
+  </section>
+
+  {%~ if page.media.isNotEmpty %}
+  <section class="px-4 py-16 md:px-8">
+
+    {%~ with { media: page.media.toFiles } %}
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+      {%~ for image in media %}
+      {%~ with {
+        nextImage: image.next(media),
+        prevImage: image.prev(media),
+        numPortraits: (image.prevAll(media).flip().pluck('orientation') | reduce((carry, orientation, k) => carry ?? orientation == 'landscape' ? k : carry, none)),
+      } %}
+      <figure class="{{ clsx('flex flex-col justify-center', image.isLandscape ? 'lg:col-span-4' : [
+        'lg:col-span-2',
+        {
+          'lg:col-start-2' : 0 == (numPortraits ?? image.prevAll(media).count) % 2 and (loop.last or nextImage.isLandscape),
+          'lg:px-8'        :
+            (0 == (numPortraits ?? image.prevAll(media).count) % 2 and nextImage.isPortrait and image.height / image.width < nextImage.height / nextImage.width) or
+            (1 == (numPortraits ?? image.prevAll(media).count) % 2 and prevImage.isPortrait and image.height / image.width < prevImage.height / prevImage.width),
+        },
+      ]) }}">
+        {%~ include '@snippets/grid-item.twig' with { image } only ~%}
+      </figure>
+      {%~ endwith %}
+      {%~ endfor %}
+    </div>
+    {%~ endwith %}
+
+  </section>
+  {%~ endif %}
+
+  {%~ with {
+    prev: page.prevAll.listed.template('project').last ?? page.nextAll.listed.template('project').last,
+    next: page.nextAll.listed.template('project').first ?? page.prevAll.listed.template('project').first,
+  } %}
+  {%~ if next %}
+  <aside class="px-4 py-16 md:px-8">
+
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+      <div class="xl:col-start-2 xl:col-span-2 flex flex-row justify-start">
+        <a class="py-2 -my-2 flex flex-col group" href="{{ next.url }}">
+          <span class="text-2xl text-current/50">{{ t('tablo.label.next') }}</span>
+          <span class="text-4xl"><span class="group-hover:underline">{{ next.title }}</span><span class="ml-1">&rarr;</span></span>
+        </a>
+      </div>
+    </div>
+  </aside>
+  {%~ endif %}
+  {%~ endwith %}
+
+{% endblock main %}

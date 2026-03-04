@@ -1,0 +1,105 @@
+.glightbox-container.glightbox-tablo {
+  & .gfadeIn {
+    /* animation: gfadeIn 0ms ease !important; */
+  }
+
+  & .gfadeOut {
+    /* animation: gfadeOut 200ms ease; */
+  }
+
+  & .gzoomIn {
+    animation: gzoomIn 200ms ease;
+  }
+
+  & .gzoomOut {
+    animation: gzoomOut 200ms ease;
+  }
+
+  & .goverlay {
+    background-color: var(--color-background);
+    opacity: 0.98;
+  }
+
+  & .gslide-description {
+    background: #fff;
+  }
+
+  & .gdesc-inner {
+    padding: 22px 20px;
+  }
+
+  & .gslide-title {
+    font-size: 1em;
+    font-weight: normal;
+    color: #000;
+    margin-bottom: 19px;
+    line-height: 1.4em;
+  }
+
+  & .gslide-desc {
+    font-size: 0.86em;
+    margin-bottom: 0;
+    line-height: 1.4em;
+  }
+
+  & .gslide-video {
+    background: #000;
+  }
+
+  & .gprev,
+  & .gnext,
+  & .gclose {
+    position: absolute;
+
+    & path {
+      fill: var(--color-text);
+    }
+  }
+
+  & .gprev,
+  & .gnext {
+    position: absolute;
+    top: 50%;
+    width: 3rem;
+    height: 4rem;
+    margin-top: -2rem;
+
+    & svg {
+      width: 3rem;
+      height: 4rem;
+    }
+  }
+
+  & .gprev,
+  & .gnext {
+    display: none;
+    @media (width >= 40rem) {
+      display: block;
+    }
+  }
+
+  & .gprev {
+    left: 2rem;
+  }
+
+  & .gnext {
+    right: 2rem;
+  }
+
+  & .gclose {
+    width: 3rem;
+    height: 3rem;
+    top: 2rem;
+    right: 2rem;
+
+    & svg {
+      width: 2rem;
+      height: 2rem;
+      margin: 0.5rem;
+    }
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

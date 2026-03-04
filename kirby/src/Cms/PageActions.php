@@ -119,7 +119,7 @@ trait PageActions
 			]);
 
 			// clear UUID cache recursively (for children and files as well)
-			$oldPage->uuid()?->clear(recursive: true);
+			$oldPage->uuid()?->clear(true);
 
 			if ($oldPage->exists() === true) {
 				// actually move stuff on disk
@@ -141,8 +141,6 @@ trait PageActions
 
 				Dir::remove($oldPage->mediaRoot());
 			}
-
-			$newPage->uuid()?->populate(recursive: true);
 
 			return $newPage;
 		});
@@ -424,8 +422,6 @@ trait PageActions
 			parent: $parentModel
 		);
 
-		$copy->uuid()?->populate(recursive: true);
-
 		return $copy;
 	}
 
@@ -459,11 +455,6 @@ trait PageActions
 		// keep the initial storage class
 		$storage = $page->storage()::class;
 
-		// Make sure that the page does not already exist at this point.
-		// Otherwise, moving the storage to memory storage, might delete
-		// an existing page before we can even run the checks.
-		PageRules::create($page);
-
 		// make sure that the temporary page is stored in memory
 		$page->changeStorage(MemoryStorage::class);
 
@@ -491,8 +482,6 @@ trait PageActions
 			$page = $page->changeStatus('listed', $props['num']);
 		}
 
-		$page->uuid()?->populate();
-
 		return $page;
 	}
 
@@ -509,14 +498,8 @@ trait PageActions
 			'site'   => $this->site(),
 		];
 
-		if (
-			($template = $props['template'] ?? null) &&
-			($model = static::$models[$template] ?? null)
-		) {
-			return $model::create($props);
-		}
-
-		return static::create($props);
+		$modelClass = static::$models[$props['template'] ?? null] ?? static::class;
+		return $modelClass::create($props);
 	}
 
 	/**
@@ -589,25 +572,15 @@ trait PageActions
 			$page->changeStorage(ImmutableMemoryStorage::class);
 
 			// clear UUID cache
-			$page->uuid()?->clear(recursive: true);
-
-			// Explanation: The two while loops below are only
-			// necessary because our property caches result in
-			// outdated collections when deleting nested pages.
-			// When we use a foreach loop to go through those collections,
-			// we encounter outdated objects. Using a while loop
-			// fixes this issue.
-			//
-			// TODO: We can remove this part as soon
-			// as we move away from our immutable object architecture.
+			$page->uuid()?->clear();
 
 			// delete all files individually
-			while ($file = $page->files()->first()) {
+			foreach ($old->files() as $file) {
 				$file->delete();
 			}
 
 			// delete all children individually
-			while ($child = $page->childrenAndDrafts()->first()) {
+			foreach ($old->childrenAndDrafts() as $child) {
 				$child->delete(true);
 			}
 
@@ -617,10 +590,10 @@ trait PageActions
 			$old->versions()->delete();
 
 			if (
-				$page->isListed() === true &&
-				$page->blueprint()->num() === 'default'
+				$old->isListed() === true &&
+				$old->blueprint()->num() === 'default'
 			) {
-				$page->resortSiblingsAfterUnlisting();
+				$old->resortSiblingsAfterUnlisting();
 			}
 
 			return true;
@@ -702,8 +675,6 @@ trait PageActions
 					key: 'page.move.notFound'
 				);
 			}
-
-			$newPage->uuid()?->populate(recursive: true);
 
 			return $newPage;
 		});
@@ -893,9 +864,6 @@ trait PageActions
 			'root'     => null,
 			'template' => $this->intendedTemplate()->name(),
 		]);
-
-		// remove the media directory
-		Dir::remove($this->mediaRoot());
 
 		// actually do it on disk
 		if ($this->exists() === true) {

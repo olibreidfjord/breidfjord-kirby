@@ -1,0 +1,21 @@
+Title: Page Types
+
+----
+
+Layout: [{"attrs":{"fullwidth":"false"},"columns":[{"blocks":[{"content":{"level":"h2","text":"Pages Overview","size":"","uppercase":"false"},"id":"d2cda304-0e30-41ea-a153-c68ae36fbc4c","isHidden":false,"type":"heading"},{"content":{"text":"<p>Explore the different page types available in this theme, each designed for specific content needs—from homepages and blogs to portfolios and contact pages.</p>","size":"","uppercase":"false"},"id":"2892a672-e19d-4be4-b6db-724abd69d921","isHidden":false,"type":"text"}],"id":"24d4db16-cc56-4525-9699-7847e0e16557","width":"1/1"}],"id":"a07037bf-d028-448d-b62c-148f92e5cd9c"},{"attrs":{"fullwidth":"true"},"columns":[{"blocks":[{"content":{"items":[{"image":["file://db8y8pCo1hSseMhz"],"title":"Home Page","caption":"","link":"page://zgacmeQdwYjDrcpe"},{"image":["file://aHoS8JkaqaMtBF5g"],"title":"Projects Folder","caption":"","link":"page://ih2OGTRiz78i4fTh"},{"image":["file://crRGSGCwfggq5j0j"],"title":"Project Detail","caption":"","link":"page://mRH5oKqHezqQnkFC"},{"image":["file://3FKpqg6cviYuvyCx"],"title":"Article Detail","caption":"","link":"page://7t4hcF0Pg7WzuT2W"},{"image":["file://Jw0QAC9FMTpTCXIX"],"title":"Articles Directory","caption":"","link":"page://oWbSEUtIHbgb29Ol"},{"image":["file://KPVEMtWuRSkOQ818"],"title":"Error Page","caption":"","link":"page://f2VmTVNAcxvHKItL"}]},"id":"1d5cebd8-67fa-4d58-9611-078085c2f610","isHidden":false,"type":"showcase"}],"id":"c3dbda02-70e8-456f-84f3-4ba2918cdfb6","width":"1/1"}],"id":"6e4b3b25-cf90-4b41-b13d-82dc9aeeecbb"}]
+
+----
+
+Tagline: 
+
+----
+
+Meta-description: 
+
+----
+
+Og-image: 
+
+----
+
+Uuid: Brc5uLGeNSV7NzHc

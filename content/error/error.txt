@@ -2,8 +2,8 @@ Title: Error
 
 ----
 
-Text: This page cannot be found 😱
+Blocks: [{"content":{"level":"h1","text":"Oops!","size":"size7xl","uppercase":"false"},"id":"11cc55a1-40f8-4a74-a554-6d2e5fe7475b","isHidden":false,"type":"heading"},{"content":{"text":"<p>The page you're looking for has either moved or vanished. Don’t worry, though — it's probably off having an adventure.</p>","size":"size3xl","uppercase":"false"},"id":"a6d4a5a5-1928-443b-a9c6-57234c5625f7","isHidden":false,"type":"text"},{"content":{"actions":[{"kind":"button","primary":"false","title":"Return home","link":"page://zgacmeQdwYjDrcpe","blank":"false","rel":""}]},"id":"21c49add-0fe4-4ec8-bb3f-973508aea3dc","isHidden":false,"type":"actions"}]
 
 ----
 
-Uuid: dRz7d31JoFrPuWkG
+Uuid: f2VmTVNAcxvHKItL

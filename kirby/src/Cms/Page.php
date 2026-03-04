@@ -30,7 +30,6 @@ use Throwable;
  * @license   https://getkirby.com/license
  *
  * @use \Kirby\Cms\HasSiblings<\Kirby\Cms\Pages>
- * @method \Kirby\Uuid\PageUuid uuid()
  */
 class Page extends ModelWithContent
 {
@@ -872,7 +871,7 @@ class Page extends ModelWithContent
 	 */
 	public function permalink(): string|null
 	{
-		return $this->uuid()?->toPermalink();
+		return $this->uuid()?->url();
 	}
 
 	/**
@@ -988,7 +987,7 @@ class Page extends ModelWithContent
 			if ($cache !== null && $response->cache() === true) {
 				$cache->set($cacheId, [
 					'html'        => $html,
-					'response'    => $response->toCacheArray(),
+					'response'    => $response->toArray(),
 					'usesAuth'    => $response->usesAuth(),
 					'usesCookies' => $response->usesCookies(),
 				], $response->expires() ?? 0);

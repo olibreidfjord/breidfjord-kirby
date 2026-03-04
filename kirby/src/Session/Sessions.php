@@ -23,7 +23,6 @@ class Sessions
 {
 	protected SessionStore $store;
 	protected string $mode;
-	protected string|null $cookieDomain;
 	protected string $cookieName;
 
 	protected array $cache = [];
@@ -34,7 +33,6 @@ class Sessions
 	 * @param \Kirby\Session\SessionStore|string $store SessionStore object or a path to the storage directory (uses the FileSessionStore)
 	 * @param array $options Optional additional options:
 	 *                       - `mode`: Default token transmission mode (cookie, header or manual); defaults to `cookie`
-	 *                       - `cookieDomain`: Domain to set the cookie to (this disables the cookie path restriction); defaults to none (default browser behavior)
 	 *                       - `cookieName`: Name to use for the session cookie; defaults to `kirby_session`
 	 *                       - `gcInterval`: How often should the garbage collector be run?; integer or `false` for never; defaults to `100`
 	 */
@@ -47,10 +45,9 @@ class Sessions
 			default                        => new FileSessionStore($store),
 		};
 
-		$this->mode         = $options['mode']         ?? 'cookie';
-		$this->cookieDomain = $options['cookieDomain'] ?? null;
-		$this->cookieName   = $options['cookieName']   ?? 'kirby_session';
-		$gcInterval         = $options['gcInterval']   ?? 100;
+		$this->mode       = $options['mode']       ?? 'cookie';
+		$this->cookieName = $options['cookieName'] ?? 'kirby_session';
+		$gcInterval       = $options['gcInterval'] ?? 100;
 
 		// validate options
 		if (in_array($this->mode, ['cookie', 'header', 'manual'], true) === false) {
@@ -195,14 +192,6 @@ class Sessions
 	public function store(): SessionStore
 	{
 		return $this->store;
-	}
-
-	/**
-	 * Getter for the cookie domain
-	 */
-	public function cookieDomain(): string|null
-	{
-		return $this->cookieDomain;
 	}
 
 	/**

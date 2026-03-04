@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="{{ option('tablo.theme.htmlLang') }}">
+<head>
+  <meta charset="utf-8">
+  <title>
+    {%- block title -%}
+    {%- if page.tagline.isNotEmpty -%}
+    {%- block sitetitle site.title %}{{ option('tablo.theme.titleSeparator') }}{{ page.tagline -}}
+    {%- elseif not page.isHomePage -%}
+    {%- block pagetitle page.title %}{{ option('tablo.theme.titleSeparator') }}{{ block('sitetitle') -}}
+    {%- else -%}
+    {{- block('sitetitle') -}}
+    {%- endif -%}
+    {%- endblock -%}
+  </title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="{% block meta_description page.meta_description.isNotEmpty ? page.meta_description.excerpt : page.description.isNotEmpty ? page.description.excerpt(180) : page.text.excerpt(180) %}">
+
+  {%~ with {
+    og_image: page.og_image.isNotEmpty ? page.og_image.toFile : page.ogImageGenerate({
+      title: page.tagline.isNotEmpty ? page.tagline.value : block('pagetitle'),
+      author: site.title.value,
+      textColor: page.theme('og-image-text-color'),
+      backgroundColor: page.theme('og-image-background-color'),
+    }),
+  } %}
+  <meta property="og:title" content="{{ block('title') }}">
+  <meta property="og:description" content="{{ block('meta_description') }}">
+  <meta property="og:url" content="{{ page.url }}">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="{{ og_image.url }}">
+  <meta property="og:image:alt" content="{{ block('title') }}">
+  <meta property="og:image:width" content="{{ og_image.width }}">
+  <meta property="og:image:height" content="{{ og_image.height }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ block('title') }}">
+  <meta name="twitter:description" content="{{ block('meta_description') }}">
+  <meta name="twitter:image" content="{{ og_image.url }}">
+  <meta name="twitter:image:alt" content="{{ block('title') }}">
+  {%~ endwith %}
+
+  {%~ if site.favicon.isNotEmpty %}
+  {%~ with { favicon: site.favicon.toFile } %}
+  <link rel="icon" type="{{ favicon.mime }}" href="{{ favicon.url }}">
+  {%~ endwith %}
+  {%~ endif %}
+
+  <link rel="stylesheet" href="{{ kirby.plugin('tablo/theme').asset('main.css').mediaUrl }}">
+
+  <style>
+  :root { {{ stlx({
+    '--spacing-copy':      page.theme( 'copy-width'      , 'rem' ),
+    '--spacing-container': page.theme( 'container-width' , 'rem' ),
+    '--color-text':        page.theme( 'text-color'              ),
+    '--color-background':  page.theme( 'background-color'        ),
+    '--color-shade':       page.theme( 'background-shade'        ),
+  }) | join(';') }} }
+  {%~ for scheme in [ 'dark', 'light' ] %}
+  @media (prefers-color-scheme: {{ scheme }}) { :root { {{ stlx({
+    '--color-text':        page.theme( "@#{scheme}.text-color"       ),
+    '--color-background':  page.theme( "@#{scheme}.background-color" ),
+    '--color-shade':       page.theme( "@#{scheme}.background-shade" ),
+  }) | join(';') }} } }
+  {%~ endfor %}
+  </style>
+
+  {%~ if option('tablo.theme.smoothNavigation') %}
+  <script type="module" src="https://cdn.jsdelivr.net/npm/@hotwired/turbo@latest/dist/turbo.es2017-esm.min.js"></script>
+  {%~ endif %}
+
+  <script src="{{ kirby.plugin('tablo/theme').asset('main.js').mediaUrl }}" defer></script>
+  {% block head none %}
+  {{ site.head | raw }}
+  {%~ include '@snippets/head.twig' ignore missing %}
+</head>
+<body class="min-h-screen max-w-container mx-auto flex flex-col touch-pan-y">
+
+  {% block body %}
+  {% endblock %}
+
+</body>
+</html>

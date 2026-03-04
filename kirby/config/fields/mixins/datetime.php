@@ -12,9 +12,6 @@ return [
 		}
 	],
 	'methods' => [
-		'emptyValue' => function () {
-			return '';
-		},
 		'toDatetime' => function ($value, string $format = 'Y-m-d H:i:s') {
 			if ($date = Date::optional($value)) {
 				if ($this->step) {

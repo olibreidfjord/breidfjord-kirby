@@ -48,7 +48,7 @@ class Example
 			return null;
 		}
 
-		if ($tab !== null && array_key_exists($tab, $this->tabs) === true) {
+		if (array_key_exists($tab, $this->tabs) === true) {
 			return $tab;
 		}
 

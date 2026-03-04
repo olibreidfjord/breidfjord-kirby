@@ -99,7 +99,7 @@ readonly class Upload
 	 *
 	 * @throws \Exception Any upload error
 	 */
-	public static function error(int $error): never
+	public static function error(int $error): void
 	{
 		// get error messages from translation
 		$message = [

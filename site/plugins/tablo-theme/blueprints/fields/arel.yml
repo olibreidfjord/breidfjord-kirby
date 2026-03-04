@@ -1,0 +1,9 @@
+label: Rel
+type: checkboxes
+columns: 5
+options:
+  - me
+  - external
+  - noreferrer
+  - noopener
+  - nofollow

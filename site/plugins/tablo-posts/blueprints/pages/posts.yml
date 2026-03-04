@@ -1,0 +1,18 @@
+title: Posts
+icon: lucide-newspaper
+
+tabs:
+  content:
+    label: Content
+    sections:
+      pages: sections/posts
+
+  layout:
+    label: Layout
+    fields:
+      blocks:
+        label: Intro
+        extends: fields/blocks
+
+  seo: tabs/seo
+  files: tabs/files

@@ -1,0 +1,20 @@
+<div class="copy">
+  <figure class="video">
+    {%~ if block.location.value == 'kirby' %}
+    {{ videoHtml(block.video.toFile.url, [], {
+      autoplay:    block.autoplay.toBool,
+      controls:    block.controls.toBool,
+      loop:        block.loop.toBool,
+      muted:       block.muted.toBool ?: block.autoplay.toBool,
+      playsinline: block.autoplay.toBool,
+      poster:      block.poster.toFile.url,
+      preload:     block.preload.value,
+    }) }}
+    {%~ else %}
+    {{ videoHtml(block.url.value) }}
+    {%~ endif %}
+    {%~ if block.caption.isNotEmpty %}
+    <figcaption class="mt-2 text-center text-current/50 text-xl">{{ block.caption.value }}</figcaption>
+    {%~ endif %}
+  </figure>
+</div>

@@ -1,0 +1,8 @@
+label: Theme
+icon: settings
+fields:
+  theme_props:
+    label: Theme
+    type: textarea
+    buttons: false
+    font: monospace

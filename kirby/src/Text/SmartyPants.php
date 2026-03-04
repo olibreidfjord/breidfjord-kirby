@@ -37,7 +37,6 @@ class SmartyPants
 	{
 		return [
 			'attr'                       => 1,
-			'convert.quot'               => true,
 			'doublequote.open'           => '&#8220;',
 			'doublequote.close'          => '&#8221;',
 			'doublequote.low'            => '&#8222;',
@@ -77,7 +76,6 @@ class SmartyPants
 		$this->parser  = new SmartyPantsTypographer($this->options['attr']);
 
 		// configuration
-		$this->parser->convert_quot               = $this->options['convert.quot'];
 		$this->parser->smart_doublequote_open     = $this->options['doublequote.open'];
 		$this->parser->smart_doublequote_close    = $this->options['doublequote.close'];
 		$this->parser->smart_singlequote_open     = $this->options['singlequote.open'];
@@ -113,6 +111,7 @@ class SmartyPants
 	{
 		// prepare the text
 		$text ??= '';
+		$text   = str_replace('&quot;', '"', $text);
 
 		// parse the text
 		return $this->parser->transform($text);

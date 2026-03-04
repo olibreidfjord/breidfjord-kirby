@@ -5,7 +5,6 @@ namespace Kirby\Image;
 use Exception;
 use Kirby\Image\Darkroom\GdLib;
 use Kirby\Image\Darkroom\ImageMagick;
-use Kirby\Image\Darkroom\Imagick;
 
 /**
  * A wrapper around resizing and cropping
@@ -20,9 +19,8 @@ use Kirby\Image\Darkroom\Imagick;
 class Darkroom
 {
 	public static array $types = [
-		'gd'      => GdLib::class,
-		'imagick' => Imagick::class,
-		'im'      => ImageMagick::class
+		'gd' => GdLib::class,
+		'im' => ImageMagick::class
 	];
 
 	public function __construct(
@@ -32,18 +30,19 @@ class Darkroom
 	}
 
 	/**
-	 * Creates a new Darkroom instance
-	 * for the given type/driver
+	 * Creates a new Darkroom instance for the given
+	 * type/driver
 	 *
 	 * @throws \Exception
 	 */
-	public static function factory(string $type, array $settings = []): static
+	public static function factory(string $type, array $settings = []): object
 	{
 		if (isset(static::$types[$type]) === false) {
 			throw new Exception(message: 'Invalid Darkroom type');
 		}
 
-		return new static::$types[$type]($settings);
+		$class = static::$types[$type];
+		return new $class($settings);
 	}
 
 	/**
@@ -70,12 +69,7 @@ class Darkroom
 	 */
 	protected function options(array $options = []): array
 	{
-		$options = [
-			...$this->settings,
-			...$options,
-			// ensure quality isn't unset by provided options
-			'quality' => $options['quality'] ?? $this->settings['quality']
-		];
+		$options = [...$this->settings, ...$options];
 
 		// normalize the crop option
 		if ($options['crop'] === true) {
@@ -87,7 +81,7 @@ class Darkroom
 			$options['blur'] = 10;
 		}
 
-		// normalize the grayscale option
+		// normalize the greyscale option
 		if (isset($options['greyscale']) === true) {
 			$options['grayscale'] = $options['greyscale'];
 			unset($options['greyscale']);
@@ -103,6 +97,8 @@ class Darkroom
 		if ($options['sharpen'] === true) {
 			$options['sharpen'] = 50;
 		}
+
+		$options['quality'] ??= $this->settings['quality'];
 
 		return $options;
 	}

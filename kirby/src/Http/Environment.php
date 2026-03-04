@@ -13,13 +13,13 @@ use Kirby\Toolkit\Str;
  * secure host and base URL detection, as
  * well as loading the dedicated
  * environment options.
+ * @since 3.7.0
  *
  * @package   Kirby Http
  * @author    Bastian Allgeier <bastian@getkirby.com>
  * @link      https://getkirby.com
  * @copyright Bastian Allgeier
  * @license   https://opensource.org/licenses/MIT
- * @since     3.7.0
  */
 class Environment
 {
@@ -809,8 +809,7 @@ class Environment
 			$configCli = F::load(
 				file: $root . '/config.cli.php',
 				fallback: [],
-				allowOutput: false,
-				cache: true
+				allowOutput: false
 			);
 		}
 
@@ -822,8 +821,7 @@ class Environment
 			$configHost = F::load(
 				file: $path,
 				fallback: [],
-				allowOutput: false,
-				cache: true
+				allowOutput: false
 			);
 		}
 
@@ -835,8 +833,7 @@ class Environment
 			$configAddr = F::load(
 				file: $path,
 				fallback: [],
-				allowOutput: false,
-				cache: true
+				allowOutput: false
 			);
 		}
 

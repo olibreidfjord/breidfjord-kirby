@@ -15,8 +15,6 @@ use Kirby\Toolkit\Collection;
  * @copyright Bastian Allgeier
  * @license   https://opensource.org/licenses/MIT
  *
- * @todo Deprecate in v6
- *
  * @extends \Kirby\Toolkit\Collection<\Kirby\Query\Argument>
  */
 class Arguments extends Collection

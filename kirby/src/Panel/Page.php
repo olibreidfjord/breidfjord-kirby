@@ -6,7 +6,6 @@ use Kirby\Cms\File as CmsFile;
 use Kirby\Cms\ModelWithContent;
 use Kirby\Filesystem\Asset;
 use Kirby\Panel\Ui\Buttons\ViewButtons;
-use Kirby\Panel\Ui\Item\PageItem;
 use Kirby\Toolkit\I18n;
 
 /**
@@ -50,7 +49,6 @@ class Page extends Model
 		return ViewButtons::view($this)->defaults(
 			'open',
 			'preview',
-			'-',
 			'settings',
 			'languages',
 			'status'
@@ -198,14 +196,12 @@ class Page extends Model
 	 * Returns the setup for a dropdown option
 	 * which is used in the changes dropdown
 	 * for example.
-	 *
-	 * @deprecated 5.1.4 Use the Kirby\Panel\Ui\Item\PageItem class instead
 	 */
 	public function dropdownOption(): array
 	{
-		return (new PageItem(page: $this->model))->props() + [
-			'icon' => 'page'
-		];
+		return [
+			'text' => $this->model->title()->value(),
+		] + parent::dropdownOption();
 	}
 
 	/**
@@ -258,18 +254,13 @@ class Page extends Model
 	 */
 	public function pickerData(array $params = []): array
 	{
-		$item = new PageItem(
-			page: $this->model,
-			image: $params['image'] ?? null,
-			info: $params['info'] ?? null,
-			layout: $params['layout'] ?? null,
-			text: $params['text'] ?? null,
-		);
+		$params['text'] ??= '{{ page.title }}';
 
 		return [
-			...$item->props(),
+			...parent::pickerData($params),
+			'dragText'    => $this->dragText(),
 			'hasChildren' => $this->model->hasChildren(),
-			'sortable'    => true
+			'url'         => $this->model->url()
 		];
 	}
 

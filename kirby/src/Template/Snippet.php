@@ -24,11 +24,6 @@ use Kirby\Toolkit\Tpl;
 class Snippet extends Tpl
 {
 	/**
-	 * Cache for the snippet files
-	 */
-	public static array $cache = [];
-
-	/**
 	 * Cache for the currently active
 	 * snippet. This is used to start
 	 * and end slots within this snippet
@@ -43,10 +38,22 @@ class Snippet extends Tpl
 	protected array $capture = [];
 
 	/**
+	 * Associative array with variables that
+	 * will be set inside the snippet
+	 */
+	protected array $data;
+
+	/**
 	 * An empty dummy slots object used for snippets
 	 * that were loaded without passing slots
 	 */
 	protected static Slots|null $dummySlots = null;
+
+	/**
+	 * Full path to the PHP file of the snippet;
+	 * can be `null` for "dummy" snippets that don't exist
+	 */
+	protected string|null $file;
 
 	/**
 	 * Keeps track of the state of the snippet
@@ -66,17 +73,11 @@ class Snippet extends Tpl
 
 	/**
 	 * Creates a new snippet
-	 *
-	 * @param string|null $file Full path to the PHP file of the snippet;
-	 *                          can be `null` for "dummy" snippets
-	 *                          that don't exist
-	 * @param array $data Associative array with variables that
-	 *                    will be set inside the snippet
 	 */
-	public function __construct(
-		protected string|null $file,
-		protected array $data = []
-	) {
+	public function __construct(string|null $file, array $data = [])
+	{
+		$this->file = $file;
+		$this->data = $data;
 	}
 
 	/**
@@ -157,9 +158,9 @@ class Snippet extends Tpl
 		array $data = [],
 		bool $slots = false
 	): static|string {
-		// instead of returning empty string when `$name` is null,
-		// allow rest of code to run, otherwise the wrong snippet would
-		// be closed and potential issues for nested snippets may occur
+		// instead of returning empty string when `$name` is null
+		// allow rest of code to run, otherwise the wrong snippet would be closed
+		// and potential issues for nested snippets may occur
 		$file = $name !== null ? static::file($name) : null;
 
 		// for snippets with slots, make sure to open a new
@@ -170,8 +171,7 @@ class Snippet extends Tpl
 
 		// for snippets without slots, directly load and return
 		// the snippet's template file
-		$data = static::scope($data);
-		return static::load($file, $data);
+		return static::load($file, static::scope($data));
 	}
 
 	/**
@@ -187,12 +187,6 @@ class Snippet extends Tpl
 
 		foreach ($names as $name) {
 			$name = (string)$name;
-
-			// retrieve the file from the cache if it exists
-			if (isset(static::$cache[$name]) === true) {
-				return static::$cache[$name];
-			}
-
 			$file = $root . '/' . $name . '.php';
 
 			if (F::exists($file, $root) === false) {
@@ -200,12 +194,11 @@ class Snippet extends Tpl
 			}
 
 			if ($file) {
-				// cache the file for future use
-				return static::$cache[$name] = $file;
+				break;
 			}
 		}
 
-		return null;
+		return $file;
 	}
 
 	/**
@@ -251,14 +244,10 @@ class Snippet extends Tpl
 			$this->slots[$slotName] = new Slot($slotName, $slotContent);
 		}
 
-		// custom data overrides the data from the controller
-		// as well as the data passed to the Snippet instance
+		// custom data overrides for the data that was passed to the snippet instance
 		$data = array_replace_recursive($this->data, $data);
 
-		return static::load(
-			file: $this->file,
-			data: static::scope($data, $this->slots())
-		);
+		return static::load($this->file, static::scope($data, $this->slots()));
 	}
 
 	/**

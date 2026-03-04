@@ -31,7 +31,6 @@ class EntriesField extends FieldClass
 	protected array $field;
 	protected Form $form;
 	protected bool  $sortable = true;
-	protected mixed $value = [];
 
 	public function __construct(array $params = [])
 	{
@@ -134,7 +133,7 @@ class EntriesField extends FieldClass
 	public function toFormValue(): mixed
 	{
 		$form  = $this->form();
-		$value = parent::toFormValue() ?? $this->emptyValue();
+		$value = parent::toFormValue() ?? [];
 
 		return A::map(
 			$value,

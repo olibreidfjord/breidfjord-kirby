@@ -90,9 +90,4 @@ return [
 			return $text;
 		},
 	],
-	'methods' => [
-		'emptyValue' => function () {
-			return [];
-		}
-	]
 ];

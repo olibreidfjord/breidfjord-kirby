@@ -1,0 +1,7 @@
+label: Files
+type: files
+info: "{{ file.nicesize }}"
+sortable: false
+image:
+  back: white
+  cover: false

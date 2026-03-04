@@ -103,9 +103,6 @@ return [
 				},
 			];
 		},
-		'emptyValue' => function () {
-			return '';
-		}
 	],
 	'validations' => [
 		'minlength',

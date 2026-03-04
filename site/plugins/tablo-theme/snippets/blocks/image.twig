@@ -1,0 +1,25 @@
+{%- set image = block.image.toFile -%}
+{%- set thumb = image.thumb({ width: 960, format: 'webp' }) -%}
+{%- set ratio = ratio ?? '%d/%d' | format(thumb.width, thumb.height) -%}
+<figure>
+  <img
+    class="block w-full h-auto"
+    style="aspect-ratio: {{ ratio }};"
+    src="{{ thumb.url }}"
+    data-srcset="{{ image.srcset({
+      '640w': { width:  640, format: 'webp' },
+      '800w': { width:  800, format: 'webp' },
+      '960w': { width:  960, format: 'webp' },
+      '1120w': { width: 1120, format: 'webp' },
+      '1280w': { width: 1280, format: 'webp' },
+      '1600w': { width: 1600, format: 'webp' },
+      '2400w': { width: 2400, format: 'webp' },
+    }) }}"
+    width="{{ thumb.width }}"
+    height="{{ thumb.height }}"
+    alt="{{ block.alt.value }}"
+  >
+  {%~ if block.caption.isNotEmpty %}
+  <figcaption class="mt-2 text-center text-current/50 text-xl">{{ block.caption.value }}</figcaption>
+  {%~ endif %}
+</figure>

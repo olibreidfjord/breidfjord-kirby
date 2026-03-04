@@ -1,0 +1,22 @@
+.tablo-block-actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: var(--spacing-1);
+}
+
+.tablo-block-actions__action {
+  border: 2px solid transparent;
+  border-radius: 9999px;
+  padding: var(--spacing-3);
+}
+
+.tablo-block-actions__action--button {
+  border-color: currentColor;
+}
+
+.tablo-block-actions__action--primary {
+  border-color: transparent;
+  background-color: var(--color-black);
+  color: var(--color-white);
+}

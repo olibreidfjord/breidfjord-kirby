@@ -1,5 +1,4 @@
 {
-	"account": "Account",
 	"account.changeName": "Muuta nimesi",
 	"account.delete": "Poista tilisi",
 	"account.delete.confirm": "Haluatko varmasti poistaa tilisi? Sinut kirjataan ulos välittömästi, eikä tiliäsi voi palauttaa.",
@@ -16,7 +15,7 @@
 	"changes": "Changes",
 	"confirm": "Ok",
 	"collapse": "Pienennä",
-	"collapse.all": "Collapse all",
+	"collapse.all": "Pienennä kaikki",
 	"color": "Color",
 	"coordinates": "Coordinates",
 	"copy": "Kopioi",
@@ -43,9 +42,6 @@
 
 	"delete": "Poista",
 	"delete.all": "Poista kaikki",
-
-	"deselect": "Deselect",
-	"deselect.all": "Deselect all",
 
 	"dialog.fields.empty": "This dialog has no fields",
 	"dialog.files.empty": "Ei valittavissa olevia tiedostoja",
@@ -298,12 +294,8 @@
 	"error.validation.uuid": "Please enter a valid UUID",
 	"error.validation.url": "Anna kelpaava URL",
 
-	"error.version.discard.permission": "You are not allowed to discard this version",
-	"error.version.publish.permission": "You are not allowed to publish this version",
-	"error.version.save.permission": "You are not allowed to change this version",
-
 	"expand": "Laajenna",
-	"expand.all": "Expand all",
+	"expand.all": "Laajenna kaikki",
 
 	"field.invalid": "The field is invalid",
 	"field.required": "Kenttä on pakollinen",
@@ -384,7 +376,6 @@
 
 	"field.structure.delete.confirm": "Haluatko varmasti poistaa tämän rivin?",
 	"field.structure.delete.confirm.all": "Do you really want to delete all entries?",
-	"field.structure.delete.confirm.selected": "Do you really want to delete the selected entries?",
 	"field.structure.empty": "Rivejä ei ole vielä lisätty",
 
 	"field.users.empty": "Käyttäjiä ei ole vielä valittu",
@@ -483,7 +474,6 @@
 	"license.code": "Tunniste",
 	"license.code.help": "You received your license code after the purchase via email. Please copy and paste it here.",
 	"license.code.label": "Anna lisenssiavain",
-	"license.remove.text": "<p>Removing the license will irreversibly delete the license file from this site. You can then activate this site with a different license key or re-register the same license key if the domain remains the same.</p><p>To change the domain associated with the license, please contact the Kirby team. <a href='https://getkirby.com/license'>Read more &rarr;</a></p>",
 	"license.status.active.info": "Includes new major versions until {date}",
 	"license.status.active.label": "Valid license",
 	"license.status.demo.info": "This is a demo installation",
@@ -635,9 +625,7 @@
 	"plugin": "Liitännäinen",
 	"plugins": "Liitännäiset",
 	"prev": "Edellinen",
-
 	"preview": "Esikatselu",
-	"preview.browser.scroll": "Sync scroll",
 
 	"publish": "Publish",
 	"published": "Julkaistut",
@@ -673,7 +661,6 @@
 
 	"security": "Tietoturva",
 	"select": "Valitse",
-	"select.all": "Select all",
 	"server": "Palvelin",
 	"settings": "Asetukset",
 	"show": "Näytä",
@@ -782,13 +769,11 @@
 	"user.changePassword.current": "Your current password",
 	"user.changePassword.new": "Uusi salasana",
 	"user.changePassword.new.confirm": "Vahvista uusi salasana...",
-	"user.changePassword.own": "Your own password",
 	"user.changeRole": "Muuta käyttäjätasoa",
 	"user.changeRole.select": "Valitse uusi käyttäjätaso",
 	"user.create": "Lisää uusi käyttäjä",
 	"user.delete": "Poista tämä käyttäjä",
 	"user.delete.confirm": "Haluatko varmsti poistaa käyttäjän <br><strong>{email}</strong>?",
-	"user.setPassword": "Set password",
 
 	"users": "Käyttäjät",
 

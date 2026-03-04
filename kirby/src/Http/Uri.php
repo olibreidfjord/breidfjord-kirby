@@ -216,9 +216,9 @@ class Uri implements Stringable
 
 		if ($app = App::instance(null, true)) {
 			$environment = $app->environment();
+		} else {
+			$environment = new Environment();
 		}
-
-		$environment ??= new Environment();
 
 		return new static($environment->requestUrl(), $props);
 	}
@@ -230,7 +230,7 @@ class Uri implements Stringable
 	 */
 	public function domain(): string|null
 	{
-		if ($this->host === null || $this->host === '' || $this->host === '/') {
+		if (empty($this->host) === true || $this->host === '/') {
 			return null;
 		}
 
@@ -255,7 +255,7 @@ class Uri implements Stringable
 
 	public function hasFragment(): bool
 	{
-		return $this->fragment !== null && $this->fragment !== '';
+		return empty($this->fragment) === false;
 	}
 
 	public function hasPath(): bool
@@ -281,9 +281,8 @@ class Uri implements Stringable
 	 */
 	public function idn(): static
 	{
-		if ($this->isAbsolute() === true) {
-			$host = Idn::decode($this->host);
-			$this->setHost($host);
+		if (empty($this->host) === false) {
+			$this->setHost(Idn::decode($this->host));
 		}
 		return $this;
 	}
@@ -296,32 +295,11 @@ class Uri implements Stringable
 	{
 		if ($app = App::instance(null, true)) {
 			$url = $app->url('index');
+		} else {
+			$url = (new Environment())->baseUrl();
 		}
-
-		$url ??= (new Environment())->baseUrl();
 
 		return new static($url, $props);
-	}
-
-	/**
-	 * Inherit query, params and fragment from a parent Uri
-	 * @since 5.2.0
-	 * @return $this
-	 */
-	public function inherit(Uri|string $parent): static
-	{
-		if (is_string($parent) === true) {
-			$parent = new static($parent);
-		}
-
-		$this->query->merge($parent->query());
-		$this->params->merge($parent->params());
-
-		if ($fragment = $parent->fragment()) {
-			$this->setFragment($fragment);
-		}
-
-		return $this;
 	}
 
 	/**
@@ -329,16 +307,7 @@ class Uri implements Stringable
 	 */
 	public function isAbsolute(): bool
 	{
-		return $this->host !== null && $this->host !== '';
-	}
-
-	/**
-	 * Returns the fragment after the hash
-	 * @since 5.1.0
-	 */
-	public function fragment(): string|null
-	{
-		return $this->fragment;
+		return empty($this->host) === false;
 	}
 
 	/**
@@ -496,7 +465,7 @@ class Uri implements Stringable
 		$url   = $this->base();
 		$slash = true;
 
-		if ($url === null || $url === '') {
+		if (empty($url) === true) {
 			$url   = '/';
 			$slash = false;
 		}
@@ -510,8 +479,8 @@ class Uri implements Stringable
 		$url .= $path;
 		$url .= $this->query->toString(true);
 
-		if ($this->hasFragment() === true) {
-			$url .= '#' . $this->fragment();
+		if (empty($this->fragment) === false) {
+			$url .= '#' . $this->fragment;
 		}
 
 		return $url;
@@ -525,9 +494,8 @@ class Uri implements Stringable
 	 */
 	public function unIdn(): static
 	{
-		if ($this->isAbsolute() === true) {
-			$host = Idn::encode($this->host);
-			$this->setHost($host);
+		if (empty($this->host) === false) {
+			$this->setHost(Idn::encode($this->host));
 		}
 		return $this;
 	}

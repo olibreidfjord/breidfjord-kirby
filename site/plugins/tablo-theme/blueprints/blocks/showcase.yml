@@ -1,0 +1,29 @@
+name: Showcase
+icon: lucide-tv-minimal
+preview: fields
+wysiwyg: true
+fields:
+  items:
+    type: structure
+    fields:
+      image:
+        label: Image
+        type: files
+        multiple: false
+      title:
+        label: Title
+        type: text
+      caption:
+        label: Caption
+        type: text
+      link:
+        label: Link
+        type: link
+        required: true
+    columns:
+      title:
+        width: 2/5
+      caption:
+        width: 2/5
+      link:
+        width: 1/5

@@ -1,0 +1,16 @@
+{%~ for item in actions %}
+<a
+  class="{{ clsx('button', {
+    'button--primary': item.primary.toBool,
+    'button--smaller': smaller,
+    'button--bigger': bigger,
+  }) }}"
+  href="{{ item.link.toUrl }}"
+  {%~ if item.blank.toBool %}
+  target="_blank"
+  {%~ endif %}
+  {%~ if item.rel.isNotEmpty %}
+  rel="{{ item.rel.split | join(' ') }}"
+  {%~ endif %}
+>{{ item.title.isNotEmpty ? item.title.value : item.link.toTitle }}</a>
+{%~ endfor %}

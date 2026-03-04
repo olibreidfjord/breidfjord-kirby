@@ -24,8 +24,8 @@ return [
 		/**
 		 * Default date when a new page/file/user gets created
 		 */
-		'default' => function (string|null $default = null) {
-			return $default;
+		'default' => function (string|null $default = null): string {
+			return $this->toDatetime($default) ?? '';
 		},
 
 		/**
@@ -77,15 +77,6 @@ return [
 		}
 	],
 	'computed' => [
-		'default' => function () {
-			$default = $this->default;
-
-			if (is_string($default) === true) {
-				$default = $this->model()->toString($default);
-			}
-
-			return $this->toDatetime($default) ?? '';
-		},
 		'display' => function () {
 			if ($this->display) {
 				return Str::upper($this->display);

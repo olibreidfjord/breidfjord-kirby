@@ -1,0 +1,23 @@
+name: People
+icon: lucide-users
+preview: fields
+wysiwyg: true
+fields:
+  items:
+    type: structure
+    fields:
+      title:
+        label: Title
+        type: text
+      caption:
+        label: Caption
+        type: text
+      photo:
+        label: Photo
+        type: files
+        multiple: false
+    columns:
+      title:
+        width: 1/2
+      caption:
+        width: 1/2

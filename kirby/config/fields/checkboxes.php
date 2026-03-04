@@ -15,13 +15,6 @@ return [
 		'placeholder' => null,
 
 		/**
-		 * Show/hide the batch select toggle
-		 */
-		'batch' => function (bool $batch = false) {
-			return $batch;
-		},
-
-		/**
 		 * Arranges the checkboxes in the given number of columns
 		 */
 		'columns' => function (int $columns = 1) {
@@ -56,11 +49,6 @@ return [
 		'value' => function () {
 			return $this->sanitizeOptions($this->value);
 		},
-	],
-	'methods' => [
-		'emptyValue' => function () {
-			return [];
-		}
 	],
 	'save' => function ($value): string {
 		return A::join($value, ', ');

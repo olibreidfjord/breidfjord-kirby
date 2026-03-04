@@ -1,1 +1,167 @@
-Title: Mægazine
+Title: Tablo Arc
+
+----
+
+Logo: - file://ptRlpRTbMVViSUOJ
+
+----
+
+Favicon: 
+
+----
+
+Logo-embed: true
+
+----
+
+Logo-width: 
+
+----
+
+Logo-height: 
+
+----
+
+Logo-title: true
+
+----
+
+Logo-title-size: 30
+
+----
+
+Mainmenu:
+
+- 
+  link: page://zgacmeQdwYjDrcpe
+  title: ""
+  blank: 'false'
+  rel: ""
+- 
+  link: page://ih2OGTRiz78i4fTh
+  title: ""
+  blank: 'false'
+  rel: ""
+- 
+  link: page://oWbSEUtIHbgb29Ol
+  title: ""
+  blank: 'false'
+  rel: ""
+- 
+  link: page://Brc5uLGeNSV7NzHc
+  title: ""
+  blank: 'false'
+  rel: ""
+
+----
+
+Actions:
+
+- 
+  title: Purchase Theme
+  primary: 'true'
+  link: https://tablo.supply/themes/tablo-arc
+  blank: 'true'
+  rel: external, noreferrer, noopener
+
+----
+
+Sociallinks:
+
+- 
+  icon:
+    - file://f48SCetpFBzCEZ7B
+  link: https://github.com/lemmon
+  title: GitHub
+  blank: 'false'
+  rel: me
+- 
+  icon:
+    - file://d4aN0mQJJfOBh13W
+  link: https://x.com/lemmon
+  title: Twitter / X
+  blank: 'false'
+  rel: me
+- 
+  icon:
+    - file://m4RcdCVCnukARQno
+  link: https://www.instagram.com/
+  title: Instagram
+  blank: 'false'
+  rel: external, noreferrer, nofollow
+- 
+  icon:
+    - file://fJev40HcyHUTB3Zx
+  link: https://www.threads.net/
+  title: Threads
+  blank: 'false'
+  rel: external, noreferrer, nofollow
+
+----
+
+Mobilemenu: 
+
+----
+
+Footermenu:
+
+- 
+  link: page://ih2OGTRiz78i4fTh
+  title: ""
+  blank: 'false'
+  rel: ""
+- 
+  link: page://oWbSEUtIHbgb29Ol
+  title: Insights
+  blank: 'false'
+  rel: ""
+- 
+  link: page://Brc5uLGeNSV7NzHc
+  title: ""
+  blank: 'false'
+  rel: ""
+- 
+  link: page://lJMakhWPSKdB7p49
+  title: ""
+  blank: 'false'
+  rel: ""
+- 
+  link: https://tablo.supply/
+  title: Themes
+  blank: 'false'
+  rel: external
+- 
+  link: https://x.com/lemmon
+  title: Twitter
+  blank: 'true'
+  rel: me, external, nofollow
+
+----
+
+Footercta: [{"content":{"level":"h2","text":"Love what you see?","size":"size6xl","uppercase":"false"},"id":"70b89840-3671-4276-afb1-47a48994e1fe","isHidden":false,"type":"heading"},{"content":{"text":"<p>Tablo Arc is more than just a demo—it’s the foundation for your next website. Perfectly designed for studios and creatives, it offers everything you need to showcase your work beautifully and professionally.</p>","size":"","uppercase":"false"},"id":"337c30c9-551a-4cf5-a64f-612bf58acd48","isHidden":false,"type":"text"},{"content":{"actions":[{"title":"Purchase Template","primary":"true","link":"https://tablo.supply/themes/tablo-arc","blank":"true","rel":"external, noreferrer, noopener","kind":"button"},{"title":"More Themes","primary":"false","link":"https://www.tablo.me/","blank":"false","rel":"","kind":"link"}]},"id":"808ccfc7-3b3b-4f1b-98cf-4b6be83e4939","isHidden":false,"type":"actions"}]
+
+----
+
+Footercopyright: © (date: year) (link: https://tablo.supply/ text: Tablo.Supply)
+
+----
+
+Footerclaim: Built with (link: https://tablo.supply/themes/tablo-arc text: Tablo Arc Theme) for (link: https://getkirby.com/ text: Kirby CMS)
+
+----
+
+Theme-props:
+
+container-width  = 100
+copy-width       = 50
+
+text-color       = #040404
+background-color = #ffffff
+
+----
+
+Head: 
+
+----
+
+Headermenu: 

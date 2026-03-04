@@ -30,8 +30,6 @@ class License
 
 	protected const SALT = 'kwAHMLyLPBnHEskzH9pPbJsBxQhKXZnX';
 
-	protected App $kirby;
-
 	// cache
 	protected LicenseStatus $status;
 	protected LicenseType $type;
@@ -52,8 +50,6 @@ class License
 		if ($email !== null) {
 			$this->email = $this->normalizeEmail($email);
 		}
-
-		$this->kirby = App::instance();
 	}
 
 	/**
@@ -102,15 +98,6 @@ class License
 		string|null $handler = null
 	): int|string|null {
 		return $this->date !== null ? Str::date(strtotime($this->date), $format, $handler) : null;
-	}
-
-	/**
-	 * Deletes the license file if it exists
-	 * @since 5.1.0
-	 */
-	public function delete(): bool
-	{
-		return F::remove($this->root());
 	}
 
 	/**
@@ -192,7 +179,7 @@ class License
 		}
 
 		// get release date of current major version
-		$major   = Str::before($this->kirby->version(), '.');
+		$major   = Str::before(App::instance()->version(), '.');
 		$release = strtotime(static::HISTORY[$major] ?? '');
 
 		// if there's no matching version in the history
@@ -232,7 +219,7 @@ class License
 		}
 
 		// compare domains
-		if ($this->normalizeDomain($this->kirby->system()->indexUrl()) !== $this->normalizeDomain($this->domain)) {
+		if ($this->normalizeDomain(App::instance()->system()->indexUrl()) !== $this->normalizeDomain($this->domain)) {
 			return false;
 		}
 
@@ -249,7 +236,7 @@ class License
 		}
 
 		// get the public key
-		$pubKey = F::read($this->kirby->root('kirby') . '/kirby.pub');
+		$pubKey = F::read(App::instance()->root('kirby') . '/kirby.pub');
 
 		// verify the license signature
 		$data      = json_encode($this->signatureData());
@@ -341,7 +328,7 @@ class License
 	public static function read(): static
 	{
 		try {
-			$license = Json::read(static::root());
+			$license = Json::read(App::instance()->root('license'));
 		} catch (Throwable) {
 			return new static();
 		}
@@ -423,15 +410,6 @@ class License
 	}
 
 	/**
-	 * Returns the root path to the license file
-	 * @since 5.1.0
-	 */
-	public static function root(): string
-	{
-		return App::instance()->root('license');
-	}
-
-	/**
 	 * Saves the license in the config folder
 	 */
 	public function save(): bool
@@ -442,11 +420,11 @@ class License
 			);
 		}
 
+		// where to store the license file
+		$file = App::instance()->root('license');
+
 		// save the license information
-		return Json::write(
-			file: $this->root(),
-			data: $this->content()
-		);
+		return Json::write($file, $this->content());
 	}
 
 	/**

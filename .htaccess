@@ -1,5 +1,5 @@
 # Kirby .htaccess
-# revision 2023-07-22
+# revision 2020-06-15
 
 # rewrite rules
 <IfModule mod_rewrite.c>
@@ -22,6 +22,24 @@ RewriteEngine on
 #
 # RewriteBase /
 
+# ===== TABLO CUSTOM CODE START =====
+# Tablo revision 2025-09-23
+
+# Media cache control optimization
+<IfModule mod_headers.c>
+  <If "%{REQUEST_URI} =~ m#^/media/.#">
+    Header unset ETag
+    FileETag None
+    Header set Cache-Control "public, max-age=31536000, immutable"
+  </If>
+</IfModule>
+
+# Block access to dependency management files
+RewriteRule ^composer\.(json|lock)$ - [F,L]
+RewriteRule ^package(-lock)?\.json$ - [F,L]
+
+# ===== TABLO CUSTOM CODE END =====
+
 # block files and folders beginning with a dot, such as .git
 # except for the .well-known folder, which is used for Let's Encrypt and security.txt
 RewriteRule (^|/)\.(?!well-known\/) index.php [L]
@@ -43,7 +61,7 @@ RewriteRule ^(.*) index.php [L]
 </IfModule>
 
 # pass the Authorization header to PHP
-SetEnvIf Authorization "(.+)" HTTP_AUTHORIZATION=$1
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
 
 # compress text file responses
 <IfModule mod_deflate.c>
@@ -54,14 +72,4 @@ AddOutputFilterByType DEFLATE text/javascript
 AddOutputFilterByType DEFLATE application/json
 AddOutputFilterByType DEFLATE application/javascript
 AddOutputFilterByType DEFLATE application/x-javascript
-</IfModule>
-
-# set security headers in all responses
-<IfModule mod_headers.c>
-
-# serve files as plain text if the actual content type is not known
-# (hardens against attacks from malicious file uploads)
-Header set Content-Type "text/plain" "expr=-z %{CONTENT_TYPE}"
-Header set X-Content-Type-Options "nosniff"
-
 </IfModule>

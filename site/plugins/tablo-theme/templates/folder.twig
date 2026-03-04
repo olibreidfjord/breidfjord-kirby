@@ -1,0 +1,23 @@
+{% extends 'default.twig' %}
+
+{% block main %}
+
+  <section class="px-4 py-16 md:px-8">
+
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+      <div class="xl:col-start-2 xl:col-span-2">
+
+        {% include '@snippets/blocks.twig' %}
+
+      </div>
+    </div>
+
+  </section>
+
+  <section class="px-4 py-16 md:px-8">
+
+    {% include '@snippets/blocks/projects.twig' with { projects: page.children().template('project').listed } %}
+
+  </section>
+
+{% endblock main %}

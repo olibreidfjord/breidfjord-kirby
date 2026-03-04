@@ -1,29 +1,12 @@
 {
-  "name": "getkirby/starterkit",
-  "description": "Kirby Starterkit",
   "type": "project",
-  "keywords": [
-    "kirby",
-    "cms",
-    "starterkit"
-  ],
-  "authors": [
-    {
-      "name": "Bastian Allgeier",
-      "email": "bastian@getkirby.com",
-      "homepage": "https://getkirby.com"
-    }
-  ],
-  "homepage": "https://getkirby.com",
-  "support": {
-    "email": "support@getkirby.com",
-    "issues": "https://github.com/getkirby/starterkit/issues",
-    "forum": "https://forum.getkirby.com",
-    "source": "https://github.com/getkirby/starterkit"
-  },
   "require": {
-    "php": "~8.2.0 || ~8.3.0 || ~8.4.0 || ~8.5.0",
-    "getkirby/cms": "^5.2"
+    "getkirby/cms": "^5.0",
+    "twig/twig": "^3.0"
+  },
+  "require-dev": {
+    "symfony/var-dumper": "^7.0",
+    "lemmon/cl": "^1.1"
   },
   "config": {
     "allow-plugins": {

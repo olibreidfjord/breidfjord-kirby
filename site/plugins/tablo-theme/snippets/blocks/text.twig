@@ -1,0 +1,11 @@
+<div class="copy {{ clsx({
+  'uppercase': block.uppercase.toBool,
+}, {
+  size3xl: 'text-3xl',
+  size4xl: 'text-4xl',
+  size5xl: 'text-5xl',
+  size6xl: 'text-6xl',
+  size7xl: 'text-7xl',
+}[block.size.value] ?? 'text-2xl') }} max-w-copy">
+  {{ block.text.value | raw }}
+</div>

@@ -1,0 +1,39 @@
+label: Social Links
+type: structure
+fields:
+  icon:
+    label: Icon
+    type: files
+    multiple: false
+    info: "{{ file.width }} x {{ file.height }}"
+    image:
+      cover: false
+      back: white
+    required: true
+  link:
+    label: Link
+    type: link
+    required: true
+  title:
+    label: Title
+    type: text
+  blank:
+    label: Target
+    type: toggle
+    text:
+      - current window
+      - new window
+  rel:
+    label: Rel
+    type: checkboxes
+    columns: 4
+    options:
+      - me
+      - external
+      - noreferrer
+      - nofollow
+columns:
+  icon:
+    width: 1/6
+  link:
+    width: 5/6

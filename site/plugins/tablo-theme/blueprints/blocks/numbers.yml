@@ -1,0 +1,36 @@
+name: Numbers
+icon: lucide-sigma
+preview: fields
+wysiwyg: true
+tabs:
+  content:
+    label: Content
+    fields:
+      items:
+        type: structure
+        fields:
+          number:
+            label: Number
+            type: text
+          description:
+            label: Description
+            type: text
+        columns:
+          number:
+            width: 1/3
+          description:
+            width: 2/3
+  settings:
+    label: Settings
+    fields:
+      size:
+        label: Size
+        type: select
+        options:
+          size3xl: 3XL
+          size4xl: 4XL
+          size5xl: 5XL
+          size6xl: 6XL
+          size7xl: 7XL
+        default: size5xl
+        required: true

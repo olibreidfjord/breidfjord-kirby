@@ -1,0 +1,17 @@
+{% extends 'blank.twig' %}
+
+{% block body %}
+
+  <section class="my-auto px-4 py-16 md:px-8">
+
+    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+      <div class="xl:col-start-2 xl:col-span-2 text-balance">
+
+          {% include '@snippets/blocks.twig' %}
+
+      </div>
+    </div>
+
+  </section>
+
+{% endblock body %}
