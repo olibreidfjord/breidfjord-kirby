@@ -20,5 +20,6 @@ jobs:
             cd /home/oli40/web/kirby.olafurbreidfjord.com/public_html
             git fetch origin
             git reset --hard origin/main
+            rm -rf node_modules
             npm install
             npm run build
