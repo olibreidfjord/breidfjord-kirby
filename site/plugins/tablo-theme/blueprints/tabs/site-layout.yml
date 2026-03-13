@@ -4,6 +4,29 @@ fields:
     label: Branding
     type: headline
 
+  h_layout_hero:
+    label: Hero
+    type: headline
+
+  hero:
+    label: Hero Image
+    type: files
+    multiple: false
+    image:
+      cover: true
+      ratio: 16/9
+    width: 1/2
+
+  hero_title:
+    label: Hero Title
+    type: text
+    width: 1/2
+
+  hero_subtitle:
+    label: Hero Subtitle
+    type: text
+    width: 1/2
+
   logo:
     label: Logo
     type: files

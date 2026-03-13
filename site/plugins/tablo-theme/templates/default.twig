@@ -7,48 +7,61 @@
 
 {% block body %}
 
-  {% include '@snippets/mobile-menu.twig' %}
+{% include '@snippets/mobile-menu.twig' %}
 
-  <header class="py-4 md:p-4 flex flex-row justify-between items-center gap-8 sticky top-0 z-9999 lg:static">
-    {% include '@snippets/site-title.twig' %}
+  <div class="site-nav-wrap{% if site.hero.isNotEmpty %} has-hero{% endif %}">
+    <header class="py-4 px-6 flex flex-row justify-between items-center gap-8">
+      {% include '@snippets/site-title.twig' %}
 
-    {%~ if site.actions.isNotEmpty %}
-    <aside class="px-4 hidden lg:flex md:flex-row-reverse md:flex-wrap items-center gap-2 text-metadata">
-      {% include '@snippets/actions.twig' with {
-        actions: site.actions.toStructure,
-        smaller: true,
-      } %}
-    </aside>
-    {%~ endif %}
+      {%~ if site.mainMenu.isNotEmpty %}
+      <nav class="hidden lg:block text-metadata underline-offset-8 **:decoration-2">
+        <ul class="flex flex-row flex-wrap gap-x-6">
+          {%~ for item in site.mainMenu.toStructure %}
+          <li>{%
+            include '@snippets/link.twig'
+            with {
+              class:     'p-2',
+              link:      item.link,
+              title:     item.title,
+              blank:     item.blank,
+              rel:       item.rel,
+              underline: item.link.toPage.isOpen,
+            }
+          %}</li>
+          {%~ endfor %}
+        </ul>
+      </nav>
+      {%~ endif %}
 
-    <button id="mobile-menu-toggle" type="button" class="flex p-4 cursor-pointer lg:hidden" aria-label="Toggle menu">
-      <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-        <line x1="2" x2="22" y1="6" y2="6" />
-        <line x1="2" x2="22" y1="12" y2="12" />
-        <line x1="2" x2="22" y1="18" y2="18" />
-      </svg>
-    </button>
-  </header>
+      <button id="mobile-menu-toggle" type="button" class="flex p-4 cursor-pointer lg:hidden" aria-label="Toggle menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <line x1="2" x2="22" y1="6" y2="6" />
+          <line x1="2" x2="22" y1="12" y2="12" />
+          <line x1="2" x2="22" y1="18" y2="18" />
+        </svg>
+      </button>
+    </header>
+  </div>
 
-  {%~ if site.mainMenu.isNotEmpty %}
-  <nav class="hidden lg:block py-4 md:p-4 text-metadata underline-offset-8 **:decoration-2">
-    <ul class="p-2 flex flex-row flex-wrap gap-x-6">
-      {%~ for item in site.mainMenu.toStructure %}
-      <li>{%
-        include '@snippets/link.twig'
-        with {
-          class:     'p-2',
-          link:      item.link,
-          title:     item.title,
-          blank:     item.blank,
-          rel:       item.rel,
-          underline: item.link.toPage.isOpen,
-        }
-      %}</li>
-      {%~ endfor %}
-    </ul>
-  </nav>
-  {%~ endif %}
+{%~ if site.hero.isNotEmpty ~%}
+  <section id="hero" class="hero-section">
+    <div class="hero-image-wrap">
+      <img
+        src="{{ site.hero.toFile.url }}"
+        alt="{{ site.hero_title }}"
+        class="hero-img"
+      />
+      <div class="hero-overlay">
+        {%~ if site.hero_title.isNotEmpty ~%}
+        <h1 class="hero-title">{{ site.hero_title }}</h1>
+        {%~ endif ~%}
+        {%~ if site.hero_subtitle.isNotEmpty ~%}
+        <p class="hero-subtitle">{{ site.hero_subtitle }}</p>
+        {%~ endif ~%}
+      </div>
+    </div>
+  </section>
+  {%~ endif ~%}
 
   <main class="flex-1">
   {% block main %}

@@ -1,26 +1,5 @@
-{%~ with {
-  logo:        site.logo.toFile,
-  logo_embed:  site.logo_embed.toBool,
-  logo_width:  site.logo_width.toInt,
-  logo_height: site.logo_height.toInt,
-  logo_title:  site.logo_title.toBool,
-  title_size:  site.logo_title_size.toInt,
-} %}
-<figure><a class="p-4 flex flex-row items-center gap-2" href="{{ site.url }}" title="{{ site.title }}">
-  {%~ if logo %}
-  {%~ if logo_embed and logo.mime == 'image/svg+xml' %}
-  {{ logo.read | raw }}
-  {%~ else %}
-  <img
-    src="{{ logo.url }}"
-    width="{{ (logo_width or logo_height) ? (logo_width ?: '') : logo.width }}"
-    height="{{ (logo_width or logo_height) ? (logo_height ?: '') : logo.height }}"
-    alt="{{ site.title }}"
-  >
-  {%~ endif %}
-  {%~ endif %}
-  {%~ if not logo or logo_title %}
-  <h1 class="text-3xl tracking-tight" style="font-size: {{ title_size }}px;">{{ site.title }}</h1>
-  {%~ endif %}
-</a></figure>
-{%~ endwith %}
+<figure>
+  <a class="p-4 flex flex-row items-center" href="{{ site.url }}" title="{{ site.title }}">
+    <h1 class="text-3xl tracking-tight" style="font-size: {{ site.logo_title_size.toInt }}px;">{{ site.title }}</h1>
+  </a>
+</figure>

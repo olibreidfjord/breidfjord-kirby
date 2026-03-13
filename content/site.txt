@@ -2,6 +2,18 @@ Title: Tablo Arc
 
 ----
 
+Hero: - 'file://lrjavxoa99jzkzmk'
+
+----
+
+Hero-title: Tablo Arc
+
+----
+
+Hero-subtitle: Base theme development
+
+----
+
 Logo: - 'file://ptRlpRTbMVViSUOJ'
 
 ----

@@ -19,3 +19,5 @@ root@admin:~#
 
 New token:
 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
+
+11:29Grid systems provide the invisible architecture that makes great web design feel effortless. Pioneered by Josef Müller-Brockmann, they bring mathematical order to visual chaos — aligning elements, establishing rhythm, and creating hierarchy. For modern web design, grids ensure consistency across breakpoints, speed up layout decisions, and give users an intuitive, trustworthy experience.
