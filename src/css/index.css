@@ -114,36 +114,53 @@
   left: 0;
   right: 0;
   z-index: 9999;
-  transition: background 0.3s ease, color 0.3s ease;
+  padding: 1rem 1.5rem;
+  transition: padding 0.4s ease;
 }
 
+.site-nav-wrap.has-hero header {
+  transition: background 0.4s ease, backdrop-filter 0.4s ease, 
+              border-radius 0.4s ease, padding 0.4s ease,
+              box-shadow 0.4s ease;
+}
+
+/* Scrolled state — pill appears */
+.site-nav-wrap.has-hero.nav-dark {
+  padding: 0.75rem 1.5rem;
+}
+
+.site-nav-wrap.has-hero.nav-dark header {
+  background: rgba(255, 255, 255, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 9999px;
+  padding: 0.5rem 1.5rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+
+/* Text colours */
 .site-nav-wrap.has-hero,
 .site-nav-wrap.has-hero a,
-.site-nav-wrap.has-hero button,
-.site-nav-wrap.has-hero h1 {
-  color: #ffffff;
-  transition: color 0.3s ease;
+.site-nav-wrap.has-hero h1,
+.site-nav-wrap.has-hero button {
+  color: white;
 }
 
 .site-nav-wrap.has-hero svg {
-  stroke: #ffffff;
-  transition: stroke 0.3s ease;
-}
-
-/* Dark state — after scrolling past hero */
-.site-nav-wrap.has-hero.nav-dark {
-  background: #ffffff;
+  stroke: white;
 }
 
 .site-nav-wrap.has-hero.nav-dark,
 .site-nav-wrap.has-hero.nav-dark a,
-.site-nav-wrap.has-hero.nav-dark button,
-.site-nav-wrap.has-hero.nav-dark h1 {
+.site-nav-wrap.has-hero.nav-dark h1,
+.site-nav-wrap.has-hero.nav-dark button {
   color: #000000;
+  transition: color 0.3s ease;
 }
 
 .site-nav-wrap.has-hero.nav-dark svg {
   stroke: #000000;
+  transition: stroke 0.3s ease;
 }
 
 .site-nav-wrap:not(.has-hero) {
