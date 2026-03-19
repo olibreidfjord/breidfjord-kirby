@@ -62,44 +62,34 @@ if (heroWrap) {
   }, { passive: true })
 }
 
-// Nav colour switch on scroll
-function initNavColorSwitch() {
-  const navWrap = document.querySelector('.site-nav-wrap.has-hero')
-  const heroSection = document.querySelector('.hero-section')
-  if (!navWrap || !heroSection) return
+// Midnight header
+function initMidnightHeader() {
+  const header = document.querySelector('[data-js="midnightHeader"]')
+  if (!header) return
 
-  const getTriggerY = () => navWrap.getBoundingClientRect().height
+  const hero = document.querySelector('.hero-section')
+  if (!hero) return
 
-  // Prefer IntersectionObserver (robust with different scroll containers).
-  if ("IntersectionObserver" in window) {
-    const io = new IntersectionObserver(
-      ([entry]) => {
-        // Flip earlier than "end of hero": when hero's bottom passes behind the nav.
-        const triggerY = getTriggerY()
-        const heroBottom = entry.boundingClientRect.bottom
-        navWrap.classList.toggle("nav-dark", heroBottom <= triggerY)
-      },
-      { root: null, threshold: 0 }
-    );
-    io.observe(heroSection);
-    return;
+  // Set header height CSS var
+  const h = header.offsetHeight
+  header.style.setProperty('--midnight-header-height', `${h}px`)
+
+  const check = () => {
+    const heroBottom = hero.getBoundingClientRect().bottom
+    if (heroBottom <= (window.innerHeight * 0.7)) {
+      header.classList.add('is-light')
+    } else {
+      header.classList.remove('is-light')
+    }
   }
 
-  // Fallback for older browsers.
-  const updateNav = () => {
-    const heroBottom = heroSection.getBoundingClientRect().bottom
-    const triggerY = getTriggerY()
-    navWrap.classList.toggle('nav-dark', heroBottom <= triggerY)
-  }
-
-  window.addEventListener('scroll', updateNav, { passive: true })
-  window.addEventListener('resize', updateNav)
-  updateNav()
+  window.addEventListener('scroll', check, { passive: true })
+  window.addEventListener('resize', check)
+  check()
 }
 
-document.addEventListener("turbo:load", initNavColorSwitch);
-
-document.addEventListener("DOMContentLoaded", function () {
-  if (typeof Turbo !== "undefined") return;
-  initNavColorSwitch();
-});
+document.addEventListener('turbo:load', initMidnightHeader)
+document.addEventListener('DOMContentLoaded', function () {
+  if (typeof Turbo !== 'undefined') return
+  initMidnightHeader()
+})
