@@ -1,0 +1,64 @@
+Title: Stained Glass
+
+----
+
+Media:
+
+- 'file://nevlskk5sfk9ep6e'
+- 'file://snyg7uygjosrmnuq'
+- 'file://ojszlxdfnpjvude5'
+- 'file://0hkkgohz1m3b08fm'
+- 'file://pwjex1eyuf2fya4m'
+- 'file://31tvz9eikr4gezwq'
+- 'file://ebmgroqhkwlv2z7p'
+- 'file://rst0jnk5ilvmcw9x'
+- 'file://rpnzun9ik2ujgvu8'
+- 'file://igjapuudwtbqzq1n'
+- 'file://vfmnaylhspl6ff8f'
+- 'file://ysctk9gzgwmn4zw6'
+- 'file://54l9uqrbi9y1ypfu'
+- 'file://htaqttyfxdkwmyz3'
+- 'file://o5wge7pyefsjijac'
+- 'file://lxi0e3cwttcpdewn'
+- 'file://pn5lvqeugsffijva'
+- 'file://x7gfrxdpuzw3hq5a'
+- 'file://mknc9td9m9pxnwel'
+- 'file://gogio4gvifohf3e5'
+- 'file://fn4epmslcu2w8lbg'
+- 'file://mmiz8x7clhyqbwik'
+- 'file://1rmazimjubtxlr0o'
+- 'file://twdklheg16q6bire'
+- 'file://uo6owqqdmnk4vhah'
+- 'file://wmfjqkwvdadeguoj'
+- 'file://rzt08wzbrwudduhh'
+- 'file://c9rogfjhjejrtigk'
+- 'file://5xfr8yfop51h7csc'
+- 'file://xgggjtqf1dplkgie'
+
+----
+
+Cover: - 'file://31tvz9eikr4gezwq'
+
+----
+
+Blocks: [{"content":{"text":"<p>A visionary eco-living complex featuring rooftop gardens, vertical forests, and energy-efficient systems. Designed to harmonize with the environment, it offers contemporary architecture that prioritizes sustainability without sacrificing style, creating a tranquil yet modern haven for urban dwellers.</p>","size":"","uppercase":"false"},"id":"d46235e9-a98c-4823-94a2-006db1129ab1","isHidden":false,"type":"text"},{"content":{"items":[{"title":"Year","caption":"2024","link":"","blank":"false","rel":""},{"title":"Location","caption":"Copenhagen, Denmark","link":"","blank":"false","rel":""},{"title":"Client","caption":"Eco Living Group","link":"","blank":"false","rel":""},{"title":"Sustainability","caption":"Vertical forests and rainwater systems","link":"https://en.wikipedia.org/wiki/Sustainability","blank":"true","rel":"external, noreferrer, noopener, nofollow"},{"title":"Size","caption":"120 residential units","link":"","blank":"false","rel":""}]},"id":"4da71c35-2d49-48fa-9377-5e1c0b806a9b","isHidden":false,"type":"properties"}]
+
+----
+
+Description: Copenhagen, Denmark / 2024
+
+----
+
+Tagline: 
+
+----
+
+Meta-description: 
+
+----
+
+Og-image: []
+
+----
+
+Uuid: 7tfvscu9JwME57nS

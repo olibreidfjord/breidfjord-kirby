@@ -76,7 +76,7 @@ function initMidnightHeader() {
 
   const check = () => {
     const heroBottom = hero.getBoundingClientRect().bottom
-    if (heroBottom <= (window.innerHeight * 0.7)) {
+    if (heroBottom <= (window.innerHeight * 0.1)) {
       header.classList.add('is-light')
     } else {
       header.classList.remove('is-light')

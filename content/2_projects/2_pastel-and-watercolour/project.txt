@@ -1,0 +1,56 @@
+Title: Pastel and Watercolour
+
+----
+
+Media:
+
+- 'file://6ww8hvqju8ke5rec'
+- 'file://mstpvw9tdegm4aqk'
+- 'file://ycoe4rgoteidxdnk'
+- 'file://s4bkp93mkaac8q8g'
+- 'file://7ebzgximrpiqncqf'
+- 'file://zlfhvvoircdcsprx'
+- 'file://j84z6xfohysetmdr'
+- 'file://7yj9hxlqodlqd6ft'
+- 'file://b5ctstd5ejdfg5aj'
+- 'file://d7u6owejp1ujmxbd'
+- 'file://wwcnzhmrkpyduufr'
+- 'file://akipov9gwmksfaed'
+- 'file://0zj7hzvt0jtx6g7f'
+- 'file://kn7fwny58wddbec7'
+- 'file://np4mvxbr2xf8aq5q'
+- 'file://glzzfhr0cb68ueus'
+- 'file://9jca96hzvyocavhf'
+- 'file://1y0jabfw40omtjd1'
+- 'file://wijvcuk7b3ucter1'
+- 'file://j6mxxnvso3jfv0qb'
+- 'file://epaynkvppccijvji'
+- 'file://r9lcwgfq5tnoxd8d'
+
+----
+
+Cover: - 'file://mstpvw9tdegm4aqk'
+
+----
+
+Blocks: [{"content":{"text":"<p>A state-of-the-art office hub designed for collaboration and innovation. Its modular, flexible spaces adapt to diverse professional needs, providing an inspiring environment with modern amenities. This vibrant complex supports creativity and productivity, setting a benchmark for future workspaces.</p>","size":"","uppercase":"false"},"id":"74ff66ab-ffd0-44d1-a516-8cfa8705d86e","isHidden":false,"type":"text"},{"content":{"items":[{"title":"Year","caption":"2023","link":"","blank":"false","rel":""},{"title":"Location","caption":"Berlin, Germany","link":"","blank":"false","rel":""},{"title":"Client","caption":"GlobalTech Solutions","link":"","blank":"false","rel":""},{"title":"Size","caption":"25,000 sqm","link":"","blank":"false","rel":""},{"title":"Special Facilities","caption":"Co-working spaces and innovation labs","link":"https://en.wikipedia.org/wiki/Innovation","blank":"true","rel":"external, noreferrer, noopener, nofollow"}]},"id":"b2c7cb36-5b56-4b8b-a8e6-a0de23b4f3df","isHidden":false,"type":"properties"}]
+
+----
+
+Description: Berlin, Germany / 2023
+
+----
+
+Tagline: 
+
+----
+
+Meta-description: 
+
+----
+
+Og-image: []
+
+----
+
+Uuid: 4wdG9SPvqP20SEDC

@@ -17,7 +17,7 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             export PATH=$PATH:/usr/bin:/usr/local/bin
-            cd /home/oli40/web/kirby.olafurbreidfjord.com/public_html
+            cd /home/oli40/web/breidfjord.com/public_html
             git fetch origin
             git reset --hard origin/main
             rm -rf node_modules

@@ -1,0 +1,79 @@
+Title: Model Drawings
+
+----
+
+Media:
+
+- 'file://vvftgezkiw2eugfb'
+- 'file://hjqrrllkj1v8fun6'
+- 'file://1sflravpwo8fnu1k'
+- 'file://m8cachb3edca3gey'
+- 'file://jfgobjxqnuj2hvuv'
+- 'file://5lp75aijuho9qmxg'
+- 'file://i8ecefzt6v6jjxft'
+- 'file://g6gxbm7qywdwt643'
+- 'file://evhcikqwbolxdztc'
+- 'file://n6opnyrlptjuqe5x'
+- 'file://pvsoabltvllo3zcm'
+- 'file://x0ufiljs2cxk4evz'
+- 'file://ln5nkirc5c22ouip'
+- 'file://fdafy25vyr5koxtd'
+- 'file://trgoxyxxfpvilbnn'
+- 'file://il368fidlm0zjfih'
+- 'file://jmqhvbksrscn5tzu'
+- 'file://89uqlpsq8eh5aewh'
+- 'file://orap5qflk6rvxmve'
+- 'file://wkvraz1jgbqyjyq6'
+- 'file://vm3aunmwjevujx3y'
+- 'file://gw9bruylpiwqw1bz'
+- 'file://ykbabi6pvrcaxp9s'
+- 'file://972tw7idbcgcufsg'
+- 'file://ypyk6c8gelaukk0e'
+- 'file://zbmhvgzxscn3ipda'
+- 'file://v7fkrz9aayyjymil'
+- 'file://vubjrsrmulwr2xml'
+- 'file://xjguvzeicyvtr4mn'
+- 'file://xptqkp2kyp8g4xil'
+- 'file://qjaxhk9gzcbe0qzf'
+- 'file://p98wwphyp4npar1a'
+- 'file://ivgeylwcajb2kykq'
+- 'file://kojnpi3xat2uwcgx'
+- 'file://9htdui9xbm0i7o3s'
+- 'file://sicx8n5hxq1gunkw'
+- 'file://tfxwx3mdygysh1gn'
+- 'file://20znaulowjso4wfo'
+- 'file://aztppkgsv5x9zw70'
+- 'file://cgfojd83gj4r2sxf'
+- 'file://jiyrnvryaydbeqoc'
+- 'file://os1esb8vntpv425c'
+- 'file://f3pbj0dipb9zognr'
+- 'file://gujpstbqfnzefimt'
+- 'file://cb0zlhujhesivh2k'
+
+----
+
+Cover: - 'file://il368fidlm0zjfih'
+
+----
+
+Blocks: [{"content":{"text":"<p>An iconic structure that connects city districts with engineering precision and artistic elegance. Its sweeping curves and durable design accommodate vehicles and pedestrians, offering scenic pathways and viewing decks that redefine how people experience urban mobility.</p>","size":"","uppercase":"false"},"id":"595ea9b3-25a0-4f86-a184-61f1b4925ce9","isHidden":false,"type":"text"},{"content":{"items":[{"title":"Year","caption":"2021","link":"","blank":"false","rel":""},{"title":"Location","caption":"Brisbane, Australia","link":"https://en.wikipedia.org/wiki/Brisbane","blank":"true","rel":"external, noreferrer, nofollow, noopener"},{"title":"Client","caption":"City Infrastructure Department","link":"","blank":"false","rel":""},{"title":"Span","caption":"800 meters","link":"","blank":"false","rel":""},{"title":"Materials","caption":"Reinforced concrete and steel","link":"","blank":"false","rel":""}]},"id":"9f1ac8da-88af-4243-bdb8-8b1360f1cd55","isHidden":false,"type":"properties"}]
+
+----
+
+Description: Brisbane, Australia / 2021
+
+----
+
+Tagline: 
+
+----
+
+Meta-description: 
+
+----
+
+Og-image: []
+
+----
+
+Uuid: MkKikxQU2NzXU3x8

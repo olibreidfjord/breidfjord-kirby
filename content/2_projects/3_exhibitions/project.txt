@@ -1,0 +1,57 @@
+Title: Exhibitions
+
+----
+
+Media:
+
+- 'file://53p5z9fvl6jqpa30'
+- 'file://6v1ti21k1okywayo'
+- 'file://tcapgybbr7cba5gr'
+- 'file://wybqow6tfeh3seok'
+- 'file://imnfaunqvbdkxgul'
+- 'file://8mcagnuk87cqhr5d'
+- 'file://e9dwrtu4l2fqdikx'
+- 'file://qe8jiusinknwqxhp'
+- 'file://fejlhnqtwjx450za'
+- 'file://7hu1wjk3tcgbwct0'
+- 'file://qykria5pu7zqrlxm'
+- 'file://v3zeavqeb3sc5agl'
+- 'file://6bxdewk65ahegahj'
+- 'file://lhdcwbctqpmzm9aq'
+- 'file://rejwjhpvpiooc7bt'
+- 'file://wrutoltz5jmqydzm'
+- 'file://t0ygf0jzgll02koe'
+- 'file://uxyeiiqjzgg2ptzb'
+- 'file://ewaobdq7233hfdin'
+- 'file://q26d6rpiahklts58'
+- 'file://sdianjjk2enjpklf'
+- 'file://ipjxalzjmgospw69'
+- 'file://1hkwgkfqnhx0frfq'
+
+----
+
+Cover: - 'file://t0ygf0jzgll02koe'
+
+----
+
+Blocks: [{"content":{"items":[{"title":"Year","caption":"2025","link":"","blank":"false","rel":""},{"title":"Location","caption":"Paris, France","link":"","blank":"false","rel":""},{"title":"Client","caption":"Private Art Foundation","link":"","blank":"false","rel":""},{"title":"Architectural Style","caption":"Minimalist","link":"https://en.wikipedia.org/wiki/Minimalism","blank":"true","rel":"external, noreferrer, noopener, nofollow"},{"title":"Features","caption":"Skylights and dynamic interior walls","link":"","blank":"false","rel":""}]},"id":"dc6145da-df09-4356-a9b4-3ce26b484397","isHidden":false,"type":"properties"},{"content":{"text":"<p>A minimalist gallery designed to elevate the interplay of light, shadow, and space. Its dynamic architecture provides a striking yet serene backdrop for exhibits, offering an immersive and transformative experience for artists and visitors alike. The space itself is as much a masterpiece as the art it showcases.</p>","size":"","uppercase":"false"},"id":"962592a1-7791-4cda-8772-c1df1183e49d","isHidden":false,"type":"text"}]
+
+----
+
+Description: Paris, France / 2025
+
+----
+
+Tagline: 
+
+----
+
+Meta-description: 
+
+----
+
+Og-image: []
+
+----
+
+Uuid: NSaDdOtwXpTCKXV3

@@ -1,16 +1,20 @@
-Title: Tablo Arc
+Title: Leifur Breidfjord
 
 ----
 
-Hero: - 'file://lrjavxoa99jzkzmk'
+Hero: - 'file://qr01abayf2y0vzmf'
 
 ----
 
-Hero-title: Tablo Arc
+Hero-title: Leifur
 
 ----
 
-Hero-subtitle: Base theme development
+Hero-title-line2: Breidfjord
+
+----
+
+Hero-subtitle: Icelandic Stained Glass Artist
 
 ----
 

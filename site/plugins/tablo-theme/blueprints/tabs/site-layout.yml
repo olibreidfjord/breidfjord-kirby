@@ -22,6 +22,11 @@ fields:
     type: text
     width: 1/2
 
+  hero_title_line2:
+    label: Hero Title Line 2
+    type: text
+    width: 1/2  
+
   hero_subtitle:
     label: Hero Subtitle
     type: text

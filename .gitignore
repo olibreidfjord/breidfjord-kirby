@@ -4,3 +4,4 @@ site/sessions/
 *.log
 .DS_Store
 site/config/config.kirby.test.php
+site/config/config.breidfjord.test.php

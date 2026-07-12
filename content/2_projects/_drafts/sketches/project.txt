@@ -1,0 +1,51 @@
+Title: Sketches
+
+----
+
+Media:
+
+- 'file://ipj5pt6qbhhaigcb'
+- 'file://mue9vjtbw2h5rrnr'
+- 'file://vr72udbyy6sln51x'
+- 'file://9wdgixqzs9arcmaq'
+- 'file://p9ejmv4ly93dqcvb'
+- 'file://1uhqi4nrpmfu7tvu'
+- 'file://srekuxbds0yrkdf6'
+- 'file://tcp7x7vidv2t31yf'
+- 'file://jealut2zzynmy89o'
+- 'file://s7u36yzxhtri4umh'
+- 'file://rbvrlb9ieemogn19'
+- 'file://xyqtf2hm9tlkwb2s'
+- 'file://zpicbfoyat2v6ztf'
+- 'file://xnwl7zcf1rigizfh'
+- 'file://yz3auue04rxdgohk'
+- 'file://wd1igjxqok5zmzv0'
+- 'file://yyvis1xkjz2yjbhe'
+
+----
+
+Cover: - 'file://yyvis1xkjz2yjbhe'
+
+----
+
+Blocks: [{"content":{"text":"<p>An iconic structure that connects city districts with engineering precision and artistic elegance. Its sweeping curves and durable design accommodate vehicles and pedestrians, offering scenic pathways and viewing decks that redefine how people experience urban mobility.</p>","size":"","uppercase":"false"},"id":"595ea9b3-25a0-4f86-a184-61f1b4925ce9","isHidden":false,"type":"text"},{"content":{"items":[{"title":"Year","caption":"2021","link":"","blank":"false","rel":""},{"title":"Location","caption":"Brisbane, Australia","link":"https://en.wikipedia.org/wiki/Brisbane","blank":"true","rel":"external, noreferrer, nofollow, noopener"},{"title":"Client","caption":"City Infrastructure Department","link":"","blank":"false","rel":""},{"title":"Span","caption":"800 meters","link":"","blank":"false","rel":""},{"title":"Materials","caption":"Reinforced concrete and steel","link":"","blank":"false","rel":""}]},"id":"9f1ac8da-88af-4243-bdb8-8b1360f1cd55","isHidden":false,"type":"properties"}]
+
+----
+
+Description: Brisbane, Australia / 2021
+
+----
+
+Tagline: 
+
+----
+
+Meta-description: 
+
+----
+
+Og-image: []
+
+----
+
+Uuid: nbta5uzja1ytwvy2
