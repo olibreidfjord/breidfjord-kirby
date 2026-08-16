@@ -10,6 +10,7 @@ tabs:
           media:
             label: Media
             type: files
+            template: gallery-image
             layout: cards
             info: "{{ file.dimensions }}"
             size: medium

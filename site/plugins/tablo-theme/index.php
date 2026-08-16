@@ -42,6 +42,7 @@ Kirby::plugin('tablo/theme', [
         'fields/menu'            => __DIR__ . '/blueprints/fields/menu.yml',
         'fields/socials'         => __DIR__ . '/blueprints/fields/socials.yml',
         'files/default'          => __DIR__ . '/blueprints/files/default.yml',
+        'files/gallery-image'    => __DIR__ . '/blueprints/files/gallery-image.yml',
         'pages/default'          => __DIR__ . '/blueprints/pages/default.yml',
         'pages/error'            => __DIR__ . '/blueprints/pages/error.yml',
         'pages/folder'           => __DIR__ . '/blueprints/pages/folder.yml',

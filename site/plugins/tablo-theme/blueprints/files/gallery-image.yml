@@ -1,0 +1,11 @@
+title: Gallery Image
+
+fields:
+  alt:
+    label: Alt Text
+    type: text
+
+  caption:
+    label: Caption
+    type: text
+    help: Displayed under the image in the project gallery. Free text — e.g. "Title, dimensions, year" or a short description.

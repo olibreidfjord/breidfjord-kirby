@@ -36,6 +36,9 @@
         },
       ]) }}">
         {%~ include '@snippets/grid-item.twig' with { image } only ~%}
+        {%~ if image.caption.isNotEmpty %}
+        <figcaption class="mt-3 text-lg lowercase text-[#8C938D]">{{ image.caption }}</figcaption>
+        {%~ endif %}
       </figure>
       {%~ endwith %}
       {%~ endfor %}
