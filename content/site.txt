@@ -59,7 +59,12 @@ Mainmenu:
   blank: 'false'
   rel: ''
 -
-  link: 'page://oWbSEUtIHbgb29Ol'
+  link: 'page://x6iqktaiornqu00k'
+  title: ''
+  blank: 'false'
+  rel: ''
+-
+  link: 'page://pcalkzkbsm2od3yp'
   title: ''
   blank: 'false'
   rel: ''
@@ -101,8 +106,13 @@ Footermenu:
   blank: 'false'
   rel: ''
 -
-  link: 'page://oWbSEUtIHbgb29Ol'
-  title: Insights
+  link: 'page://x6iqktaiornqu00k'
+  title: ''
+  blank: 'false'
+  rel: ''
+-
+  link: 'page://pcalkzkbsm2od3yp'
+  title: ''
   blank: 'false'
   rel: ''
 
@@ -112,7 +122,7 @@ Footercta:
 
 ----
 
-Footercopyright: © (date: year) (link: https://olafurbreidfjord.com/ text: Olafur Breidfjord)
+Footercopyright: © (date: year) (link: https://breidfjord.com/ text: Leifur Breidfjord)
 
 ----
 

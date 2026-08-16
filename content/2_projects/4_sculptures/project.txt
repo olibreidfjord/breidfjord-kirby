@@ -1,0 +1,73 @@
+Title: Sculptures
+
+----
+
+Media:
+
+- 'file://nc05wpwogzgy6xmb'
+- 'file://xezwu9s7lofjgxkb'
+- 'file://dhoqf4vzwonjz180'
+- 'file://ky12brprytgigmvv'
+- 'file://oeiuitu4rkhjq8az'
+- 'file://vufydoppycsunry5'
+- 'file://gdgc1xq46ajcbmgd'
+- 'file://l3taq3vf8essbjob'
+- 'file://6kdpoun5rk3klypf'
+- 'file://wwkvvryt80selddo'
+- 'file://iicy5ggaaoa5nmvv'
+- 'file://59mvtm6ienrtctzw'
+- 'file://kyjgsuembxd9pstp'
+- 'file://0r7rbwd2hvomgej7'
+- 'file://piduynpff88oqxrz'
+- 'file://uaum4nsjsyduoou8'
+- 'file://vqkhnpzvfasx5hzp'
+- 'file://uzmby3orinh0cto8'
+- 'file://ctvr8f7bopaf0nwb'
+- 'file://we9qysmxkxkb3f9k'
+- 'file://9c0jageffzrg0hyp'
+- 'file://4u6sgj3n8fvogqgw'
+- 'file://mmganp32wxybfgln'
+
+----
+
+Cover: - 'file://239sbchk58z6hbw3'
+
+----
+
+Blocks: [{"content":{"text":"<p>Leifur has made free-standing sculptures that test the idea of stained glass as a fixed window — among them his glass kites, the Blue Dragon (1983) and Dragon Babies (1985), and the outdoor sculpture for Kópasker School (1993), which brings together mirror glass, basalt, sheet metal and mosaic.</p>","size":"size3xl","uppercase":"false"},"id":"595ea9b3-25a0-4f86-a184-61f1b4925ce9","isHidden":false,"type":"text"},{"content":{"items":[]},"id":"9f1ac8da-88af-4243-bdb8-8b1360f1cd55","isHidden":false,"type":"properties"}]
+
+----
+
+Description: Glass and mixed-media works in three dimensions.
+
+----
+
+Layout-offset: 6
+
+----
+
+Layout-span: 
+
+----
+
+Layout-pull: 
+
+----
+
+Layout-depth: 
+
+----
+
+Tagline: 
+
+----
+
+Meta-description: 
+
+----
+
+Og-image: []
+
+----
+
+Uuid: hskcptd2uhegy7xj

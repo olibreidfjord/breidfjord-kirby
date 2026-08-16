@@ -1,0 +1,66 @@
+Title: Sketches
+
+----
+
+Media:
+
+- 'file://ipj5pt6qbhhaigcb'
+- 'file://mue9vjtbw2h5rrnr'
+- 'file://vr72udbyy6sln51x'
+- 'file://9wdgixqzs9arcmaq'
+- 'file://p9ejmv4ly93dqcvb'
+- 'file://1uhqi4nrpmfu7tvu'
+- 'file://srekuxbds0yrkdf6'
+- 'file://tcp7x7vidv2t31yf'
+- 'file://jealut2zzynmy89o'
+- 'file://rbvrlb9ieemogn19'
+- 'file://xyqtf2hm9tlkwb2s'
+- 'file://zpicbfoyat2v6ztf'
+- 'file://xnwl7zcf1rigizfh'
+- 'file://yz3auue04rxdgohk'
+- 'file://wd1igjxqok5zmzv0'
+- 'file://yyvis1xkjz2yjbhe'
+
+----
+
+Cover: - 'file://rhbqhjmurdaesrzw'
+
+----
+
+Blocks: [{"content":{"text":"<p>The preparatory studies behind the finished pieces. Every commission begins on paper, in the method Leifur learned in Edinburgh: study the setting first, then draw.</p>","size":"size3xl","uppercase":"false"},"id":"595ea9b3-25a0-4f86-a184-61f1b4925ce9","isHidden":false,"type":"text"},{"content":{"items":[]},"id":"9f1ac8da-88af-4243-bdb8-8b1360f1cd55","isHidden":false,"type":"properties"}]
+
+----
+
+Description: Working drawings and studies.
+
+----
+
+Layout-offset: 5
+
+----
+
+Layout-span: 5
+
+----
+
+Layout-pull: 
+
+----
+
+Layout-depth: 1
+
+----
+
+Tagline: 
+
+----
+
+Meta-description: 
+
+----
+
+Og-image: []
+
+----
+
+Uuid: nbta5uzja1ytwvy2

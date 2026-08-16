@@ -1,0 +1,73 @@
+Title: Oil Paintings
+
+----
+
+Media:
+
+- 'file://jm8wh8ignn3jtc0v'
+- 'file://ltecuyv6hcfjvmic'
+- 'file://zj8rdc7o8fh42fi5'
+- 'file://araykrdv6vjot63h'
+- 'file://0mnytfwl7kakpnlp'
+- 'file://wzkclw2izxatwxrf'
+- 'file://gy9ibxfp44d76y4g'
+- 'file://ia5hfdxmdut6uvxh'
+- 'file://nbkv68a1dyrulo9r'
+- 'file://tgzfo2jjgvewarld'
+- 'file://jzpfos3u13xfijng'
+- 'file://orptblemgkx7sna1'
+- 'file://r3elddg1zrueocgb'
+- 'file://9wyq55nyldkqtncy'
+- 'file://hm02lazcud1gh5oq'
+- 'file://kudlmcuqh5mijz0l'
+- 'file://ud6ao0qsity9cbxg'
+- 'file://k8zo3vkwuyjomo8m'
+- 'file://kufdsrfjszeute1t'
+- 'file://qqhtaxbqon06auck'
+- 'file://0ofj57eje7tpvidn'
+- 'file://8d1yumsuybvkt2oc'
+- 'file://x7jwbt5ealk4nflg'
+
+----
+
+Cover: - 'file://ijdf7wghm5glpw2w'
+
+----
+
+Blocks: [{"content":{"text":"<p>Leifur trained in drawing and painting at the Icelandic College of Arts and Crafts before he took up stained glass, and has painted throughout his career. His work in oil is shown in solo and group exhibitions in Iceland and abroad.</p>","size":"size3xl","uppercase":"false"},"id":"5e88c18b-f2ce-48a6-9adc-b2873345ff81","isHidden":false,"type":"text"},{"content":{"items":[]},"id":"9a5dbd15-d2a9-4bb9-8258-755e3075fde9","isHidden":false,"type":"properties"}]
+
+----
+
+Description: Painting alongside the glass.
+
+----
+
+Layout-offset: 5
+
+----
+
+Layout-span: 6
+
+----
+
+Layout-pull: 8
+
+----
+
+Layout-depth: 5
+
+----
+
+Tagline: 
+
+----
+
+Meta-description: 
+
+----
+
+Og-image: []
+
+----
+
+Uuid: T9RnIoBmOJRaA8nK

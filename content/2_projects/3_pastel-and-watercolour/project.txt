@@ -1,0 +1,72 @@
+Title: Pastel and Watercolour
+
+----
+
+Media:
+
+- 'file://6ww8hvqju8ke5rec'
+- 'file://mstpvw9tdegm4aqk'
+- 'file://ycoe4rgoteidxdnk'
+- 'file://s4bkp93mkaac8q8g'
+- 'file://7ebzgximrpiqncqf'
+- 'file://zlfhvvoircdcsprx'
+- 'file://j84z6xfohysetmdr'
+- 'file://7yj9hxlqodlqd6ft'
+- 'file://b5ctstd5ejdfg5aj'
+- 'file://d7u6owejp1ujmxbd'
+- 'file://wwcnzhmrkpyduufr'
+- 'file://akipov9gwmksfaed'
+- 'file://0zj7hzvt0jtx6g7f'
+- 'file://kn7fwny58wddbec7'
+- 'file://np4mvxbr2xf8aq5q'
+- 'file://glzzfhr0cb68ueus'
+- 'file://9jca96hzvyocavhf'
+- 'file://1y0jabfw40omtjd1'
+- 'file://wijvcuk7b3ucter1'
+- 'file://j6mxxnvso3jfv0qb'
+- 'file://epaynkvppccijvji'
+- 'file://r9lcwgfq5tnoxd8d'
+
+----
+
+Cover: - 'file://a0w4nbzgnbibtjda'
+
+----
+
+Blocks: [{"content":{"text":"<p>Alongside the glass and oil, Leifur works in watercolour and pastel — media he has exhibited regularly in Iceland and abroad.</p>","size":"size3xl","uppercase":"false"},"id":"74ff66ab-ffd0-44d1-a516-8cfa8705d86e","isHidden":false,"type":"text"},{"content":{"items":[]},"id":"b2c7cb36-5b56-4b8b-a8e6-a0de23b4f3df","isHidden":false,"type":"properties"}]
+
+----
+
+Description: Works on paper.
+
+----
+
+Layout-offset: 2
+
+----
+
+Layout-span: 6
+
+----
+
+Layout-pull: 0
+
+----
+
+Layout-depth: 1
+
+----
+
+Tagline: 
+
+----
+
+Meta-description: 
+
+----
+
+Og-image: []
+
+----
+
+Uuid: 4wdG9SPvqP20SEDC

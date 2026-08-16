@@ -1,0 +1,9 @@
+Alt: 
+
+----
+
+Template: gallery-image
+
+----
+
+Uuid: gy9ibxfp44d76y4g

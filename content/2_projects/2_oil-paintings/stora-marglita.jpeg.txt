@@ -1,0 +1,13 @@
+Alt: 
+
+----
+
+Caption: Stora Marglita
+
+----
+
+Template: gallery-image
+
+----
+
+Uuid: jm8wh8ignn3jtc0v

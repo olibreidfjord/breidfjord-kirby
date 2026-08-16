@@ -1,0 +1,9 @@
+Alt: 
+
+----
+
+Template: gallery-image
+
+----
+
+Uuid: x7jwbt5ealk4nflg

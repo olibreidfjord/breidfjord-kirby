@@ -1,0 +1,73 @@
+Title: Exhibitions
+
+----
+
+Media:
+
+- 'file://53p5z9fvl6jqpa30'
+- 'file://6v1ti21k1okywayo'
+- 'file://tcapgybbr7cba5gr'
+- 'file://wybqow6tfeh3seok'
+- 'file://imnfaunqvbdkxgul'
+- 'file://8mcagnuk87cqhr5d'
+- 'file://e9dwrtu4l2fqdikx'
+- 'file://qe8jiusinknwqxhp'
+- 'file://fejlhnqtwjx450za'
+- 'file://7hu1wjk3tcgbwct0'
+- 'file://qykria5pu7zqrlxm'
+- 'file://v3zeavqeb3sc5agl'
+- 'file://6bxdewk65ahegahj'
+- 'file://lhdcwbctqpmzm9aq'
+- 'file://rejwjhpvpiooc7bt'
+- 'file://wrutoltz5jmqydzm'
+- 'file://t0ygf0jzgll02koe'
+- 'file://uxyeiiqjzgg2ptzb'
+- 'file://ewaobdq7233hfdin'
+- 'file://q26d6rpiahklts58'
+- 'file://sdianjjk2enjpklf'
+- 'file://ipjxalzjmgospw69'
+- 'file://1hkwgkfqnhx0frfq'
+
+----
+
+Cover: - 'file://wgdt8lj17i8ebjau'
+
+----
+
+Blocks: [{"content":{"items":[]},"id":"dc6145da-df09-4356-a9b4-3ce26b484397","isHidden":false,"type":"properties"},{"content":{"text":"<p>Leifur has held many solo exhibitions and taken part in group shows in Iceland and abroad, showing stained glass, oil paintings, watercolours and pastels — often alongside Sigríður's woven work.</p>","size":"size3xl","uppercase":"false"},"id":"962592a1-7791-4cda-8772-c1df1183e49d","isHidden":false,"type":"text"}]
+
+----
+
+Description: Solo and group shows, in Iceland and abroad.
+
+----
+
+Layout-offset: 2
+
+----
+
+Layout-span: 
+
+----
+
+Layout-pull: 
+
+----
+
+Layout-depth: 
+
+----
+
+Tagline: 
+
+----
+
+Meta-description: 
+
+----
+
+Og-image: []
+
+----
+
+Uuid: NSaDdOtwXpTCKXV3

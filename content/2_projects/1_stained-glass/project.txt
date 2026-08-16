@@ -1,0 +1,80 @@
+Title: Stained Glass
+
+----
+
+Media:
+
+- 'file://snyg7uygjosrmnuq'
+- 'file://nevlskk5sfk9ep6e'
+- 'file://ojszlxdfnpjvude5'
+- 'file://0hkkgohz1m3b08fm'
+- 'file://pwjex1eyuf2fya4m'
+- 'file://31tvz9eikr4gezwq'
+- 'file://ebmgroqhkwlv2z7p'
+- 'file://rst0jnk5ilvmcw9x'
+- 'file://rpnzun9ik2ujgvu8'
+- 'file://igjapuudwtbqzq1n'
+- 'file://vfmnaylhspl6ff8f'
+- 'file://ysctk9gzgwmn4zw6'
+- 'file://54l9uqrbi9y1ypfu'
+- 'file://htaqttyfxdkwmyz3'
+- 'file://o5wge7pyefsjijac'
+- 'file://lxi0e3cwttcpdewn'
+- 'file://pn5lvqeugsffijva'
+- 'file://x7gfrxdpuzw3hq5a'
+- 'file://mknc9td9m9pxnwel'
+- 'file://gogio4gvifohf3e5'
+- 'file://fn4epmslcu2w8lbg'
+- 'file://mmiz8x7clhyqbwik'
+- 'file://1rmazimjubtxlr0o'
+- 'file://twdklheg16q6bire'
+- 'file://uo6owqqdmnk4vhah'
+- 'file://wmfjqkwvdadeguoj'
+- 'file://rzt08wzbrwudduhh'
+- 'file://c9rogfjhjejrtigk'
+- 'file://5xfr8yfop51h7csc'
+- 'file://xgggjtqf1dplkgie'
+
+----
+
+Cover: - 'file://ryh1ea3xo22pvm25'
+
+----
+
+Blocks: [{"content":{"text":"<p>Stained glass is the centre of Leifur's work. He was the first Icelandic artist to specialise in the medium and the first to set up a studio for it, insisting from the outset on unique works rather than editions. His windows are found in churches and public buildings across Iceland and abroad — among them the Robert Burns memorial window at St Giles' Cathedral, Edinburgh (1985), and a window at Southwark Cathedral, London, marking the Diamond Jubilee of Queen Elizabeth II (2012).</p>","size":"size3xl","uppercase":"false"},"id":"d46235e9-a98c-4823-94a2-006db1129ab1","isHidden":false,"type":"text"},{"content":{"items":[]},"id":"4da71c35-2d49-48fa-9377-5e1c0b806a9b","isHidden":false,"type":"properties"}]
+
+----
+
+Description: Windows for churches and public buildings.
+
+----
+
+Layout-offset: 2
+
+----
+
+Layout-span: 8
+
+----
+
+Layout-pull: 
+
+----
+
+Layout-depth: 
+
+----
+
+Tagline: 
+
+----
+
+Meta-description: 
+
+----
+
+Og-image: []
+
+----
+
+Uuid: 7tfvscu9JwME57nS
