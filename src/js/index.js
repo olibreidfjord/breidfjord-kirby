@@ -1,6 +1,7 @@
 import { initState, updateState } from "./state";
 import { initStickyHeader, updateStickyHeader } from "./sticky-header";
 import { initMobileMenu } from "./mobile-menu";
+import { initMasonry } from "./masonry";
 
 // Page
 
@@ -31,6 +32,9 @@ function initPage() {
 
   // Mobile menu
   initMobileMenu();
+
+  // Project gallery masonry
+  initMasonry();
 }
 
 document.addEventListener("DOMContentLoaded", function () {

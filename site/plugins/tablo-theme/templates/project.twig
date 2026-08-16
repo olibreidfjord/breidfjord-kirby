@@ -19,28 +19,14 @@
   <section class="px-4 py-16 md:px-8">
 
     {%~ with { media: page.media.toFiles } %}
-    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8">
+    <div class="masonry-grid" data-masonry>
       {%~ for image in media %}
-      {%~ with {
-        nextImage: image.next(media),
-        prevImage: image.prev(media),
-        numPortraits: (image.prevAll(media).flip().pluck('orientation') | reduce((carry, orientation, k) => carry ?? orientation == 'landscape' ? k : carry, none)),
-      } %}
-      <figure class="{{ clsx('flex flex-col justify-center', image.isLandscape ? 'lg:col-span-4' : [
-        'lg:col-span-2',
-        {
-          'lg:col-start-2' : 0 == (numPortraits ?? image.prevAll(media).count) % 2 and (loop.last or nextImage.isLandscape),
-          'lg:px-8'        :
-            (0 == (numPortraits ?? image.prevAll(media).count) % 2 and nextImage.isPortrait and image.height / image.width < nextImage.height / nextImage.width) or
-            (1 == (numPortraits ?? image.prevAll(media).count) % 2 and prevImage.isPortrait and image.height / image.width < prevImage.height / prevImage.width),
-        },
-      ]) }}">
+      <figure class="masonry-item" data-masonry-item>
         {%~ include '@snippets/grid-item.twig' with { image } only ~%}
         {%~ if image.caption.isNotEmpty %}
         <figcaption class="mt-3 text-lg lowercase text-[#8C938D]">{{ image.caption }}</figcaption>
         {%~ endif %}
       </figure>
-      {%~ endwith %}
       {%~ endfor %}
     </div>
     {%~ endwith %}

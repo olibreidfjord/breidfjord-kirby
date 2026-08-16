@@ -43,6 +43,40 @@
   );
 }
 
+/* In-project image gallery — CSS Grid row-span masonry, laid out by src/js/masonry.js.
+   grid-auto-rows is a fine-grained unit; JS sets each item's grid-row-end: span N
+   from its rendered height. Swapping to native masonry later is just replacing
+   grid-auto-rows with grid-template-rows: masonry and dropping the JS. */
+.masonry-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-auto-rows: 1px;
+  gap: 2.5rem 2rem;
+  /* Without this, items default to align-items: stretch and are forced to
+     fill their (currently assigned) row-span exactly — which makes their
+     measured height a function of the last span JS wrote, not their actual
+     content, so the row-span math can never converge. This lets each item
+     size to its own content so masonry.js measures something real. */
+  align-items: start;
+}
+
+@variant md {
+  .masonry-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@variant xl {
+  .masonry-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  /* Works overview — capped at 2 columns, unlike the 3-column project galleries */
+  .masonry-grid.works-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .hero-section {
   position: relative;
   width: 100vw;
