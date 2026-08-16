@@ -1,12 +1,7 @@
 {% with { projects: projects ?? site.find('projects').children().listed } %}
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-16">
+<div class="masonry-grid works-grid" data-masonry>
   {%~ for project in projects %}
-  <div class="gallery-item" style="
-    --gallery-span: {{ project.layout_span.or(6) }};
-    --gallery-offset: {{ project.layout_offset.or(0) }};
-    --gallery-pull: {{ project.layout_pull.or(0) }}rem;
-    --gallery-z: {{ project.layout_depth.or(1) }};
-  ">
+  <div class="masonry-item" data-masonry-item>
     {%~ embed '@snippets/grid-item.twig' with {
       project: project,
       image:   project.getCoverImage,

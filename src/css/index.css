@@ -11,6 +11,7 @@
   --color-text: #ffffff;
   --color-background: #121d12;
   --font-display: 'Bellefair', serif;
+  --font-copy: 'Lato', sans-serif;
   --color-shade: #ffffff1a;
 
   --spacing-container: none;
@@ -22,6 +23,7 @@
   --text-action--line-height: 24px;
   --text-xl--line-height: 1.25;
   --text-2xl--line-height: 1.25;
+  --text-3xl: 1.5rem;
 }
 
 @layer base {
@@ -77,6 +79,40 @@
   }
 }
 
+/* Gallery-hang works listing — mobile: plain single-column stack */
+.gallery-item {
+  grid-column: 1 / -1;
+}
+
+@variant lg {
+  .gallery-item {
+    position: relative;
+    grid-column: calc(var(--gallery-offset, 0) + 1) / span var(--gallery-span, 6);
+    margin-top: var(--gallery-pull, 0rem);
+    z-index: var(--gallery-z, 1);
+  }
+}
+
+/* Gallery item fade — toggled by IntersectionObserver in index.js */
+.gallery-item {
+  opacity: 0;
+  transform: translateY(1rem);
+  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.gallery-item.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-item {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
 .hero-section {
   position: relative;
   width: 100vw;
@@ -89,10 +125,8 @@
   position: sticky;
   top: 0;
   width: 100%;
-  height: 100svh;
+  height: 100%;
   overflow: hidden;
-  transform-origin: center top;
-  will-change: transform;
 }
 
 .hero-img {
@@ -101,22 +135,35 @@
   object-fit: cover;
 }
 
+.hero-gradient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(
+    to bottom,
+    transparent 0%,
+    transparent 40%,
+    color-mix(in srgb, #121d12 60%, transparent) 75%,
+    #121d12 100%
+  );
+}
+
 .hero-overlay {
   position: absolute;
   inset: 0;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: flex-end;
   text-align: center;
-  padding: 6rem 2rem 2rem;
+  padding: 2rem 2rem 6rem;
   color: white;
-  background: rgba(0, 0, 0, 0.5);
 }
 
 .hero-title {
   font-family: 'Bellefair', serif;
-  font-size: clamp(3rem, 8vw, 10rem);
+  font-size: clamp(3rem, 10vw, 11rem);
+  line-height: 0.9em;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 400;
@@ -124,7 +171,8 @@
 }
 
 .hero-subtitle {
-  font-size: clamp(1.5rem, 2vw, 3rem);
+  font-size: clamp(.75rem, 1.5vw, 2rem);
+  margin-top: 0.5em;
   opacity: 0.85;
 }
 
@@ -135,63 +183,51 @@
   z-index: 9999;
 }
 
-/* Midnight header */
+/* Midnight header — nav stays visible; only the site title hides over the hero */
 .midnight-header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 9999;
-  height: var(--midnight-header-height, 72px);
-  overflow: hidden;
 }
 
-.midnight-white,
-.midnight-black {
-  position: absolute;
-  inset: 0;
-  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+@variant lg {
+  /* While the hero is in view, align the nav's right edge with the hero border */
+  .midnight-header header {
+    padding-right: 5vw;
+    transition: padding-right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  /* Past the hero, the nav settles back to its normal edge padding */
+  .midnight-header.is-light header {
+    padding-right: 1.5rem;
+  }
 }
 
-/* White nav — default position (visible) */
-.midnight-white {
-  color: white;
-  transform: translateY(0);
-}
-
-.midnight-white a,
-.midnight-white h1,
-.midnight-white button {
+.midnight-header a,
+.midnight-header h1,
+.midnight-header button {
   color: white;
 }
 
-.midnight-white svg {
+.midnight-header svg {
   stroke: white;
 }
 
-/* Black nav — starts below, slides up when needed */
-.midnight-black {
-  color: white;
-  transform: translateY(100%);
+.midnight-header figure {
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-8px);
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), visibility 0s linear 0.4s;
 }
 
-.midnight-black a,
-.midnight-black h1,
-.midnight-black button {
-  color: white;
-}
-
-.midnight-black svg {
-  stroke: white;
-}
-
-/* Active states */
-.midnight-header.is-light .midnight-white {
-  transform: translateY(-100%);
-}
-
-.midnight-header.is-light .midnight-black {
+/* Site title revealed once scrolled past the hero */
+.midnight-header.is-light figure {
+  opacity: 1;
+  visibility: visible;
   transform: translateY(0);
+  transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Breidfjord typography */
@@ -201,7 +237,8 @@ body {
 
 .hero-title {
   font-family: 'Bellefair', serif;
-  font-size: clamp(3rem, 8vw, 7rem);
+  font-size: clamp(3rem, 10vw, 11rem);
+  line-height: 0.9em;
   text-transform: uppercase;
   letter-spacing: 0.05em;
   font-weight: 400;
@@ -210,15 +247,15 @@ body {
 
 .hero-subtitle {
   font-family: 'Bellefair', serif;
-  font-size: clamp(0.75rem, 1.5vw, 1rem);
+  font-size: clamp(.75rem, 1.5vw, 2rem);
+  margin-top: 0.5em;
   text-transform: uppercase;
   letter-spacing: 0.2em;
   opacity: 1;
 }
 
 /* Nav uppercase */
-.midnight-white nav a,
-.midnight-black nav a,
+.midnight-header nav a,
 .site-nav-wrap nav a {
   text-transform: uppercase;
   letter-spacing: 0.1em;
@@ -227,17 +264,34 @@ body {
 }
 
 /* Nav — no underline */
-.midnight-white nav a span,
-.midnight-black nav a span,
+.midnight-header nav a span,
 .site-nav-wrap nav a span {
   text-decoration: none !important;
 }
 
 /* Site title */
-.midnight-white h1,
-.midnight-black h1,
+.midnight-header h1,
 .site-nav-wrap h1 {
   font-family: 'Bellefair', serif;
   text-transform: uppercase;
   letter-spacing: 0.05em;
+}
+
+/* Body copy — paragraph text under headings, site-wide. Headings/nav stay Bellefair. */
+.copy p {
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  line-height: 1.4em;
+}
+
+/* Home intro — copy under the H2, not the heading itself */
+.home-intro .copy p {
+  color: #8C938D;
+}
+
+/* Works overview + individual project pages — sub-copy under headings */
+.works-intro .copy p,
+.project-copy .copy p {
+  color: #8C938D;
+  text-transform: lowercase;
 }

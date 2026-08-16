@@ -49,23 +49,6 @@ window.addEventListener("scroll", function () {
   updateState();
 });
 
-// Hero scroll animation
-const heroWrap = document.querySelector('.hero-image-wrap')
-const heroOverlay = document.querySelector('.hero-overlay')
-
-if (heroWrap) {
-  window.addEventListener('scroll', () => {
-    const scrollY = window.scrollY
-    const vh = window.innerHeight
-    const progress = Math.min(scrollY / vh, 1)
-    const scale = 1 - (progress * 0.15)
-    heroWrap.style.transform = `scale(${scale})`
-    if (heroOverlay) {
-      heroOverlay.style.opacity = Math.max(1 - (progress * 2), 0)
-    }
-  }, { passive: true })
-}
-
 // Midnight header
 function initMidnightHeader() {
   const header = document.querySelector('[data-js="midnightHeader"]')
@@ -73,10 +56,6 @@ function initMidnightHeader() {
 
   const hero = document.querySelector('.hero-section')
   if (!hero) return
-
-  // Set header height CSS var
-  const h = header.offsetHeight
-  header.style.setProperty('--midnight-header-height', `${h}px`)
 
   const check = () => {
     const heroBottom = hero.getBoundingClientRect().bottom
@@ -96,4 +75,29 @@ document.addEventListener('turbo:load', initMidnightHeader)
 document.addEventListener('DOMContentLoaded', function () {
   if (typeof Turbo !== 'undefined') return
   initMidnightHeader()
+})
+
+// Gallery item fade
+function initGalleryFade() {
+  const items = document.querySelectorAll('.gallery-item')
+  if (!items.length) return
+
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    items.forEach((item) => item.classList.add('is-visible'))
+    return
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      entry.target.classList.toggle('is-visible', entry.isIntersecting)
+    })
+  }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' })
+
+  items.forEach((item) => observer.observe(item))
+}
+
+document.addEventListener('turbo:load', initGalleryFade)
+document.addEventListener('DOMContentLoaded', function () {
+  if (typeof Turbo !== 'undefined') return
+  initGalleryFade()
 })

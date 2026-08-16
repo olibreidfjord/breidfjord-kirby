@@ -2,15 +2,13 @@
 
 {% block main %}
 
-  <section class="px-4 py-16 md:px-8">
+  <section class="px-4 pt-[15%] pb-0 md:px-8">
 
-    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
-      <div class="xl:col-start-2 xl:col-span-2 space-y-10">
+    <div class="project-copy mx-auto max-w-3xl space-y-10 text-center">
 
-        {% include '@snippets/title.twig' %}
-        {% include '@snippets/blocks.twig' %}
+      {% include '@snippets/title.twig' %}
+      {% include '@snippets/blocks.twig' %}
 
-      </div>
     </div>
 
   </section>
@@ -41,13 +39,11 @@
   {%~ if next %}
   <aside class="px-4 py-16 md:px-8">
 
-    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
-      <div class="xl:col-start-2 xl:col-span-2 flex flex-row justify-start">
-        <a class="py-2 -my-2 flex flex-col group" href="{{ next.url }}">
-          <span class="text-2xl text-current/50">{{ t('tablo.label.next') }}</span>
-          <span class="text-4xl"><span class="group-hover:underline">{{ next.title }}</span><span class="ml-1">&rarr;</span></span>
-        </a>
-      </div>
+    <div class="mx-auto max-w-3xl flex flex-row justify-center text-center">
+      <a class="py-2 -my-2 flex flex-col group" href="{{ next.url }}">
+        <span class="text-2xl lowercase text-[#8C938D]">{{ t('tablo.label.next') }}</span>
+        <span class="text-4xl uppercase text-white"><span class="group-hover:underline">{{ next.title }}</span><span class="ml-1">&rarr;</span></span>
+      </a>
     </div>
   </aside>
   {%~ endif %}

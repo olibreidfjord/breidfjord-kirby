@@ -1,10 +1,11 @@
 {%~ for layout in page.layout.toLayouts %}
 {%~ if layout.isNotEmpty %}
-<section class="px-4 py-16 md:px-8">
+{%~ set isFirstLayout = loop.first %}
+<section class="px-4 md:px-8 {{ isFirstLayout ? 'py-36' : 'py-16' }}">
 
-  <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
+  <div class="grid grid-cols-1 {{ isFirstLayout ? 'xl:grid-cols-2' : 'xl:grid-cols-3' }} gap-8">
     {%~ for column in layout.columns %}
-    <div class="{{ layout.fullwidth.toBool ? 'xl:col-span-3' : 'xl:col-start-2 xl:col-span-2' }}">
+    <div class="{{ layout.fullwidth.toBool ? 'xl:col-span-3' : (isFirstLayout ? 'home-intro xl:col-span-2 mx-auto max-w-3xl text-center' : 'xl:col-start-2 xl:col-span-2') }}">
 
       {% include '@snippets/blocks.twig' with { blocks: column.blocks } %}
 

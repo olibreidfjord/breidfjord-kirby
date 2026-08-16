@@ -2,21 +2,19 @@
 
 {% block main %}
 
-  <section class="px-4 py-16 md:px-8">
+  <section class="px-4 pt-[20%] pb-[10%] md:px-8">
 
-    <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
-      <div class="xl:col-start-2 xl:col-span-2">
+    <div class="works-intro mx-auto max-w-3xl text-center">
 
-        {% include '@snippets/blocks.twig' %}
+      {% include '@snippets/blocks.twig' %}
 
-      </div>
     </div>
 
   </section>
 
   <section class="px-4 py-16 md:px-8">
 
-    {% include '@snippets/blocks/projects.twig' with { projects: page.children().template('project').listed } %}
+    {% include '@snippets/works-grid.twig' %}
 
   </section>
 

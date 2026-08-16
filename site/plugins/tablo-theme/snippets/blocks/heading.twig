@@ -1,6 +1,6 @@
 <div class="copy text-2xl max-w-copy">
 <{{ block.level.value }} class="{{ clsx('tracking-tight', 'text-balance', {
-  uppercase: block.uppercase.toBool,
+  uppercase: block.uppercase.toBool or block.level.value == 'h1',
 }, {
   size3xl: 'text-3xl',
   size4xl: 'text-4xl',

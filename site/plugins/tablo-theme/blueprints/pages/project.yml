@@ -45,5 +45,44 @@ tabs:
         type: text
         help: Will be displayed as a secondary caption under the main title in projects listings.
 
+  layout:
+    label: Layout
+    fields:
+      layout_offset:
+        label: Grid offset
+        type: range
+        min: 0
+        max: 8
+        step: 1
+        default: 0
+        help: Columns (of 12) to offset this project from the left in the works listing, on desktop. 0 = flush left.
+
+      layout_span:
+        label: Grid width
+        type: range
+        min: 4
+        max: 12
+        step: 1
+        default: 6
+        help: How many of the 12 columns this project occupies in the works listing, on desktop. Offset + width should not exceed 12.
+
+      layout_pull:
+        label: Overlap
+        type: range
+        min: 0
+        max: 12
+        step: 1
+        default: 0
+        help: How far (in rem) this project overlaps the row above it in the works listing, on desktop. 0 = no overlap.
+
+      layout_depth:
+        label: Stack order
+        type: range
+        min: 1
+        max: 10
+        step: 1
+        default: 1
+        help: Which project appears on top where they overlap in the works listing. Higher = closer to front.
+
   seo: tabs/seo
   files: tabs/files
