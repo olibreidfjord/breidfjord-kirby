@@ -599,7 +599,7 @@ body.lightbox-open {
 }
 
 .grid-hover-label {
-  padding: 0.5rem 1.5rem;
+  padding: 1rem 3rem;
   border: 1px solid currentColor;
   border-radius: 9999px;
   color: white;
