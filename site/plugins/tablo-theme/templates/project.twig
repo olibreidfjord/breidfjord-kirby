@@ -25,7 +25,15 @@
     <div class="masonry-grid" data-masonry>
       {%~ for image in media %}
       <figure class="masonry-item" data-masonry-item>
-        {%~ include '@snippets/grid-item.twig' with { image } only ~%}
+        <button
+          type="button"
+          class="block w-full p-0 border-0 bg-transparent text-left cursor-pointer"
+          data-lightbox-trigger
+          data-lightbox-src="{{ image.thumb({ width: 2400, format: 'webp' }).url }}"
+          aria-label="Open image"
+        >
+          {%~ include '@snippets/grid-item.twig' with { image } only ~%}
+        </button>
         {%~ if image.caption.isNotEmpty %}
         <figcaption class="mt-3 font-copy font-light leading-[1.2] text-sm text-[#aeaeae]">{{ image.caption }}</figcaption>
         {%~ endif %}

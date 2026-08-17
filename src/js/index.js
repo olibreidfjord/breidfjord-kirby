@@ -4,6 +4,7 @@ import { initMobileMenu } from "./mobile-menu";
 import { initMasonry } from "./masonry";
 import { initSmoothScroll } from "./smooth-scroll";
 import { initHeroParallax } from "./hero-parallax";
+import { initLightbox } from "./lightbox";
 
 // Page
 
@@ -63,6 +64,13 @@ document.addEventListener('turbo:load', initHeroParallax)
 document.addEventListener('DOMContentLoaded', function () {
   if (typeof Turbo !== 'undefined') return
   initHeroParallax()
+})
+
+// Lightbox (project gallery)
+document.addEventListener('turbo:load', initLightbox)
+document.addEventListener('DOMContentLoaded', function () {
+  if (typeof Turbo !== 'undefined') return
+  initLightbox()
 })
 
 // Midnight header

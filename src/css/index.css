@@ -273,6 +273,31 @@
   z-index: 9999;
 }
 
+/* Scrim behind the fixed nav — every page except the home hero. .is-light
+   only ever applies when page.isHomePage is false (see default.twig), so
+   this never renders over the homepage hero, which has its own entrance/
+   scroll treatment. Static CSS only — no scroll listeners, no interaction
+   with Lenis or the existing scroll-fade toggling.
+   The <header> below needs its own explicit position + z-index: a
+   positioned element (this ::before) always paints above a non-positioned
+   in-flow sibling regardless of DOM order, so without that the scrim would
+   sit on top of the nav content instead of behind it. */
+.midnight-header.is-light::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 8rem;
+  background: linear-gradient(to bottom, #121d12 0%, transparent 100%);
+  pointer-events: none;
+}
+
+.midnight-header.is-light header {
+  position: relative;
+  z-index: 1;
+}
+
 @variant lg {
   /* While the hero is in view, align the nav's right edge with the hero border */
   .midnight-header header {
@@ -438,4 +463,119 @@ body {
 .works-intro .copy p,
 .project-copy .copy p {
   color: #aeaeae;
+}
+
+/* Project gallery lightbox — built/toggled in src/js/lightbox.js.
+   Shown/hidden via opacity + a visibility transition-delay on hide, same
+   technique already used above for .midnight-header figure's scroll
+   reveal, rather than display:none (which can't be transitioned) or a
+   second show/hide mechanism. z-index sits above .midnight-header's 9999
+   so the viewer covers the nav too. */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0s linear 0.3s;
+}
+
+.lightbox.is-open {
+  opacity: 1;
+  visibility: visible;
+  transition: opacity 0.3s ease;
+}
+
+.lightbox-backdrop {
+  position: absolute;
+  inset: 0;
+  background-color: color-mix(in srgb, #121d12 90%, transparent);
+}
+
+.lightbox-figure {
+  position: relative;
+  z-index: 1;
+  max-width: min(90vw, 1600px);
+  max-height: 85vh;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: 75vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.lightbox-caption {
+  margin-top: 0.75rem;
+  text-align: left;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  line-height: 1.2em;
+  font-size: var(--text-sm);
+  color: #aeaeae;
+}
+
+.lightbox-close,
+.lightbox-prev,
+.lightbox-next {
+  position: absolute;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9999px;
+  border: 1px solid currentColor;
+  color: white;
+  background: transparent;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.lightbox-close:hover,
+.lightbox-prev:hover,
+.lightbox-next:hover {
+  background-color: white;
+  color: #121d12;
+}
+
+.lightbox-close {
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 2.5rem;
+  height: 2.5rem;
+}
+
+.lightbox-prev,
+.lightbox-next {
+  top: 50%;
+  transform: translateY(-50%);
+  width: 3rem;
+  height: 3rem;
+}
+
+.lightbox-prev {
+  left: 1.5rem;
+}
+
+.lightbox-next {
+  right: 1.5rem;
+}
+
+body.lightbox-open {
+  overflow: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .lightbox {
+    transition: none;
+  }
 }
