@@ -579,3 +579,61 @@ body.lightbox-open {
     transition: none;
   }
 }
+
+/* Gallery image hover — zoom + scrim + "View" pill. Opt-in via grid-item.twig's
+   `overlay` param: the frontpage curated tiles and the in-project gallery
+   images only — not the Works overview category tiles. Triggered by the
+   existing .group ancestor (the <a>/<button> wrapper). Hover rules are
+   wrapped in (hover: hover) and (pointer: fine) — Tailwind's own group-hover:
+   utility doesn't carry that guard, so this is hand-written specifically to
+   keep touch devices from ever matching a hover state at all. */
+.grid-hover-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: color-mix(in srgb, #121d12 85%, transparent);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.grid-hover-label {
+  padding: 0.5rem 1.5rem;
+  border: 1px solid currentColor;
+  border-radius: 9999px;
+  color: white;
+  font-family: 'Lato', sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .grid-image-wrap img {
+    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .grid-hover-overlay {
+    transition: opacity 0.18s ease;
+  }
+
+  .group:hover .grid-image-wrap img {
+    transform: scale(1.04);
+  }
+
+  .group:hover .grid-hover-overlay {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .grid-image-wrap img,
+  .grid-hover-overlay {
+    transition: none;
+  }
+
+  .group:hover .grid-image-wrap img {
+    transform: none;
+  }
+}

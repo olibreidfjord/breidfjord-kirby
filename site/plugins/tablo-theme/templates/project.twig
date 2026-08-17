@@ -27,12 +27,12 @@
       <figure class="masonry-item" data-masonry-item>
         <button
           type="button"
-          class="block w-full p-0 border-0 bg-transparent text-left cursor-pointer"
+          class="group block w-full p-0 border-0 bg-transparent text-left cursor-pointer"
           data-lightbox-trigger
           data-lightbox-src="{{ image.thumb({ width: 2400, format: 'webp' }).url }}"
           aria-label="Open image"
         >
-          {%~ include '@snippets/grid-item.twig' with { image } only ~%}
+          {%~ include '@snippets/grid-item.twig' with { image, overlay: true } only ~%}
         </button>
         {%~ if image.caption.isNotEmpty %}
         <figcaption class="mt-3 font-copy font-light leading-[1.2] text-sm text-[#aeaeae]">{{ image.caption }}</figcaption>

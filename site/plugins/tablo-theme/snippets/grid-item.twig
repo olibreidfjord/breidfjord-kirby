@@ -18,7 +18,7 @@
   {%- set thumb = image.thumb({ width: 640, format: 'webp' }) -%}
   {%- set ratio = ratio ?? '%d/%d' | format(thumb.width, thumb.height) -%}
   <div
-    class="bg-current/5"
+    class="{{ clsx('bg-current/5', { 'grid-image-wrap relative overflow-hidden': overlay }) }}"
     style="aspect-ratio: {{ ratio }};"
     ><img
       class="w-full h-full {{ crop ? 'object-cover' : 'object-contain' }}"
@@ -37,7 +37,11 @@
       height="{{ thumb.height }}"
       alt="{{ image.alt }}"
       data-grid-image
-    ></div
+    >{%~ if overlay ~%}
+    <div class="grid-hover-overlay">
+      <span class="grid-hover-label">View</span>
+    </div>
+    {%~ endif ~%}</div
   >
   {%- elseif image.type == 'video' -%}
   <div><video
