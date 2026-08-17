@@ -2,16 +2,32 @@
 
 {% block main %}
 
-  <section class="px-4 pt-[20%] pb-[10%] md:px-8 space-y-10">
+  <section class="px-4 pt-[20%] md:px-8">
 
-    {% include '@snippets/title.twig' %}
+    {% set heading %}
+      {% include '@snippets/title.twig' %}
+    {% endset %}
 
-    {%~ if page.text.isNotEmpty %}
+    {% set body %}
+      {%~ if page.standfirst.isNotEmpty %}
+      <p class="text-2xl font-copy text-[#aeaeae]">{{ page.standfirst }}</p>
+      {%~ endif %}
+    {% endset %}
+
+    <div class="page-intro">
+      {% include '@snippets/section-intro.twig' with { heading, body } %}
+    </div>
+
+  </section>
+
+  {%~ if page.text.isNotEmpty %}
+  <section class="px-4 pt-16 pb-[10%] md:px-8">
+
     <div class="copy text-2xl max-w-copy">
       {{ page.text.kirbytext | raw }}
     </div>
-    {%~ endif %}
 
   </section>
+  {%~ endif %}
 
 {% endblock main %}

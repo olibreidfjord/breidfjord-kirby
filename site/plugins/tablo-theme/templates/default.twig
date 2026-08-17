@@ -13,7 +13,7 @@
 {% include '@snippets/mobile-menu.twig' %}
 
 {% if site.hero.isNotEmpty %}
-<div class="midnight-header{{ page.isHomePage ? '' : ' is-light' }}" data-js="midnightHeader">
+<div class="midnight-header{{ page.isHomePage ? ' hero-entrance' : ' is-light' }}" data-js="midnightHeader">
   <header class="py-4 pl-6 flex flex-row justify-between items-center gap-8">
     {% include '@snippets/site-title.twig' %}
     {%~ if site.mainMenu.isNotEmpty %}

@@ -2,6 +2,8 @@ import { initState, updateState } from "./state";
 import { initStickyHeader, updateStickyHeader } from "./sticky-header";
 import { initMobileMenu } from "./mobile-menu";
 import { initMasonry } from "./masonry";
+import { initSmoothScroll } from "./smooth-scroll";
+import { initHeroParallax } from "./hero-parallax";
 
 // Page
 
@@ -49,6 +51,20 @@ window.addEventListener("scroll", function () {
   updateState();
 });
 
+// Smooth scroll (Lenis)
+document.addEventListener('turbo:load', initSmoothScroll)
+document.addEventListener('DOMContentLoaded', function () {
+  if (typeof Turbo !== 'undefined') return
+  initSmoothScroll()
+})
+
+// Hero parallax
+document.addEventListener('turbo:load', initHeroParallax)
+document.addEventListener('DOMContentLoaded', function () {
+  if (typeof Turbo !== 'undefined') return
+  initHeroParallax()
+})
+
 // Midnight header
 function initMidnightHeader() {
   const header = document.querySelector('[data-js="midnightHeader"]')
@@ -77,9 +93,11 @@ document.addEventListener('DOMContentLoaded', function () {
   initMidnightHeader()
 })
 
-// Gallery item fade
-function initGalleryFade() {
-  const items = document.querySelectorAll('.gallery-item')
+// Fade-in-on-scroll — shared by .gallery-item and .section-intro (each
+// selector's own CSS drives what actually fades/staggers; this just
+// toggles the trigger class via IntersectionObserver).
+function initFadeObserver(selector) {
+  const items = document.querySelectorAll(selector)
   if (!items.length) return
 
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
@@ -96,8 +114,14 @@ function initGalleryFade() {
   items.forEach((item) => observer.observe(item))
 }
 
-document.addEventListener('turbo:load', initGalleryFade)
+function initFades() {
+  initFadeObserver('.gallery-item')
+  initFadeObserver('.section-intro')
+  initFadeObserver('.masonry-item')
+}
+
+document.addEventListener('turbo:load', initFades)
 document.addEventListener('DOMContentLoaded', function () {
   if (typeof Turbo !== 'undefined') return
-  initGalleryFade()
+  initFades()
 })

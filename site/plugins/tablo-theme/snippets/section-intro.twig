@@ -1,0 +1,17 @@
+{#
+  Two-column editorial intro: headline left, body copy right, top-aligned,
+  collapsing to a single stacked column below lg. Shared by the home,
+  works, and individual project pages — callers pass pre-rendered
+  heading/body markup:
+    {% set heading %}...{% endset %}
+    {% set body %}...{% endset %}
+    {% include '@snippets/section-intro.twig' with { heading, body } %}
+#}
+<div class="section-intro max-w-7xl mr-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+  <div class="section-intro-heading">
+    {{ heading }}
+  </div>
+  <div class="section-intro-body">
+    {{ body }}
+  </div>
+</div>

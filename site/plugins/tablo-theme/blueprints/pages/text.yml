@@ -9,6 +9,11 @@ tabs:
           content:
             type: fields
             fields:
+              standfirst:
+                label: Standfirst
+                type: text
+                help: Short line shown beside the page title at the top of the page.
+
               text:
                 label: Text
                 type: textarea

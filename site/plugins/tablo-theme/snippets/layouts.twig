@@ -1,11 +1,34 @@
 {%~ for layout in page.layout.toLayouts %}
 {%~ if layout.isNotEmpty %}
 {%~ set isFirstLayout = loop.first %}
-<section class="px-4 md:px-8 {{ isFirstLayout ? 'py-36' : 'py-16' }}">
 
-  <div class="grid grid-cols-1 {{ isFirstLayout ? 'xl:grid-cols-2' : 'xl:grid-cols-3' }} gap-8">
+{%~ if isFirstLayout %}
+{%~ set allBlocks = layout.columns.first.blocks %}
+{%~ set headingBlock = allBlocks.filterBy('type', 'heading').first %}
+{%~ set bodyBlocks = allBlocks.filterBy('type', '!=', 'heading') %}
+<section class="px-4 py-36 md:px-8">
+
+  {% set heading %}
+    {%~ if headingBlock %}
+    {% include '@snippets/blocks/heading.twig' with { block: headingBlock } %}
+    {%~ endif %}
+  {% endset %}
+
+  {% set body %}
+    {% include '@snippets/blocks.twig' with { blocks: bodyBlocks } %}
+  {% endset %}
+
+  <div class="home-intro">
+    {% include '@snippets/section-intro.twig' with { heading, body } %}
+  </div>
+
+</section>
+{%~ else %}
+<section class="px-4 py-16 md:px-8">
+
+  <div class="grid grid-cols-1 xl:grid-cols-3 gap-8">
     {%~ for column in layout.columns %}
-    <div class="{{ layout.fullwidth.toBool ? 'xl:col-span-3' : (isFirstLayout ? 'home-intro xl:col-span-2 mx-auto max-w-3xl text-center' : 'xl:col-start-2 xl:col-span-2') }}">
+    <div class="{{ layout.fullwidth.toBool ? 'xl:col-span-3' : 'xl:col-start-2 xl:col-span-2' }}">
 
       {% include '@snippets/blocks.twig' with { blocks: column.blocks } %}
 
@@ -14,5 +37,7 @@
   </div>
 
 </section>
+{%~ endif %}
+
 {%~ endif %}
 {%~ endfor %}

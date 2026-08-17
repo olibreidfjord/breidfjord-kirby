@@ -4,11 +4,16 @@
 
   <section class="px-4 pt-[15%] pb-0 md:px-8">
 
-    <div class="project-copy mx-auto max-w-3xl space-y-10 text-center">
-
+    {% set heading %}
       {% include '@snippets/title.twig' %}
-      {% include '@snippets/blocks.twig' %}
+    {% endset %}
 
+    {% set body %}
+      {% include '@snippets/blocks.twig' %}
+    {% endset %}
+
+    <div class="project-copy">
+      {% include '@snippets/section-intro.twig' with { heading, body } %}
     </div>
 
   </section>
@@ -22,7 +27,7 @@
       <figure class="masonry-item" data-masonry-item>
         {%~ include '@snippets/grid-item.twig' with { image } only ~%}
         {%~ if image.caption.isNotEmpty %}
-        <figcaption class="mt-3 text-lg lowercase text-[#8C938D]">{{ image.caption }}</figcaption>
+        <figcaption class="mt-3 font-copy font-light leading-[1.2] text-sm text-[#aeaeae]">{{ image.caption }}</figcaption>
         {%~ endif %}
       </figure>
       {%~ endfor %}
@@ -41,7 +46,7 @@
 
     <div class="mx-auto max-w-3xl flex flex-row justify-center text-center">
       <a class="py-2 -my-2 flex flex-col group" href="{{ next.url }}">
-        <span class="text-2xl lowercase text-[#8C938D]">{{ t('tablo.label.next') }}</span>
+        <span class="text-2xl lowercase text-[#aeaeae]">{{ t('tablo.label.next') }}</span>
         <span class="text-4xl uppercase text-white"><span class="group-hover:underline">{{ next.title }}</span><span class="ml-1">&rarr;</span></span>
       </a>
     </div>

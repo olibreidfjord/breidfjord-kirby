@@ -4,10 +4,22 @@
 
   <section class="px-4 pt-[20%] pb-[10%] md:px-8">
 
-    <div class="works-intro mx-auto max-w-3xl text-center">
+    {%~ set allBlocks = page.blocks.toBlocks %}
+    {%~ set headingBlock = allBlocks.filterBy('type', 'heading').first %}
+    {%~ set bodyBlocks = allBlocks.filterBy('type', '!=', 'heading') %}
 
-      {% include '@snippets/blocks.twig' %}
+    {% set heading %}
+      {%~ if headingBlock %}
+      {% include '@snippets/blocks/heading.twig' with { block: headingBlock } %}
+      {%~ endif %}
+    {% endset %}
 
+    {% set body %}
+      {% include '@snippets/blocks.twig' with { blocks: bodyBlocks } %}
+    {% endset %}
+
+    <div class="works-intro">
+      {% include '@snippets/section-intro.twig' with { heading, body } %}
     </div>
 
   </section>
