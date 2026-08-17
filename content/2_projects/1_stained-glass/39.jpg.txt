@@ -2,8 +2,16 @@ Alt:
 
 ----
 
+Caption: Dýrð-Vald-Virðing  860 x 190 cm Hallgrímskirkja 1999
+
+----
+
 Template: gallery-image
 
 ----
 
 Uuid: ojszlxdfnpjvude5
+
+----
+
+Focus: 50.1% 33.6%

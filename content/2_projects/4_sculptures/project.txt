@@ -38,7 +38,7 @@ Blocks: [{"content":{"text":"<p>Leifur has made free-standing sculptures that te
 
 ----
 
-Description: Glass and mixed-media works in three dimensions.
+Description: Glass and mixed-media works in three dimensions
 
 ----
 

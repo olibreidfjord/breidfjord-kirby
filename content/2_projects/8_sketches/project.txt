@@ -31,7 +31,7 @@ Blocks: [{"content":{"text":"<p>The preparatory studies behind the finished piec
 
 ----
 
-Description: Working drawings and studies.
+Description: Working drawings and studies
 
 ----
 

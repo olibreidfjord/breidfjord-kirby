@@ -26,7 +26,7 @@ Blocks: [{"content":{"text":"<p>With his wife Sigríður Jóhannsdóttir, Leifur
 
 ----
 
-Description: Woven works and vestments, with Sigríður Jóhannsdóttir.
+Description: Woven works and vestments, with Sigríður Jóhannsdóttir
 
 ----
 

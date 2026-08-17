@@ -60,7 +60,7 @@ Blocks: [{"content":{"text":"<p>Drawing is the foundation of Leifur's practice. 
 
 ----
 
-Description: Studies of the figure.
+Description: Studies of the figure
 
 ----
 

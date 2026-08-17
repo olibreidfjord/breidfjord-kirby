@@ -45,7 +45,7 @@ Blocks: [{"content":{"text":"<p>Stained glass is the centre of Leifur's work. He
 
 ----
 
-Description: Windows for churches and public buildings.
+Description: Windows for churches and public buildings
 
 ----
 

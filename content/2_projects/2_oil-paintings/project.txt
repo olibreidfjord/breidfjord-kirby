@@ -38,7 +38,7 @@ Blocks: [{"content":{"text":"<p>Leifur trained in drawing and painting at the Ic
 
 ----
 
-Description: Painting alongside the glass.
+Description: Painting alongside the glass
 
 ----
 

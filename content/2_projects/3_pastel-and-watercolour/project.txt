@@ -37,7 +37,7 @@ Blocks: [{"content":{"text":"<p>Alongside the glass and oil, Leifur works in wat
 
 ----
 
-Description: Works on paper.
+Description: Works on paper
 
 ----
 

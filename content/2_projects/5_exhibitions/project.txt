@@ -38,7 +38,7 @@ Blocks: [{"content":{"items":[]},"id":"dc6145da-df09-4356-a9b4-3ce26b484397","is
 
 ----
 
-Description: Solo and group shows, in Iceland and abroad.
+Description: Solo and group shows, in Iceland and abroad
 
 ----
 

@@ -2,7 +2,11 @@ Title: Contact
 
 ----
 
-Text: 
+Standfirst: Get in touch about commissions, exhibitions, or press enquiries.
+
+----
+
+Text:
 
 ----
 
