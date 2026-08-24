@@ -1,9 +1,0 @@
-Alt: 
-
-----
-
-Template: gallery-image
-
-----
-
-Uuid: i8ecefzt6v6jjxft

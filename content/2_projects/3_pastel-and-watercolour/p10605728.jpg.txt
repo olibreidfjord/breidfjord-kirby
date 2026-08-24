@@ -1,9 +1,0 @@
-Alt: 
-
-----
-
-Template: gallery-image
-
-----
-
-Uuid: wijvcuk7b3ucter1
