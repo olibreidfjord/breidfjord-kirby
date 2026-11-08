@@ -4,8 +4,24 @@ fields:
   alt:
     label: Alt Text
     type: text
+    help: For screen readers and when the image fails to load. Not shown on the page.
 
-  caption:
-    label: Caption
+  worktitle:
+    label: Title
     type: text
-    help: Displayed under the image in the project gallery. Free text — e.g. "Title, dimensions, year" or a short description.
+    help: 'Title of the work, e.g. Dýrð-Vald-Virðing'
+
+  size:
+    label: Size
+    type: text
+    help: 'Dimensions exactly as they should read, e.g. 860 x 190 cm'
+
+  location:
+    label: Location / Collection
+    type: text
+    help: 'Where the work is, e.g. Hallgrímskirkja, or Einkaeign for a private collection'
+
+  year:
+    label: Year
+    type: text
+    help: 'e.g. 1999, or a range such as 1998–1999'
