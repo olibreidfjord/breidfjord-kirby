@@ -1,4 +1,5 @@
 import { getLenisInstance } from "./smooth-scroll";
+import { getArtworkCaptionText } from "./artwork-caption";
 
 // Vanilla-JS lightbox for the in-project masonry gallery. One shared
 // overlay, rebuilt on every turbo:load (Turbo replaces <body>, so any
@@ -89,8 +90,9 @@ function showImage(index) {
 
   const figure = trigger.closest(".masonry-item");
   const caption = figure ? figure.querySelector("figcaption") : null;
-  captionEl.textContent = caption ? caption.textContent : "";
-  captionEl.hidden = !caption;
+  const captionText = getArtworkCaptionText(caption);
+  captionEl.textContent = captionText;
+  captionEl.hidden = !captionText;
 
   const multiple = count > 1;
   prevBtn.hidden = !multiple;

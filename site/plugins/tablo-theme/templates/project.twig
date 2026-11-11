@@ -34,14 +34,7 @@
         >
           {%~ include '@snippets/grid-item.twig' with { image, overlay: true } only ~%}
         </button>
-        {%~ if image.worktitle.isNotEmpty or image.size.isNotEmpty or image.location.isNotEmpty or image.year.isNotEmpty %}
-        <figcaption class="mt-3 font-copy font-light leading-[1.2] text-sm text-[#aeaeae]">
-          {%~ if image.worktitle.isNotEmpty %}<span class="block italic">{{ image.worktitle }}</span>{% endif %}
-          {%~ if image.size.isNotEmpty %}<span class="block">{{ image.size }}</span>{% endif %}
-          {%~ if image.location.isNotEmpty %}<span class="block">{{ image.location }}</span>{% endif %}
-          {%~ if image.year.isNotEmpty %}<span class="block">{{ image.year }}</span>{% endif %}
-        </figcaption>
-        {%~ endif %}
+        {% include '@snippets/artwork-caption.twig' with { image } only %}
       </figure>
       {%~ endfor %}
     </div>

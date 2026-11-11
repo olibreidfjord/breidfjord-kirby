@@ -1,0 +1,18 @@
+{# Read content fields explicitly: image.size is Kirby's file size in bytes. #}
+{% set parts = [] %}
+{% set seen = [] %}
+{% for field in ['worktitle', 'size', 'location', 'year'] %}
+  {% set text = image.content.get(field).value|trim %}
+  {% set key = text|lower %}
+  {% if text != '' and key not in seen %}
+    {% set parts = parts|merge([{ text: text, title: field == 'worktitle' }]) %}
+    {% set seen = seen|merge([key]) %}
+  {% endif %}
+{% endfor %}
+{% if parts is not empty %}
+<figcaption class="mt-3 font-copy font-light leading-[1.2] text-sm text-[#aeaeae]">
+  {% for part in parts %}
+  <span class="block{{ part.title ? ' italic' : '' }}" data-caption-part>{{ part.text }}</span>
+  {% endfor %}
+</figcaption>
+{% endif %}
