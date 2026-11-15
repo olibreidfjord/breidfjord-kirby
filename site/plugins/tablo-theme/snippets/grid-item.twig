@@ -35,7 +35,9 @@
       }) }}"
       width="{{ thumb.width }}"
       height="{{ thumb.height }}"
-      alt="{{ image.alt }}"
+      loading="{{ (lazy ?? true) ? 'lazy' : 'eager' }}"
+      decoding="async"
+      alt="{{ image.alt.isNotEmpty ? image.alt : image.worktitle }}"
       data-grid-image
     >{%~ if overlay ~%}
     <div class="grid-hover-overlay">

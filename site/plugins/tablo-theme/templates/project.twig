@@ -30,9 +30,9 @@
           class="group block w-full p-0 border-0 bg-transparent text-left cursor-pointer"
           data-lightbox-trigger
           data-lightbox-src="{{ image.thumb({ width: 2400, format: 'webp' }).url }}"
-          aria-label="Open image"
+          aria-label="Open image{{ image.worktitle.isNotEmpty ? ': ' ~ image.worktitle : '' }}"
         >
-          {%~ include '@snippets/grid-item.twig' with { image, overlay: true } only ~%}
+          {%~ include '@snippets/grid-item.twig' with { image, overlay: true, lazy: loop.index > 6 } only ~%}
         </button>
         {% include '@snippets/artwork-caption.twig' with { image } only %}
       </figure>

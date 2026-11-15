@@ -620,7 +620,7 @@ body.lightbox-open {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: color-mix(in srgb, #121d12 85%, transparent);
+  background-color: color-mix(in srgb, #121d12 40%, transparent);
   opacity: 0;
   pointer-events: none;
 }
@@ -629,6 +629,9 @@ body.lightbox-open {
   padding: 1rem 3rem;
   border: 1px solid currentColor;
   border-radius: 9999px;
+  /* Own backing, so the pill stays legible over bright glass now the
+     scrim behind it is lighter. */
+  background-color: color-mix(in srgb, #121d12 75%, transparent);
   color: white;
   font-family: 'Lato', sans-serif;
   font-weight: 300;

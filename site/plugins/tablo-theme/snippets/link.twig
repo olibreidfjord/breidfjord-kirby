@@ -3,6 +3,9 @@
     'justify-center': center,
   }) }}"
   href="{{ link.toUrl }}"
+  {%~ if underline %}
+  aria-current="page"
+  {%~ endif %}
   {%~ if blank.toBool %}
   target="_blank"
   {%~ endif %}
