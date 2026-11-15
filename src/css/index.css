@@ -363,6 +363,18 @@ body {
   fill: currentColor;
 }
 
+/* Current page in the desktop nav: the underline was removed on purpose,
+   so the other links dim slightly instead. Not over the home hero photo,
+   where dimmed links would be hard to read on bright glass. */
+.midnight-header.is-light nav:has([aria-current="page"]) a,
+.site-nav-wrap nav:has([aria-current="page"]) a {
+  transition: opacity 0.2s ease;
+}
+.midnight-header.is-light nav:has([aria-current="page"]) a:not([aria-current="page"]):not(:hover):not(:focus-visible),
+.site-nav-wrap nav:has([aria-current="page"]) a:not([aria-current="page"]):not(:hover):not(:focus-visible) {
+  opacity: 0.6;
+}
+
 /* Breidfjord typography */
 body {
   font-family: 'Bellefair', serif;
