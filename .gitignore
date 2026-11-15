@@ -6,5 +6,6 @@ site/sessions/
 site/config/config.kirby.test.php
 site/config/config.breidfjord.test.php
 site/accounts/
-site/accounts/
 content/
+node_modules/
+.claude/

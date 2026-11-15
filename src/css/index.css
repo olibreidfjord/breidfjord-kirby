@@ -5,7 +5,6 @@
 @import "./debug.css";
 @import "./buttons.css";
 @import "./copy.css";
-@import "./lightbox.css";
 
 @theme {
   --color-text: #ffffff;

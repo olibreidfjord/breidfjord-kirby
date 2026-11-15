@@ -23,15 +23,6 @@ function initPage() {
     el.setAttribute("srcset", el.dataset.srcset);
   });
 
-  // Lightbox
-  document.querySelectorAll("[data-block]:has([data-lightbox]").forEach(function (node) {
-    GLightbox({
-      selector: `[data-block="${node.dataset.block}"] a[data-lightbox]`,
-      skin: "tablo",
-      openEffect: "fade",
-      closeEffect: "fade",
-    });
-  });
 
   // Mobile menu
   initMobileMenu();
