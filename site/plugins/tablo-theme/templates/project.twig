@@ -12,6 +12,13 @@
       {% include '@snippets/blocks.twig' %}
     {% endset %}
 
+    {%~ if page.parent %}
+    <a class="mb-7 inline-flex flex-row items-center gap-2.5 min-h-11 font-copy text-sm uppercase tracking-[1.7px] text-accent-text hover:text-white" href="{{ page.parent.url }}">
+      <svg aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>
+      All {{ page.parent.title | lower }}
+    </a>
+    {%~ endif %}
+
     <div class="project-copy">
       {% include '@snippets/section-intro.twig' with { heading, body } %}
     </div>
@@ -52,8 +59,8 @@
 
     <div class="mx-auto max-w-3xl flex flex-row justify-center text-center">
       <a class="py-2 -my-2 flex flex-col group" href="{{ next.url }}">
-        <span class="text-2xl lowercase text-[#aeaeae]">{{ t('tablo.label.next') }}</span>
-        <span class="text-4xl uppercase text-white"><span class="group-hover:underline">{{ next.title }}</span><span class="ml-1">&rarr;</span></span>
+        <span class="font-copy text-sm uppercase tracking-[1.7px] text-[#aeaeae]">{{ t('tablo.label.next') }}</span>
+        <span class="text-4xl uppercase text-white"><span class="group-hover:underline">{{ next.title }}</span><span class="ml-2 text-accent">&rarr;</span></span>
       </a>
     </div>
   </aside>

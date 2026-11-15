@@ -12,6 +12,10 @@
   --font-display: 'Bellefair', serif;
   --font-copy: 'Lato', sans-serif;
   --color-shade: #ffffff1a;
+  /* Monotone accent: -accent for lines and icons (4.09:1 on the
+     background), -accent-text for link text (4.95:1). */
+  --color-accent: #757d75;
+  --color-accent-text: #838b83;
 
   --spacing-container: none;
   --spacing-copy: none;
@@ -337,17 +341,50 @@
 
 /* Nothing may push the page wider than the screen. `clip`, unlike
    `hidden`, does not create a scroll container, so sticky and fixed
-   elements keep working. */
-html,
-body {
+   elements keep working. On html only: body is capped at a max width
+   and centred, so clipping there cuts off the full-bleed home hero on
+   screens wider than that cap. */
+html {
   overflow-x: clip;
 }
 
 /* Below 768 px, intro headlines run at 75% of their desktop size
    (72 px -> 54 px, 60 px -> 45 px). */
+.section-intro-heading .text-7xl { line-height: 4.75rem; letter-spacing: 1.4px; }
+.section-intro-heading .text-6xl { font-size: 3.5rem; line-height: 3.75rem; letter-spacing: 1.1px; }
 @media (width < 48rem) {
-  .section-intro-heading .text-7xl { font-size: 3.375rem; }
-  .section-intro-heading .text-6xl { font-size: 2.8125rem; }
+  .section-intro-heading .text-7xl { font-size: 3.375rem; line-height: 3.5625rem; }
+  .section-intro-heading .text-6xl { font-size: 2.625rem; line-height: 2.8125rem; }
+}
+
+/* Type scale, November 2026.
+   Lead paragraphs: Lato Light 22/31. Long-form body (About, Contact):
+   Lato Regular 19/31 in soft white, on the same 31 px rhythm. */
+.home-intro .copy p,
+.works-intro .copy p,
+.project-copy .copy p,
+.page-intro p {
+  font-size: 22px;
+  line-height: 31px;
+  font-weight: 300;
+}
+.longform {
+  max-width: 40rem;
+}
+.longform p {
+  font-size: 19px;
+  line-height: 31px;
+  font-weight: 400;
+  color: #e9ebe7;
+}
+
+/* Links in running copy take the accent text colour. */
+.copy a:not(.button) {
+  color: var(--color-accent-text);
+}
+.copy a:not(.button):hover,
+.copy a:not(.button):focus-visible {
+  color: #ffffff;
 }
 
 /* Social icons are uploaded SVGs pasted inline, so they carry whatever
@@ -638,7 +675,7 @@ body.lightbox-open {
 
 .grid-hover-label {
   padding: 1rem 3rem;
-  border: 1px solid currentColor;
+  border: 1px solid var(--color-accent);
   border-radius: 9999px;
   /* Own backing, so the pill stays legible over bright glass now the
      scrim behind it is lighter. */

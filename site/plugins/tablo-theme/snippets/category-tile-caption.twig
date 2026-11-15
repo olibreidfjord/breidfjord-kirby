@@ -5,8 +5,8 @@
   Params: title, description (Kirby Field)
 #}
 <div class="mt-8 flex flex-col gap-1 lg:flex-row lg:items-baseline lg:justify-between lg:gap-4">
-  <h2 class="text-2xl uppercase text-white">{{ title }}</h2>
+  <h2 class="text-2xl uppercase tracking-[0.7px] text-white">{{ title }}</h2>
   {%~ if description.isNotEmpty %}
-  <h3 class="text-2xl font-copy text-[#aeaeae]">{{ description }}</h3>
+  <h3 class="text-sm font-copy uppercase tracking-[1.7px] text-[#aeaeae]">{{ description }}</h3>
   {%~ endif %}
 </div>
