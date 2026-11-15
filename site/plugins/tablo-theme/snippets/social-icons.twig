@@ -1,4 +1,4 @@
-<ul class="{{ clsx(class, 'p-2 flex flex-row flex-wrap', {
+<ul class="{{ clsx(class, 'social-icons p-2 flex flex-row flex-wrap', {
     'justify-center': center,
   }) }}"
 >
@@ -7,6 +7,7 @@
   <li><a
     class="p-2 flex flex-row"
     href="{{ link.link.toUrl }}"
+    aria-label="{{ link.title }}"
     {%~ if link.blank.toBool %}
     target="_blank"
     {%~ endif %}

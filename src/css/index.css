@@ -351,6 +351,18 @@ body {
   .section-intro-heading .text-6xl { font-size: 2.8125rem; }
 }
 
+/* Social icons are uploaded SVGs pasted inline, so they carry whatever
+   size and colour the file declares. Force them to one size in the
+   text colour, so every icon matches whatever is uploaded later. */
+.social-icons svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  fill: currentColor;
+}
+.social-icons svg [fill]:not([fill="none"]) {
+  fill: currentColor;
+}
+
 /* Breidfjord typography */
 body {
   font-family: 'Bellefair', serif;
