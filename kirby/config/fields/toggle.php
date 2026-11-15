@@ -55,6 +55,9 @@ return [
 		}
 	],
 	'methods' => [
+		'emptyValue' => function () {
+			return false;
+		},
 		'toBool' => function ($value) {
 			return in_array($value, [true, 'true', 1, '1', 'on'], true) === true;
 		}
@@ -67,6 +70,7 @@ return [
 		'required' => function ($value) {
 			if (
 				$this->isRequired() &&
+				$this->isActive() &&
 				($value === false || $this->isEmptyValue($value))
 			) {
 				throw new InvalidArgumentException(

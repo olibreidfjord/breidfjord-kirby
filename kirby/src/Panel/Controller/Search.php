@@ -3,7 +3,9 @@
 namespace Kirby\Panel\Controller;
 
 use Kirby\Cms\App;
-use Kirby\Toolkit\Escape;
+use Kirby\Panel\Ui\Item\FileItem;
+use Kirby\Panel\Ui\Item\PageItem;
+use Kirby\Panel\Ui\Item\UserItem;
 
 /**
  * The Search controller takes care of the logic
@@ -24,7 +26,8 @@ class Search
 		int $page = 1
 	): array {
 		$kirby = App::instance();
-		$files = $kirby->site()
+		$files = $kirby
+			->site()
 			->index(true)
 			->filter('isListable', true)
 			->files();
@@ -40,13 +43,7 @@ class Search
 		}
 
 		return [
-			'results' => $files->values(fn ($file) => [
-				'image' => $file->panel()->image(),
-				'text'  => Escape::html($file->filename()),
-				'link'  => $file->panel()->url(true),
-				'info'  => Escape::html($file->id()),
-				'uuid'  => $file->uuid()->toString(),
-			]),
+			'results'    => $files->values(fn ($file) => (new FileItem(file: $file, info: '{{ file.id }}'))->props()),
 			'pagination' => $files->pagination()?->toArray()
 		];
 	}
@@ -57,23 +54,18 @@ class Search
 		int $page = 1
 	): array {
 		$kirby = App::instance();
-		$pages = $kirby->site()
+		$pages = $kirby
+			->site()
 			->index(true)
-			->search($query)
-			->filter('isListable', true);
+			->filter('isListable', true)
+			->search($query);
 
 		if ($limit !== null) {
 			$pages = $pages->paginate($limit, $page);
 		}
 
 		return [
-			'results' => $pages->values(fn ($page) => [
-				'image' => $page->panel()->image(),
-				'text' => Escape::html($page->title()->value()),
-				'link' => $page->panel()->url(true),
-				'info' => Escape::html($page->id()),
-				'uuid' => $page->uuid()?->toString(),
-			]),
+			'results'    => $pages->values(fn ($page) => (new PageItem(page: $page, info: '{{ page.id }}'))->props()),
 			'pagination' => $pages->pagination()?->toArray()
 		];
 	}
@@ -84,20 +76,17 @@ class Search
 		int $page = 1
 	): array {
 		$kirby = App::instance();
-		$users = $kirby->users()->search($query);
+		$users = $kirby
+			->users()
+			->filter('isListable', true)
+			->search($query);
 
 		if ($limit !== null) {
 			$users = $users->paginate($limit, $page);
 		}
 
 		return [
-			'results' => $users->values(fn ($user) => [
-				'image' => $user->panel()->image(),
-				'text'  => Escape::html($user->username()),
-				'link'  => $user->panel()->url(true),
-				'info'  => Escape::html($user->role()->title()),
-				'uuid'  => $user->uuid()->toString(),
-			]),
+			'results'    => $users->values(fn ($user) => (new UserItem(user: $user))->props()),
 			'pagination' => $users->pagination()?->toArray()
 		];
 	}

@@ -13,6 +13,7 @@ use Kirby\Cms\User;
 use Kirby\Exception\InvalidArgumentException;
 use Kirby\Exception\LogicException;
 use Kirby\Exception\NotFoundException;
+use Kirby\Toolkit\A;
 use Kirby\Toolkit\Str;
 use Stringable;
 
@@ -41,6 +42,8 @@ use Stringable;
  * @link      https://getkirby.com
  * @copyright Bastian Allgeier
  * @license   https://getkirby.com/license
+ *
+ * @template TModel of \Kirby\Uuid\Identifiable
  */
 abstract class Uuid implements Stringable
 {
@@ -55,9 +58,14 @@ abstract class Uuid implements Stringable
 	/**
 	 * Collection that is likely to contain the model and
 	 * that will be checked first to speed up the lookup
+	 *
+	 * @var \Kirby\Cms\Collection<TModel>|null
 	 */
 	public Collection|null $context;
 
+	/**
+	 * @var TModel|null
+	 */
 	public Identifiable|null $model;
 	public Uri $uri;
 
@@ -99,18 +107,8 @@ abstract class Uuid implements Stringable
 	 * Removes the current UUID from cache,
 	 * recursively including all children if needed
 	 */
-	public function clear(bool $recursive = false): bool
+	public function clear(): bool
 	{
-		// For all models with children: if $recursive,
-		// also clear UUIDs from cache for all children
-		if ($recursive === true && $model = $this->model()) {
-			if (method_exists($model, 'children') === true) {
-				foreach ($model->children() as $child) {
-					$child->uuid()->clear(true);
-				}
-			}
-		}
-
 		if ($key = $this->key()) {
 			return Uuids::cache()->remove($key);
 		}
@@ -123,6 +121,8 @@ abstract class Uuid implements Stringable
 	 * collection, which takes priority when looking
 	 * up the UUID/model from index
 	 * @internal
+	 *
+	 * @return \Generator<TModel>
 	 */
 	final public function context(): Generator
 	{
@@ -133,6 +133,8 @@ abstract class Uuid implements Stringable
 	 * Looks up UUID in cache and resolves
 	 * to identifiable model object;
 	 * implemented on child classes
+	 *
+	 * @return TModel|null
 	 *
 	 * @codeCoverageIgnore
 	 */
@@ -147,6 +149,8 @@ abstract class Uuid implements Stringable
 	 * Looks up UUID in local and global index
 	 * and returns the identifiable model object;
 	 * implemented on child classes
+	 *
+	 * @return TModel|null
 	 *
 	 * @codeCoverageIgnore
 	 */
@@ -268,7 +272,7 @@ abstract class Uuid implements Stringable
 	 * into one iterator
 	 * @internal
 	 *
-	 * @return \Generator|\Kirby\Uuid\Identifiable[]
+	 * @return \Generator<TModel>
 	 */
 	final public function indexes(): Generator
 	{
@@ -282,14 +286,16 @@ abstract class Uuid implements Stringable
 	 */
 	final public static function is(
 		string $string,
-		string|null $type = null
+		string|array|null $type = null
 	): bool {
 		// always return false when UUIDs have been disabled
 		if (Uuids::enabled() === false) {
 			return false;
 		}
 
-		$type  ??= implode('|', Uri::$schemes);
+		// use all available schemes by default
+		$type  ??= Uri::$schemes;
+		$type    = implode('|', A::wrap($type));
 		$pattern = sprintf('!^(%s)://(.*)!', $type);
 
 		if (preg_match($pattern, $string, $matches) !== 1) {
@@ -341,6 +347,7 @@ abstract class Uuid implements Stringable
 	 * or index and returns the object
 	 *
 	 * @param bool $lazy If `true`, only lookup from cache
+	 * @return TModel|null
 	 */
 	public function model(bool $lazy = false): Identifiable|null
 	{
@@ -354,9 +361,13 @@ abstract class Uuid implements Stringable
 
 		if ($lazy === false) {
 			if (App::instance()->option('content.uuid.index') === false) {
-				throw new NotFoundException(
-					message: 'Model for UUID ' . $this->uri->toString() . ' could not be found without searching in the site index'
-				);
+				if (App::instance()->option('debug') === true) {
+					throw new NotFoundException(
+						message: 'Model for UUID ' . $this->uri->toString() . ' could not be found without searching in the site index'
+					);
+				}
+
+				return null;
 			}
 
 			if ($this->model = $this->findByIndex()) {
@@ -407,6 +418,32 @@ abstract class Uuid implements Stringable
 		$this->populate();
 
 		return $this->uri->toString();
+	}
+
+	/**
+	 * Returns the URL of the model, including the query and fragment
+	 * @since 5.1.0
+	 */
+	public function toUrl(): string|null
+	{
+		$model = $this->model();
+
+		if ($model === null) {
+			return null;
+		}
+
+		if (method_exists($model, 'url') === false) {
+			return null;
+		}
+
+		$url  = $model->url();
+		$url .= $this->uri->query()->toString(true);
+
+		if ($this->uri->hasFragment() === true) {
+			$url .= '#' . $this->uri->fragment();
+		}
+
+		return $url;
 	}
 
 	/**

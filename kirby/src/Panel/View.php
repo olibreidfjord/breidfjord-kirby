@@ -201,7 +201,12 @@ class View
 					'code'       => 200,
 					'path'       => Str::after($kirby->path(), '/'),
 					'props'      => [],
-					'query'      => App::instance()->request()->query()->toArray(),
+					// the State params are part of the transport and
+					// must not end up in the URL the Panel restores
+					'query'      => A::without(
+						$kirby->request()->query()->toArray(),
+						['_globals', '_json', '_only', '_pretty']
+					),
 					'referrer'   => Panel::referrer(),
 					'search'     => $kirby->option('panel.search.type', 'pages'),
 					'timestamp'  => (int)(microtime(true) * 1000),
@@ -233,18 +238,21 @@ class View
 	/**
 	 * Renders the error view with provided message
 	 */
-	public static function error(string $message, int $code = 404)
+	public static function error(string $message, int $code = 404, array $details = [])
 	{
-		return [
-			'code'      => $code,
+		$response = [
+			...Json::error($message, $code, $details),
 			'component' => 'k-error-view',
-			'error'     => $message,
 			'props'     => [
 				'error'  => $message,
 				'layout' => Panel::hasAccess(App::instance()->user()) ? 'inside' : 'outside'
 			],
 			'title' => 'Error'
 		];
+
+		ksort($response);
+
+		return $response;
 	}
 
 	/**
@@ -266,8 +274,10 @@ class View
 				],
 				'debug'       => $kirby->option('debug', false),
 				'kirbytext'   => $kirby->option('panel.kirbytext', true),
+				'theme'       => $kirby->option('panel.theme', 'system'),
 				'translation' => $kirby->option('panel.language', 'en'),
 				'upload'      => Upload::chunkSize(),
+				'uploads'     => $kirby->option('panel.uploads', 3),
 			],
 			'$system' => function () use ($kirby) {
 				$locales = [];
@@ -325,7 +335,7 @@ class View
 
 		// handle Kirby exceptions
 		if ($data instanceof Exception) {
-			$data = static::error($data->getMessage(), $data->getHttpCode());
+			$data = static::error($data->getMessage(), $data->getHttpCode(), $data->getDetails());
 
 		// handle regular exceptions
 		} elseif ($data instanceof Throwable) {
@@ -369,7 +379,7 @@ class View
 				foreach ($area['searches'] ?? [] as $id => $params) {
 					$searches[$id] = [
 						'icon'  => $params['icon'] ?? 'search',
-						'label' => $params['label'] ?? Str::ucfirst($id),
+						'label' => $params['label'] ?? Str::label($id),
 						'id'    => $id
 					];
 				}

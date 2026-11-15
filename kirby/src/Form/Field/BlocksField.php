@@ -16,6 +16,7 @@ use Kirby\Form\Form;
 use Kirby\Form\Mixin\EmptyState;
 use Kirby\Form\Mixin\Max;
 use Kirby\Form\Mixin\Min;
+use Kirby\Toolkit\BlockCollectionAccess;
 use Kirby\Toolkit\Str;
 use Throwable;
 
@@ -26,6 +27,7 @@ class BlocksField extends FieldClass
 	use Min;
 
 	protected Fieldsets $fieldsets;
+	protected array $forms;
 	protected string|null $group;
 	protected bool $pretty;
 	protected mixed $value = [];
@@ -51,19 +53,13 @@ class BlocksField extends FieldClass
 		string $to = 'toFormValues'
 	): array {
 		$result = [];
-		$fields = [];
-		$forms  = [];
 
 		foreach ($blocks as $block) {
 			try {
-				$type = $block['type'];
-
-				// get and cache fields at the same time
-				$fields[$type] ??= $this->fields($block['type']);
-				$forms[$type]  ??= $this->form($fields[$type]);
+				$form = $this->fieldsetForm($block['type']);
 
 				// overwrite the block content with form values
-				$block['content'] = $forms[$type]->reset()->fill(input: $block['content'])->$to();
+				$block['content'] = $form->reset()->fill(input: $block['content'])->$to();
 
 				// create id if not exists
 				$block['id'] ??= Str::uuid();
@@ -93,6 +89,11 @@ class BlocksField extends FieldClass
 		);
 	}
 
+	protected function fieldsetForm(string $type): Form
+	{
+		return $this->forms[$type] ??= $this->form($this->fields($type));
+	}
+
 	public function fieldsets(): Fieldsets
 	{
 		return $this->fieldsets;
@@ -108,6 +109,7 @@ class BlocksField extends FieldClass
 	 * @psalm-suppress MethodSignatureMismatch
 	 * @todo Remove psalm suppress after https://github.com/vimeo/psalm/issues/8673 is fixed
 	 */
+	#[BlockCollectionAccess]
 	public function fill(mixed $value): static
 	{
 		$value  = BlocksCollection::parse($value);

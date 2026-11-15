@@ -3,6 +3,8 @@
 namespace Kirby\Form\Mixin;
 
 use Kirby\Cms\Language;
+use Kirby\Toolkit\BlockCollectionAccess;
+use ReflectionProperty;
 
 /**
  * @package   Kirby Form
@@ -13,7 +15,14 @@ use Kirby\Cms\Language;
  */
 trait Value
 {
+	/**
+	 * Default value for the field, which will be used when a page/file/user is created
+	 */
 	protected mixed $default = null;
+
+	/**
+	 * The value of the field
+	 */
 	protected mixed $value = null;
 
 	/**
@@ -45,8 +54,17 @@ trait Value
 	}
 
 	/**
+	 * Returns the fallback value when the field should be empty
+	 */
+	public function emptyValue(): mixed
+	{
+		return (new ReflectionProperty($this, 'value'))->getDefaultValue();
+	}
+
+	/**
 	 * Sets a new value for the field
 	 */
+	#[BlockCollectionAccess]
 	public function fill(mixed $value): static
 	{
 		$this->value = $value;
@@ -112,10 +130,6 @@ trait Value
 			return false;
 		}
 
-		if ($this->isDisabled() === true) {
-			return false;
-		}
-
 		if ($this->isTranslatable($language) === false) {
 			return false;
 		}
@@ -168,6 +182,7 @@ trait Value
 	 *
 	 * @since 5.0.0
 	 */
+	#[BlockCollectionAccess]
 	public function submit(mixed $value): static
 	{
 		return $this->fill($value);
@@ -205,6 +220,7 @@ trait Value
 	 * If you need the form value with the default as fallback, you should use
 	 * the fill method first `$field->fill($field->default())->toFormValue()`
 	 */
+	#[BlockCollectionAccess]
 	public function value(bool $default = false): mixed
 	{
 		if ($default === true && $this->isEmpty() === true) {

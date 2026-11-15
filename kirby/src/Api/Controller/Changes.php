@@ -5,6 +5,7 @@ namespace Kirby\Api\Controller;
 use Kirby\Cms\Language;
 use Kirby\Cms\ModelWithContent;
 use Kirby\Content\Lock;
+use Kirby\Exception\PermissionException;
 use Kirby\Filesystem\F;
 use Kirby\Form\Fields;
 use Kirby\Form\Form;
@@ -40,6 +41,12 @@ class Changes
 	 */
 	public static function discard(ModelWithContent $model): array
 	{
+		if ($model->permissions()->can('update') === false) {
+			throw new PermissionException(
+				key: 'version.discard.permission',
+			);
+		}
+
 		$model->version('changes')->delete('current');
 
 		// Removes the old .lock file when it is no longer needed
@@ -56,6 +63,12 @@ class Changes
 	 */
 	public static function publish(ModelWithContent $model, array $input): array
 	{
+		if ($model->permissions()->can('update') === false) {
+			throw new PermissionException(
+				key: 'version.publish.permission',
+			);
+		}
+
 		// save the given changes first
 		static::save(
 			model: $model,
@@ -91,6 +104,12 @@ class Changes
 	 */
 	public static function save(ModelWithContent $model, array $input): array
 	{
+		if ($model->permissions()->can('update') === false) {
+			throw new PermissionException(
+				key: 'version.save.permission',
+			);
+		}
+
 		// Removes the old .lock file when it is no longer needed
 		// @todo Remove in 6.0.0
 		static::cleanup($model);
@@ -105,8 +124,18 @@ class Changes
 		$changes = $model->version('changes');
 		$latest  = $model->version('latest');
 
+		// read the raw fields to find out whether the changes version really
+		// holds content. `Version::content()` would not tell us: for a
+		// secondary language it quietly falls back to the default language,
+		// which would then be stored as the translation.
+		$changed = $changes->read($language) ?? [];
+
+		// the lock is not content and is dropped by `Version::content()`
+		// as well, so a version that only holds it has nothing to offer
+		unset($changed['lock']);
+
 		// get the source version for the existing content
-		$source  = $changes->exists($language) === true ? $changes : $latest;
+		$source  = $changed === [] ? $latest : $changes;
 		$content = $source->content($language)->toArray();
 
 		// fill in the form values and pass through any values that are not
@@ -129,6 +158,24 @@ class Changes
 				language: $language
 			);
 		}
+
+		return [
+			'status' => 'ok'
+		];
+	}
+
+	/**
+	 * Releases the content lock without discarding changes
+	 */
+	public static function unlock(ModelWithContent $model): array
+	{
+		if ($model->permissions()->can('update') === false) {
+			throw new PermissionException(
+				key: 'version.unlock.permission',
+			);
+		}
+
+		$model->version('changes')->unlock('current');
 
 		return [
 			'status' => 'ok'

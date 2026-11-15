@@ -1,6 +1,5 @@
 <?php
 
-use Kirby\Cms\App;
 use Kirby\Cms\Find;
 use Kirby\Panel\Ui\Buttons\LanguagesDropdown;
 
@@ -21,17 +20,17 @@ return [
 		}
 	],
 	'page.file' => [
-		'pattern' => '(pages/.*?)/files/(:any)',
+		'pattern' => '(pages/[^/]+)/files/(:any)',
 		'options' => $files['file']
 	],
 	'page.file.languages' => [
-		'pattern' => '(pages/.*?)/files/(:any)/languages',
+		'pattern' => '(pages/[^/]+)/files/(:any)/languages',
 		'options' => $files['language']
 	],
 	'site.languages' => [
 		'pattern' => 'site/languages',
 		'options' => function () {
-			$site = App::instance()->site();
+			$site = Find::site();
 			return (new LanguagesDropdown($site))->options();
 		}
 	],

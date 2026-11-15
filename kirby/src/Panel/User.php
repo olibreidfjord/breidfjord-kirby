@@ -8,6 +8,7 @@ use Kirby\Cms\Translation;
 use Kirby\Cms\Url;
 use Kirby\Filesystem\Asset;
 use Kirby\Panel\Ui\Buttons\ViewButtons;
+use Kirby\Panel\Ui\Item\UserItem;
 use Kirby\Toolkit\I18n;
 
 /**
@@ -99,7 +100,7 @@ class User extends Model
 		$result[] = [
 			'dialog'   => $url . '/changePassword',
 			'icon'     => 'key',
-			'text'     => I18n::translate('user.changePassword'),
+			'text'     => I18n::translate('user.' . ($this->model->hasPassword() === true ? 'changePassword' : 'setPassword')),
 			'disabled' => $this->isDisabledDropdownOption('changePassword', $options, $permissions)
 		];
 
@@ -137,13 +138,14 @@ class User extends Model
 	 * Returns the setup for a dropdown option
 	 * which is used in the changes dropdown
 	 * for example.
+	 *
+	 * @deprecated 5.1.4 Use the Kirby\Panel\Ui\Item\UserItem class instead
 	 */
 	public function dropdownOption(): array
 	{
-		return [
-			'icon' => 'user',
-			'text' => $this->model->username(),
-		] + parent::dropdownOption();
+		return (new UserItem(user: $this->model))->props() + [
+			'icon' => 'user'
+		];
 	}
 
 	public function home(): string|null
@@ -200,11 +202,18 @@ class User extends Model
 	 */
 	public function pickerData(array $params = []): array
 	{
-		$params['text'] ??= '{{ user.username }}';
+		$item = new UserItem(
+			user:   $this->model,
+			image:  $params['image'] ?? null,
+			info:   $params['info'] ?? null,
+			layout: $params['layout'] ?? null,
+			text:   $params['text'] ?? null,
+		);
 
 		return [
-			...parent::pickerData($params),
+			...$item->props(),
 			'email'    => $this->model->email(),
+			'sortable' => true,
 			'username' => $this->model->username(),
 		];
 	}
@@ -215,11 +224,12 @@ class User extends Model
 	 */
 	public function prevNext(): array
 	{
-		$user = $this->model;
+		$user     = $this->model;
+		$siblings = $user->siblings()->filter('isListable', true);
 
 		return [
-			'next' => fn () => $this->toPrevNextLink($user->next(), 'username'),
-			'prev' => fn () => $this->toPrevNextLink($user->prev(), 'username')
+			'next' => fn () => $this->toPrevNextLink($user->next($siblings), 'username'),
+			'prev' => fn () => $this->toPrevNextLink($user->prev($siblings), 'username')
 		];
 	}
 

@@ -5,6 +5,7 @@ namespace Kirby\Query;
 use Closure;
 use Kirby\Exception\BadMethodCallException;
 use Kirby\Exception\InvalidArgumentException;
+use Kirby\Toolkit\BlockCollectionAccess;
 use Kirby\Toolkit\Str;
 
 /**
@@ -16,6 +17,8 @@ use Kirby\Toolkit\Str;
  * @link      https://getkirby.com
  * @copyright Bastian Allgeier
  * @license   https://opensource.org/licenses/MIT
+ *
+ * @todo Deprecate in v6
  */
 class Segment
 {
@@ -36,8 +39,12 @@ class Segment
 	 *
 	 * @throws \Kirby\Exception\BadMethodCallException
 	 */
-	public static function error(mixed $data, string $name, string $label): void
-	{
+	#[BlockCollectionAccess]
+	public static function error(
+		mixed $data,
+		string $name,
+		string $label
+	): never {
 		$type = strtolower(gettype($data));
 
 		if ($type === 'double') {
@@ -80,6 +87,7 @@ class Segment
 	 *
 	 * @param mixed $base Current value of the query chain
 	 */
+	#[BlockCollectionAccess]
 	public function resolve(mixed $base = null, array|object $data = []): mixed
 	{
 		// resolve arguments to array

@@ -9,6 +9,7 @@ use Kirby\Cms\ModelWithContent;
 use Kirby\Filesystem\Asset;
 use Kirby\Form\Fields;
 use Kirby\Http\Uri;
+use Kirby\Panel\Ui\Item\ModelItem;
 use Kirby\Toolkit\A;
 
 /**
@@ -145,7 +146,20 @@ abstract class Model
 			...$blueprint ?? [],
 		];
 
-		if ($image = $this->imageSource($settings['query'] ?? null)) {
+		$query = $settings['query'] ?? null;
+		unset($settings['query']);
+
+		// resolve options defined as query before they are used,
+		// e.g. as `ratio` for the srcset
+		$settings = A::map($settings, function ($option) {
+			if (is_string($option) === false) {
+				return $option;
+			}
+
+			return $this->model->toString($option);
+		});
+
+		if ($image = $this->imageSource($query)) {
 			// main url
 			$settings['url'] = $image->url();
 
@@ -158,16 +172,7 @@ abstract class Model
 			}
 		}
 
-		unset($settings['query']);
-
-		// resolve remaining options defined as query
-		return A::map($settings, function ($option) {
-			if (is_string($option) === false) {
-				return $option;
-			}
-
-			return $this->model->toString($option);
-		});
+		return $settings;
 	}
 
 	/**
@@ -200,14 +205,11 @@ abstract class Model
 		$image = $this->model->query($query ?? null);
 
 		// validate the query result
-		if (
-			$image instanceof CmsFile ||
-			$image instanceof Asset
-		) {
-			return $image;
-		}
-
-		return null;
+		return match (true) {
+			$image instanceof CmsFile === true && $image->isListable() === true => $image,
+			$image instanceof Asset === true => $image,
+			default => null
+		};
 	}
 
 	/**
@@ -237,9 +239,18 @@ abstract class Model
 		if ($layout === 'cards') {
 			$ratio = $settings['ratio'] ?? '1/1';
 
+			// turn fractions like `16/9` into a float and
+			// fall back to a square for malformed values
 			if (is_numeric($ratio) === false) {
-				$ratio = explode('/', $ratio);
-				$ratio = $ratio[0] / $ratio[1];
+				$parts = explode('/', $ratio);
+				$ratio = 1;
+
+				if (
+					is_numeric($parts[0]) === true &&
+					(float)($parts[1] ?? 0) > 0
+				) {
+					$ratio = $parts[0] / $parts[1];
+				}
 			}
 
 			return $image->srcset([
@@ -338,17 +349,18 @@ abstract class Model
 	 */
 	public function pickerData(array $params = []): array
 	{
+		$item = new ModelItem(
+			model: $this->model,
+			image: $params['image'] ?? null,
+			info: $params['info'] ?? null,
+			layout: $params['layout'] ?? null,
+			text: $params['text'] ?? null,
+		);
+
 		return [
-			'id'       => $this->model->id(),
-			'image'    => $this->image(
-				$params['image'] ?? [],
-				$params['layout'] ?? 'list'
-			),
-			'info'     => $this->model->toSafeString($params['info'] ?? false),
-			'link'     => $this->url(true),
+			...$item->props(),
 			'sortable' => true,
-			'text'     => $this->model->toSafeString($params['text'] ?? false),
-			'uuid'     => $this->model->uuid()?->toString()
+			'url'      => $this->url(true)
 		];
 	}
 
@@ -460,7 +472,15 @@ abstract class Model
 		$latestContent  = $latestVersion->content($language)->toArray();
 		$changesContent = $latestContent;
 
-		if ($changesVersion->exists($language) === true) {
+		// read the raw fields to find out whether the changes version really
+		// holds content. `Version::content()` would not tell us: for a
+		// secondary language it quietly falls back to the default language.
+		$changed = $changesVersion->read($language) ?? [];
+
+		// the lock is not content and is dropped by `Version::content()`
+		unset($changed['lock']);
+
+		if ($changed !== []) {
 			$changesContent = $changesVersion->content($language)->toArray();
 		}
 

@@ -5,6 +5,7 @@ namespace Kirby\Form;
 use Closure;
 use Kirby\Cms\HasSiblings;
 use Kirby\Exception\InvalidArgumentException;
+use Kirby\Toolkit\BlockCollectionAccess;
 use Kirby\Toolkit\Component;
 use Kirby\Toolkit\I18n;
 
@@ -250,6 +251,20 @@ class Field extends Component
 	}
 
 	/**
+	 * Returns the preferred empty state for the field
+	 *
+	 * @since 5.2.0
+	 */
+	public function emptyValue(): mixed
+	{
+		if (isset($this->methods['emptyValue']) === true) {
+			return $this->methods['emptyValue']->call($this);
+		}
+
+		return null;
+	}
+
+	/**
 	 * Creates a new field instance
 	 */
 	public static function factory(
@@ -270,6 +285,7 @@ class Field extends Component
 	/**
 	 * Sets a new value for the field
 	 */
+	#[BlockCollectionAccess]
 	public function fill(mixed $value): static
 	{
 		// remember the current state to restore it afterwards
@@ -294,6 +310,22 @@ class Field extends Component
 		$this->type    = $type;
 
 		return $this;
+	}
+
+	/**
+	 * Preferred name would be `::reset` but this is
+	 * taken by options in other fields.
+	 *
+	 * @since 5.2.0
+	 */
+	#[BlockCollectionAccess]
+	public function fillWithEmptyValue(): static
+	{
+		// go through `::fill()` to reevaluate the computed props;
+		// otherwise a field that has never been filled could end up
+		// with a different form value than the same field filled with
+		// its own empty value
+		return $this->fill($this->emptyValue());
 	}
 
 	/**

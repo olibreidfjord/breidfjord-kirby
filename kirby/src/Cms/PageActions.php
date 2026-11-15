@@ -11,7 +11,9 @@ use Kirby\Exception\DuplicateException;
 use Kirby\Exception\InvalidArgumentException;
 use Kirby\Exception\LogicException;
 use Kirby\Filesystem\Dir;
+use Kirby\Template\Template;
 use Kirby\Toolkit\A;
+use Kirby\Toolkit\BlockCollectionAccess;
 use Kirby\Toolkit\I18n;
 use Kirby\Toolkit\Str;
 use Kirby\Uuid\Uuid;
@@ -30,14 +32,16 @@ trait PageActions
 {
 	/**
 	 * Changes the sorting number.
-	 * The sorting number must already be correct
-	 * when the method is called.
-	 * This only affects this page,
-	 * siblings will not be resorted.
+	 * Low-level method, ensure to run all necessary checks
+	 * (e.g. permissions) before calling it. The sorting number
+	 * must already be correct when the method is called.
+	 * This only affects this page, siblings will not be resorted.
+	 * @internal
 	 *
 	 * @return $this|static
 	 * @throws \Kirby\Exception\LogicException If a draft is being sorted or the directory cannot be moved
 	 */
+	#[BlockCollectionAccess]
 	public function changeNum(int|null $num = null): static
 	{
 		if ($this->isDraft() === true) {
@@ -82,6 +86,7 @@ trait PageActions
 	 * @return $this|static
 	 * @throws \Kirby\Exception\LogicException If the directory cannot be moved
 	 */
+	#[BlockCollectionAccess]
 	public function changeSlug(
 		string $slug,
 		string|null $languageCode = null
@@ -119,7 +124,7 @@ trait PageActions
 			]);
 
 			// clear UUID cache recursively (for children and files as well)
-			$oldPage->uuid()?->clear(true);
+			$oldPage->uuid()?->clear(recursive: true);
 
 			if ($oldPage->exists() === true) {
 				// actually move stuff on disk
@@ -141,6 +146,8 @@ trait PageActions
 
 				Dir::remove($oldPage->mediaRoot());
 			}
+
+			$newPage->uuid()?->populate(recursive: true);
 
 			return $newPage;
 		});
@@ -197,6 +204,7 @@ trait PageActions
 	 * @param int|null $position Optional sorting number
 	 * @throws \Kirby\Exception\InvalidArgumentException If an invalid status is being passed
 	 */
+	#[BlockCollectionAccess]
 	public function changeStatus(
 		string $status,
 		int|null $position = null
@@ -285,6 +293,7 @@ trait PageActions
 	 *
 	 * @return $this|static
 	 */
+	#[BlockCollectionAccess]
 	public function changeSort(int|null $position = null): static
 	{
 		return $this->changeStatus('listed', $position);
@@ -296,6 +305,7 @@ trait PageActions
 	 * @return $this|static
 	 * @throws \Kirby\Exception\LogicException If the textfile cannot be renamed/moved
 	 */
+	#[BlockCollectionAccess]
 	public function changeTemplate(string $template): static
 	{
 		if ($template === $this->intendedTemplate()->name()) {
@@ -311,6 +321,7 @@ trait PageActions
 	/**
 	 * Change the page title
 	 */
+	#[BlockCollectionAccess]
 	public function changeTitle(
 		string $title,
 		string|null $languageCode = null
@@ -359,10 +370,14 @@ trait PageActions
 	}
 
 	/**
-	 * Copies the page to a new parent
+	 * Copies the page to a new parent.
+	 * Low-level method, ensure to run all necessary checks
+	 * (e.g. permissions) before calling it.
+	 * @internal
 	 *
 	 * @throws \Kirby\Exception\DuplicateException If the page already exists
 	 */
+	#[BlockCollectionAccess]
 	public function copy(array $options = []): static
 	{
 		$slug        = $options['slug']     ?? $this->slug();
@@ -422,12 +437,15 @@ trait PageActions
 			parent: $parentModel
 		);
 
+		$copy->uuid()?->populate(recursive: true);
+
 		return $copy;
 	}
 
 	/**
 	 * Creates and stores a new page
 	 */
+	#[BlockCollectionAccess]
 	public static function create(array $props): Page
 	{
 		$props = self::normalizeProps($props);
@@ -440,11 +458,17 @@ trait PageActions
 			'translations' => null
 		]);
 
-		// merge the content with the defaults
-		$props['content'] = [
-			...$page->createDefaultContent(),
-			...$props['content'],
-		];
+		// keep the initial storage class
+		$storage = $page->storage()::class;
+
+		// Make sure that the page does not already exist at this point.
+		// Otherwise, moving the storage to memory storage, might delete
+		// an existing page before we can even run the checks.
+		PageRules::create($page);
+
+		// merge the content with the defaults and run it through
+		// the fields to apply their save handlers
+		$props['content'] = $page->createContent($props['content']);
 
 		// make sure that a UUID gets generated
 		// and added to content right away
@@ -452,17 +476,17 @@ trait PageActions
 			$props['content']['uuid'] ??= Uuid::generate();
 		}
 
-		// keep the initial storage class
-		$storage = $page->storage()::class;
-
 		// make sure that the temporary page is stored in memory
 		$page->changeStorage(MemoryStorage::class);
 
 		// inject the content
 		$page->setContent($props['content']);
 
-		// inject the translations
-		$page->setTranslations($props['translations'] ?? null);
+		// inject the translations and run their content through
+		// the fields to apply their save handlers
+		$page->setTranslations(
+			$page->createTranslations($props['translations'] ?? null)
+		);
 
 		// run the hooks and creation action
 		$page = $page->commit(
@@ -473,7 +497,11 @@ trait PageActions
 			],
 			function ($page) use ($storage) {
 				// move to final storage
-				return $page->changeStorage($storage);
+				$page->changeStorage($storage);
+
+				$page->uuid()?->populate();
+
+				return $page;
 			}
 		);
 
@@ -488,6 +516,7 @@ trait PageActions
 	/**
 	 * Creates a child of the current page
 	 */
+	#[BlockCollectionAccess]
 	public function createChild(array $props): Page
 	{
 		$props = [
@@ -498,14 +527,21 @@ trait PageActions
 			'site'   => $this->site(),
 		];
 
-		$modelClass = static::$models[$props['template'] ?? null] ?? static::class;
-		return $modelClass::create($props);
+		if (
+			($template = $props['template'] ?? null) &&
+			($model = static::$models[$template] ?? null)
+		) {
+			return $model::create($props);
+		}
+
+		return static::create($props);
 	}
 
 	/**
 	 * Create the sorting number for the page
 	 * depending on the blueprint settings
 	 */
+	#[BlockCollectionAccess]
 	public function createNum(int|null $num = null): int
 	{
 		$mode = $this->blueprint()->num();
@@ -562,27 +598,39 @@ trait PageActions
 	/**
 	 * Deletes the page
 	 */
+	#[BlockCollectionAccess]
 	public function delete(bool $force = false): bool
 	{
 		return $this->commit('delete', ['page' => $this, 'force' => $force], function ($page, $force) {
 			$old = $page->clone();
 
-			// keep the content in iummtable memory storage
-			// to still have access to it in after hooks
-			$page->changeStorage(ImmutableMemoryStorage::class);
-
 			// clear UUID cache
-			$page->uuid()?->clear();
+			$page->uuid()?->clear(recursive: true);
+
+			// Explanation: The two while loops below are only
+			// necessary because our property caches result in
+			// outdated collections when deleting nested pages.
+			// When we use a foreach loop to go through those collections,
+			// we encounter outdated objects. Using a while loop
+			// fixes this issue.
+			//
+			// TODO: We can remove this part as soon
+			// as we move away from our immutable object architecture.
 
 			// delete all files individually
-			foreach ($old->files() as $file) {
+			while ($file = $page->files()->first()) {
 				$file->delete();
 			}
 
 			// delete all children individually
-			foreach ($old->childrenAndDrafts() as $child) {
+			while ($child = $page->childrenAndDrafts()->first()) {
 				$child->delete(true);
 			}
+
+			// keep the content in immutable memory storage
+			// to still have access to it in after hooks;
+			// only now, so a failure above can't lose the content
+			$page->changeStorage(ImmutableMemoryStorage::class);
 
 			// delete all versions,
 			// the plain text storage handler will then clean
@@ -590,10 +638,10 @@ trait PageActions
 			$old->versions()->delete();
 
 			if (
-				$old->isListed() === true &&
-				$old->blueprint()->num() === 'default'
+				$page->isListed() === true &&
+				$page->blueprint()->num() === 'default'
 			) {
-				$old->resortSiblingsAfterUnlisting();
+				$page->resortSiblingsAfterUnlisting();
 			}
 
 			return true;
@@ -604,6 +652,7 @@ trait PageActions
 	 * Duplicates the page with the given
 	 * slug and optionally copies all files
 	 */
+	#[BlockCollectionAccess]
 	public function duplicate(string|null $slug = null, array $options = []): static
 	{
 		// create the slug for the duplicate
@@ -636,6 +685,7 @@ trait PageActions
 	 * Moves the page to a new parent if the
 	 * new parent accepts the page type
 	 */
+	#[BlockCollectionAccess]
 	public function move(Site|Page $parent): Page
 	{
 		// nothing to move
@@ -665,6 +715,9 @@ trait PageActions
 				);
 			}
 
+			// media folder is bound to the page id, which just changed
+			Dir::remove($page->mediaRoot());
+
 			// flush all collection caches to be sure that
 			// the new child is included afterwards
 			$parent->purge();
@@ -676,14 +729,29 @@ trait PageActions
 				);
 			}
 
+			$newPage->uuid()?->populate(recursive: true);
+
 			return $newPage;
 		});
 	}
 
 	protected static function normalizeProps(array $props): array
 	{
+		unset(
+			// Prevent injecting blueprint as this always must be derived from
+			// the template/model name and blueprint object in the app,
+			// never directly be supplied by the caller
+			$props['blueprint'],
+
+			// Prevent injecting the root and dirname as those must always be
+			// derived from the parent and slug. Otherwise the caller could
+			// place the page's content at an arbitrary path on disk.
+			$props['dirname'],
+			$props['root']
+		);
+
 		$content  = $props['content']  ?? [];
-		$template = $props['template'] ?? 'default';
+		$template = Template::sanitizeName($props['template'] ?? null) ?: 'default';
 
 		return [
 			...$props,
@@ -699,6 +767,7 @@ trait PageActions
 	 * @return $this|static
 	 * @throws \Kirby\Exception\LogicException If the folder cannot be moved
 	 */
+	#[BlockCollectionAccess]
 	public function publish(): static
 	{
 		if ($this->isDraft() === false) {
@@ -746,6 +815,7 @@ trait PageActions
 	 *
 	 * @return $this
 	 */
+	#[BlockCollectionAccess]
 	public function purge(): static
 	{
 		parent::purge();
@@ -815,6 +885,7 @@ trait PageActions
 	/**
 	 * @internal
 	 */
+	#[BlockCollectionAccess]
 	public function resortSiblingsAfterUnlisting(): bool
 	{
 		$index    = 0;
@@ -851,6 +922,7 @@ trait PageActions
 	 * @return $this|static
 	 * @throws \Kirby\Exception\LogicException If the folder cannot be moved
 	 */
+	#[BlockCollectionAccess]
 	public function unpublish(): static
 	{
 		if ($this->isDraft() === true) {
@@ -864,6 +936,9 @@ trait PageActions
 			'root'     => null,
 			'template' => $this->intendedTemplate()->name(),
 		]);
+
+		// remove the media directory
+		Dir::remove($this->mediaRoot());
 
 		// actually do it on disk
 		if ($this->exists() === true) {
@@ -892,6 +967,7 @@ trait PageActions
 	/**
 	 * Updates the page data
 	 */
+	#[BlockCollectionAccess]
 	public function update(
 		array|null $input = null,
 		string|null $languageCode = null,

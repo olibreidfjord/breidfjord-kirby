@@ -24,8 +24,8 @@ return [
 		/**
 		 * Default date when a new page/file/user gets created
 		 */
-		'default' => function (string|null $default = null): string {
-			return $this->toDatetime($default) ?? '';
+		'default' => function (string|null $default = null) {
+			return $default;
 		},
 
 		/**
@@ -77,6 +77,15 @@ return [
 		}
 	],
 	'computed' => [
+		'default' => function () {
+			$default = $this->default;
+
+			if (is_string($default) === true) {
+				$default = $this->model()->toString($default);
+			}
+
+			return $this->toDatetime($default) ?? '';
+		},
 		'display' => function () {
 			if ($this->display) {
 				return Str::upper($this->display);
@@ -111,6 +120,24 @@ return [
 		'value' => function (): string {
 			return $this->toDatetime($this->value) ?? '';
 		},
+	],
+	'methods' => [
+		'toDatetime' => function ($value, string $format = 'Y-m-d H:i:s') {
+			if ($date = Date::optional($value)) {
+				if ($this->time === false) {
+					$date->setTime(0, 0);
+				}
+
+				if ($this->step) {
+					$step = Date::stepConfig($this->step);
+					$date->round($step['unit'], $step['size']);
+				}
+
+				return $date->format($format);
+			}
+
+			return null;
+		}
 	],
 	'validations' => [
 		'date',

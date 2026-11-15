@@ -8,16 +8,23 @@ use Kirby\Image\Darkroom;
 use Kirby\Image\Focus;
 
 /**
- * ImageMagick
+ * Legacy ImageMagick driver using the convert CLI
  *
  * @package   Kirby Image
  * @author    Bastian Allgeier <bastian@getkirby.com>
  * @link      https://getkirby.com
  * @copyright Bastian Allgeier
  * @license   https://opensource.org/licenses/MIT
+ *
+ * @deprecated 5.1.0 Use `imagick` in the `thumbs.driver` config option instead
+ * @todo Remove in 7.0.0
  */
 class ImageMagick extends Darkroom
 {
+	// animated AVIF needs ImageMagick 7.1.2-19 with libheif 1.20,
+	// older versions write a still image per frame
+	protected static array $animatableTypes = ['gif', 'webp'];
+
 	/**
 	 * Applies the blur settings
 	 */
@@ -35,8 +42,26 @@ class ImageMagick extends Darkroom
 	 */
 	protected function coalesce(string $file, array $options): string|null
 	{
-		if (F::extension($file) === 'gif') {
+		// check the content, as the extension
+		// already is the one of the output format
+		$mime = F::mime($file);
+
+		if ($mime === 'image/gif') {
 			return '-coalesce';
+		}
+
+		// animated WebPs set a flag in their `VP8X` header,
+		// coalescing other WebPs would only copy the image
+		if ($mime === 'image/webp') {
+			$header = (string)file_get_contents($file, false, null, 12, 9);
+
+			if (
+				strlen($header) === 9 &&
+				str_starts_with($header, 'VP8X') === true &&
+				(ord($header[8]) & 0x02) !== 0
+			) {
+				return '-coalesce';
+			}
 		}
 
 		return null;
@@ -51,6 +76,12 @@ class ImageMagick extends Darkroom
 
 		// default is limiting to single-threading to keep CPU usage sane
 		$command .= ' -limit thread ' . escapeshellarg($options['threads']);
+
+		// formats without animation only get the first frame,
+		// otherwise ImageMagick writes a numbered file per frame
+		if ($this->isAnimatable($file, $options) === false) {
+			$file .= '[0]';
+		}
 
 		// append input file
 		return $command . ' ' . escapeshellarg($file);
@@ -157,50 +188,29 @@ class ImageMagick extends Darkroom
 	 */
 	protected function resize(string $file, array $options): string
 	{
-		// simple resize
-		if ($options['crop'] === false) {
-			return '-thumbnail ' . escapeshellarg(sprintf('%sx%s!', $options['width'], $options['height']));
-		}
+		if ($crop = $options['crop'] ?? null) {
+			$downscale = $this->downscale($options);
 
-		// crop based on focus point
-		if (Focus::isFocalPoint($options['crop']) === true) {
 			if ($focus = Focus::coords(
-				$options['crop'],
-				$options['sourceWidth'],
-				$options['sourceHeight'],
+				$crop,
+				$downscale->width(),
+				$downscale->height(),
 				$options['width'],
 				$options['height']
 			)) {
 				return sprintf(
-					'-crop %sx%s+%s+%s -resize %sx%s^',
-					$focus['width'],
-					$focus['height'],
-					$focus['x1'],
-					$focus['y1'],
+					'-thumbnail %sx%s! -crop %sx%s+%s+%s +repage',
+					$downscale->width(),
+					$downscale->height(),
 					$options['width'],
-					$options['height']
+					$options['height'],
+					$focus['x1'],
+					$focus['y1']
 				);
 			}
 		}
 
-		// translate the gravity option into something imagemagick understands
-		$gravity = match ($options['crop'] ?? null) {
-			'top left'     => 'NorthWest',
-			'top'          => 'North',
-			'top right'    => 'NorthEast',
-			'left'         => 'West',
-			'right'        => 'East',
-			'bottom left'  => 'SouthWest',
-			'bottom'       => 'South',
-			'bottom right' => 'SouthEast',
-			default        => 'Center'
-		};
-
-		$command  = '-thumbnail ' . escapeshellarg(sprintf('%sx%s^', $options['width'], $options['height']));
-		$command .= ' -gravity ' . escapeshellarg($gravity);
-		$command .= ' -crop ' . escapeshellarg(sprintf('%sx%s+0+0', $options['width'], $options['height']));
-
-		return $command;
+		return '-thumbnail ' . escapeshellarg(sprintf('%sx%s^', $options['width'], $options['height']));
 	}
 
 	/**
@@ -208,8 +218,10 @@ class ImageMagick extends Darkroom
 	 */
 	protected function save(string $file, array $options): string
 	{
+		// use the format: prefix to output in the specified format
+		// while writing to the original path
 		if ($options['format'] !== null) {
-			$file = pathinfo($file, PATHINFO_DIRNAME) . '/' . pathinfo($file, PATHINFO_FILENAME) . '.' . $options['format'];
+			return escapeshellarg($options['format'] . ':' . $file);
 		}
 
 		return escapeshellarg($file);

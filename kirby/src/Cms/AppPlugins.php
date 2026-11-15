@@ -16,6 +16,7 @@ use Kirby\Plugin\Plugin;
 use Kirby\Text\KirbyTag;
 use Kirby\Toolkit\A;
 use Kirby\Toolkit\Collection as ToolkitCollection;
+use Kirby\Toolkit\I18n;
 use Kirby\Toolkit\V;
 
 /**
@@ -140,6 +141,10 @@ trait AppPlugins
 		foreach ($areas as $id => $area) {
 			$this->extensions['areas'][$id] ??= [];
 			$this->extensions['areas'][$id][] = $area;
+
+			// keep track of custom areas to add
+			// default access permission for them
+			Permissions::$extendedAreas[$id] = true;
 		}
 
 		return $this->extensions['areas'];
@@ -645,6 +650,11 @@ trait AppPlugins
 	 */
 	protected function extendTranslations(array $translations): array
 	{
+		// drop translations that were cached before these strings existed
+		$this->i18nStrings  = [];
+		$this->translations = null;
+		I18n::$translations = [];
+
 		return $this->extensions['translations'] = array_replace_recursive(
 			$this->extensions['translations'],
 			$translations
@@ -762,12 +772,15 @@ trait AppPlugins
 	 */
 	protected function extensionsFromOptions(): void
 	{
-		// register routes and hooks from options
+		// directly register api components, routes and hooks from options.
 		$this->extend([
 			'api'    => $this->options['api']    ?? [],
 			'routes' => $this->options['routes'] ?? [],
 			'hooks'  => $this->options['hooks']  ?? []
 		]);
+
+		// register everything under the extensions key
+		$this->extend($this->options['extensions'] ?? []);
 	}
 
 	/**

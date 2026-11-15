@@ -268,7 +268,11 @@ class Fields extends Collection
 
 		// reset the values of each field
 		foreach ($this->data as $field) {
-			$field->fill(null);
+			if ($field instanceof Field) {
+				$field->fillWithEmptyValue();
+			} else {
+				$field->reset();
+			}
 		}
 
 		return $this;
@@ -424,8 +428,9 @@ class Fields extends Collection
 
 		if ($errors !==	[]) {
 			throw new InvalidArgumentException(
-				fallback: 'Invalid form with errors',
-				details: $errors
+				key: 'form.incomplete',
+				details: $errors,
+				fallback: 'Invalid form with errors'
 			);
 		}
 	}

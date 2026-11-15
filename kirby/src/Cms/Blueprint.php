@@ -10,6 +10,7 @@ use Kirby\Filesystem\F;
 use Kirby\Form\Field;
 use Kirby\Toolkit\A;
 use Kirby\Toolkit\I18n;
+use Kirby\Toolkit\Str;
 use Throwable;
 
 /**
@@ -29,6 +30,7 @@ class Blueprint
 	public static array $loaded = [];
 
 	protected array $fields = [];
+	protected array|null $fieldsLower = null;
 	protected ModelWithContent $model;
 	protected array $props;
 	protected array $sections = [];
@@ -70,7 +72,7 @@ class Blueprint
 		$props['name'] ??= 'default';
 
 		// normalize and translate the title
-		$props['title'] ??= ucfirst($props['name']);
+		$props['title'] ??= Str::label($props['name']);
 		$props['title']   = $this->i18n($props['title']);
 
 		// convert all shortcuts
@@ -99,7 +101,7 @@ class Blueprint
 	 */
 	public function __debugInfo(): array
 	{
-		return $this->props ?? [];
+		return $this->props;
 	}
 
 	/**
@@ -123,8 +125,14 @@ class Blueprint
 				continue;
 			}
 
+			$template  = $section->template();
 			$templates = match ($section->type()) {
-				'files'  => [...$templates, $section->template() ?? 'default'],
+				'files'  => [
+					...$templates,
+					...($template
+						? [$template]
+						: App::instance()->blueprints('files'))
+				],
 				'fields' => [
 					...$templates,
 					...$this->acceptedFileTemplatesFromFields($section->fields())
@@ -359,7 +367,13 @@ class Blueprint
 	 */
 	public function field(string $name): array|null
 	{
-		return $this->fields[$name] ?? null;
+		if (isset($this->fields[$name]) === true) {
+			return $this->fields[$name];
+		}
+
+		// field objects use normalized lowercase keys
+		$this->fieldsLower ??= array_change_key_case($this->fields);
+		return $this->fieldsLower[Str::lower($name)] ?? null;
 	}
 
 	/**
@@ -441,7 +455,7 @@ class Blueprint
 		$props['name'] ??= $name;
 
 		// normalize the title
-		$title = $props['title'] ?? ucfirst($props['name']);
+		$title = $props['title'] ?? Str::label($props['name']);
 
 		// translate the title
 		$props['title'] = I18n::translate($title) ?? $title;
@@ -567,7 +581,7 @@ class Blueprint
 		// add some useful defaults
 		return [
 			...$props,
-			'label' => $props['label'] ?? ucfirst($name),
+			'label' => $props['label'] ?? Str::label($name),
 			'name'  => $name,
 			'type'  => $type,
 			'width' => $props['width'] ?? '1/1',
@@ -667,7 +681,7 @@ class Blueprint
 
 		// set all options to false
 		if ($options === false) {
-			return array_map(fn () => false, $defaults);
+			return array_fill_keys(array_keys($defaults), false);
 		}
 
 		// extend options if possible
@@ -795,7 +809,7 @@ class Blueprint
 				...$tabProps,
 				'columns' => $this->normalizeColumns($tabName, $tabProps['columns'] ?? []),
 				'icon'    => $tabProps['icon']  ?? null,
-				'label'   => $this->i18n($tabProps['label'] ?? ucfirst($tabName)),
+				'label'   => $this->i18n($tabProps['label'] ?? Str::label($tabName)),
 				'link'    => $this->model->panel()->url(true) . '/?tab=' . $tabName,
 				'name'    => $tabName,
 			];

@@ -50,7 +50,7 @@ return [
 				return [];
 			}
 
-			return $this->form()->fields()->toArray();
+			return $this->form()->fields()->toProps();
 		},
 		'value' => function () {
 			$data = Data::decode($this->value, 'yaml');
@@ -63,6 +63,9 @@ return [
 		}
 	],
 	'methods' => [
+		'emptyValue' => function () {
+			return '';
+		},
 		'form' => function (array $values = []) {
 			return new Form([
 				'fields' => $this->attrs['fields'],

@@ -8,7 +8,7 @@ use Kirby\Image\Darkroom;
 use Kirby\Image\Focus;
 
 /**
- * GdLib
+ * GdLib darkroom driver
  *
  * @package   Kirby Image
  * @author    Bastian Allgeier <bastian@getkirby.com>
@@ -45,39 +45,29 @@ class GdLib extends Darkroom
 	 */
 	protected function resize(SimpleImage $image, array $options): SimpleImage
 	{
-		// just resize, no crop
-		if ($options['crop'] === false) {
-			return $image->resize($options['width'], $options['height']);
-		}
+		if ($crop = $options['crop'] ?? null) {
+			$downscale = $this->downscale($options);
+			$image->resize($downscale->width(), $downscale->height());
 
-		// crop based on focus point
-		if (Focus::isFocalPoint($options['crop']) === true) {
-			// get crop coords for focal point:
-			// if image needs to be cropped, crop before resizing
 			if ($focus = Focus::coords(
-				$options['crop'],
-				$options['sourceWidth'],
-				$options['sourceHeight'],
+				$crop,
+				$downscale->width(),
+				$downscale->height(),
 				$options['width'],
 				$options['height']
 			)) {
 				$image->crop(
 					$focus['x1'],
 					$focus['y1'],
-					$focus['x2'],
-					$focus['y2']
+					$focus['x1'] + $options['width'],
+					$focus['y1'] + $options['height']
 				);
 			}
 
-			return $image->thumbnail($options['width'], $options['height']);
+			return $image;
 		}
 
-		// normal crop with crop anchor
-		return $image->thumbnail(
-			$options['width'],
-			$options['height'] ?? $options['width'],
-			$options['crop']
-		);
+		return $image->resize($options['width'], $options['height']);
 	}
 
 	/**

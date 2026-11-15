@@ -23,6 +23,18 @@ class Html extends Xml
 	public static array|null $entities = null;
 
 	/**
+	 * List of hosts that are allowed as source for embedded
+	 * Gists. Embedding Gists from any other host is blocked to
+	 * prevent loading untrusted scripts. Additional hosts (e.g.
+	 * for GitHub Enterprise) can be allowed via config:
+	 *
+	 * ```php
+	 * Html::$gistDomains[] = 'gist.example.com';
+	 * ```
+	 */
+	public static array $gistDomains = ['gist.github.com'];
+
+	/**
 	 * List of HTML tags that can be used inline
 	 */
 	public static array $inlineList = [
@@ -111,11 +123,12 @@ class Html extends Xml
 		$text = null,
 		array $attr = []
 	): string {
-		if (Str::startsWith($href, 'mailto:')) {
+		// URL schemes are case-insensitive
+		if (Str::startsWith($href, 'mailto:', true) === true) {
 			return static::email(substr($href, 7), $text, $attr);
 		}
 
-		if (Str::startsWith($href, 'tel:')) {
+		if (Str::startsWith($href, 'tel:', true) === true) {
 			return static::tel(substr($href, 4), $text, $attr);
 		}
 
@@ -156,11 +169,22 @@ class Html extends Xml
 			return null;
 		}
 
+		// cache the keys/values arrays;
+		// invalidates if $entities changes
+		static $cached = null;
+		static $html   = [];
+		static $xml    = [];
+
 		// HTML supports named entities
 		$entities = parent::entities();
-		$html     = array_keys($entities);
-		$xml      = array_values($entities);
-		$attr     = str_replace($xml, $html, $attr);
+
+		if ($cached !== $entities) {
+			$html   = array_keys($entities);
+			$xml    = array_values($entities);
+			$cached = $entities;
+		}
+
+		$attr = str_replace($xml, $html, $attr);
 
 		if ($attr) {
 			return $before . $attr . $after;
@@ -194,7 +218,7 @@ class Html extends Xml
 			return '';
 		}
 
-		if (empty($text) === true) {
+		if ($text === null || $text === '' || $text === []) {
 			// show only the email address without additional parameters
 			$address = match (Str::contains($email, '?')) {
 				true  => Str::before($email, '?'),
@@ -212,7 +236,8 @@ class Html extends Xml
 			...$attr
 		];
 
-		// add rel=noopener to target blank links to improve security
+		// add rel=noreferrer to target=_blank links to improve security
+		// (avoids referrer leak and `window.opener` access)
 		$attr['rel'] = static::rel(
 			$attr['rel'] ?? null,
 			$attr['target'] ?? null
@@ -277,7 +302,7 @@ class Html extends Xml
 		string|array|null $caption = '',
 		array $attr = []
 	): string {
-		if ($caption) {
+		if ($caption !== null && $caption !== '' && $caption !== []) {
 			$figcaption = static::tag('figcaption', $caption);
 
 			if (is_string($content) === true) {
@@ -303,6 +328,12 @@ class Html extends Xml
 		string|null $file = null,
 		array $attr = []
 	): string {
+		// only embed Gists from allowed hosts to prevent
+		// loading untrusted scripts from arbitrary URLs
+		if (in_array((new Uri($url))->host(), static::$gistDomains, true) === false) {
+			return '';
+		}
+
 		$src = $url . '.js';
 
 		if ($file !== null) {
@@ -360,9 +391,13 @@ class Html extends Xml
 		string|array|null $text = null,
 		array $attr = []
 	): string {
+		if (Url::hasDangerousScheme($href) === true) {
+			$href = '';
+		}
+
 		$attr = ['href' => $href, ...$attr];
 
-		if (empty($text) === true) {
+		if ($text === null || $text === '' || $text === []) {
 			$text = $attr['href'];
 		}
 
@@ -370,7 +405,8 @@ class Html extends Xml
 			$text = Url::short($text);
 		}
 
-		// add rel=noopener to target blank links to improve security
+		// add rel=noreferrer to target=_blank links to improve security
+		// (avoids referrer leak and `window.opener` access)
 		$attr['rel'] = static::rel(
 			$attr['rel'] ?? null,
 			$attr['target'] ?? null
@@ -380,7 +416,9 @@ class Html extends Xml
 	}
 
 	/**
-	 * Add noreferrer to rels when target is `_blank`
+	 * Ensures a safe default `rel` for links with target `_blank`.
+	 * Adds `noreferrer` (which also implies `noopener`) when no
+	 * explicit `rel` is set. Pass an explicit `rel` to opt out.
 	 *
 	 * @param string|null $rel Current `rel` value
 	 * @param string|null $target Current `target` value
@@ -392,12 +430,9 @@ class Html extends Xml
 	): string|null {
 		$rel = trim($rel ?? '');
 
-		if ($target === '_blank') {
-			if (empty($rel) === false) {
-				return $rel;
-			}
-
-			return trim($rel . ' noreferrer', ' ');
+		// target keywords are case-insensitive
+		if (strtolower($target ?? '') === '_blank' && $rel === '') {
+			return 'noreferrer';
 		}
 
 		return $rel ?: null;
@@ -448,7 +483,7 @@ class Html extends Xml
 	): string {
 		$number = preg_replace('![^0-9\+]+!', '', $tel);
 
-		if (empty($text) === true) {
+		if ($text === null || $text === '' || $text === []) {
 			$text = $tel;
 		}
 
@@ -559,13 +594,16 @@ class Html extends Xml
 		$path  = $uri->path();
 		$query = $uri->query();
 
-		$id = match ($uri->host()) {
+		$id = match (strtolower((string)$uri->host())) {
 			'vimeo.com', 'www.vimeo.com' => $path->last(),
 			'player.vimeo.com'           => $path->nth(1),
 			default                      => null
 		};
 
-		if (empty($id) === true || preg_match('!^[0-9]*$!', $id) !== 1) {
+		if (
+			$id === null ||
+			preg_match('!^[0-9]*$!', $id) !== 1
+		) {
 			return null;
 		}
 
@@ -593,17 +631,40 @@ class Html extends Xml
 		array $options = [],
 		array $attr = []
 	): string|null {
-		if (preg_match('!youtu!i', $url) !== 1) {
+		$uri    = new Uri($url);
+		$domain = Str::lower((string)$uri->host());
+
+		// Only build embeds for URLs on an official YouTube domain
+		// or one of its subdomains. The domains are matched by
+		// registrable suffix because YouTube serves watch/share
+		// URLs from several subdomains (www, m, …). A leading dot
+		// is required so that look-alikes like `notyoutube.com`
+		// are not matched.
+		$isYoutube =
+			$domain === 'youtu.be' ||
+			$domain === 'youtube.com' ||
+			$domain === 'youtube-nocookie.com' ||
+			Str::endsWith($domain, '.youtu.be') === true ||
+			Str::endsWith($domain, '.youtube.com') === true ||
+			Str::endsWith($domain, '.youtube-nocookie.com') === true;
+
+		if ($isYoutube === false) {
 			return null;
 		}
 
-		$uri    = new Uri($url);
 		$path   = $uri->path();
 		$query  = $uri->query();
 		$first  = $path->first();
 		$second = $path->nth(1);
-		$host   = 'https://' . $uri->host() . '/embed';
 		$src    = null;
+
+		// always build the embed src on the canonical, fixed host
+		$host = match (true) {
+			Str::endsWith($domain, 'youtube-nocookie.com') === true
+				=> 'https://www.youtube-nocookie.com/embed',
+			default
+			=> 'https://www.youtube.com/embed'
+		};
 
 		$isYoutubeId = static function (string|null $id = null): bool {
 			if (empty($id) === true) {
@@ -637,7 +698,7 @@ class Html extends Xml
 			default:
 				// short URLs
 				if (
-					Str::contains($uri->host(), 'youtu.be') === true &&
+					Str::contains($domain, 'youtu.be') === true &&
 					$isYoutubeId($first) === true
 				) {
 					$src = 'https://www.youtube.com/embed/' . $first;

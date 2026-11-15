@@ -11,6 +11,7 @@ use Kirby\Content\PlainTextStorage;
 use Kirby\Content\Storage;
 use Kirby\Data\Data;
 use Kirby\Email\PHPMailer as Emailer;
+use Kirby\Exception\InvalidArgumentException;
 use Kirby\Exception\NotFoundException;
 use Kirby\Filesystem\Asset;
 use Kirby\Filesystem\F;
@@ -80,12 +81,21 @@ return [
 		$template  = $mediaRoot . '/{{ name }}{{ attributes }}.{{ extension }}';
 		$thumbRoot = (new Filename($file->root(), $template, $options))->toString();
 		$thumbName = basename($thumbRoot);
+		$job       = $mediaRoot . '/.jobs/' . $thumbName . '.json';
 
-		// check if the thumb already exists
-		if (file_exists($thumbRoot) === false) {
+		// additional protection against path traversal
+		// e.g. from dynamic user-controlled file or asset objects
+		// or malicious data in the `$options`; we check both for `../` and `..\` (Windows)
+		if (Str::contains(Str::replace($thumbRoot, '\\', '/'), '../') === true) {
+			throw new InvalidArgumentException('Received unexpected generated thumb root');
+		}
+
+		// check if the thumb or job file already exists
+		if (
+			file_exists($thumbRoot) === false &&
+			file_exists($job) === false
+		) {
 			// if not, create job file
-			$job = $mediaRoot . '/.jobs/' . $thumbName . '.json';
-
 			try {
 				Data::write(
 					$job,
@@ -356,11 +366,32 @@ return [
 			$kirby->option('thumbs.driver', 'gd'),
 			$kirby->option('thumbs', [])
 		);
-		$options = $darkroom->preprocess($src, $options);
-		$root    = (new Filename($src, $dst, $options))->toString();
+		$options   = $darkroom->preprocess($src, $options);
+		$root      = (new Filename($src, $dst, $options))->toString();
+		$extension = F::extension($root);
 
-		F::copy($src, $root, true);
-		$darkroom->process($root, $options);
+		// generate the thumb in a hidden temp file so broken output never appears
+		// at the final path and the temp file is not picked up as model file
+		$tempRoot  = F::dirname($root) . '/.' . F::name($root) . '.tmp-' . uniqid();
+
+		// keep the original extension so the darkroom can infer the output format.
+		if ($extension !== '') {
+			$tempRoot .= '.' . $extension;
+		}
+
+		F::copy($src, $tempRoot, true);
+
+		try {
+			$darkroom->process($tempRoot, $options);
+
+			// move the finished file into place so the final path
+			// only appears once generation succeeded
+			F::move($tempRoot, $root, true);
+		} catch (Throwable $e) {
+			// clean up the temp file so failed jobs don't leave broken output behind
+			F::remove($tempRoot);
+			throw $e;
+		}
 
 		return $root;
 	},
@@ -397,12 +428,20 @@ return [
 
 			if ($parts[0] ?? null) {
 				$page = $kirby->site()->find($parts[0]);
+
+				// get the extension of the url, if there is one, to add it back later
+				$extension = F::extension($parts[0]);
 			} else {
 				$page = $kirby->site()->page();
 			}
 
 			if ($page) {
 				$path = $page->url($language);
+
+				// add the extension back to the url, if there was one
+				if (isset($extension) === true && $extension !== '') {
+					$path .= '.' . $extension;
+				}
 
 				if (isset($parts[1]) === true) {
 					$path .= '#' . $parts[1];
@@ -421,10 +460,7 @@ return [
 		// support UUIDs
 		if (
 			$path !== null &&
-			(
-				Uuid::is($path, 'page') === true ||
-				Uuid::is($path, 'file') === true
-			)
+			Uuid::is($path, ['page', 'file']) === true
 		) {
 			$model = Uuid::for($path)->model();
 

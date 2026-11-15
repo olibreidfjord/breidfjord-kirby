@@ -9,6 +9,8 @@ use Kirby\Content\VersionCache;
 use Kirby\Exception\InvalidArgumentException;
 use Kirby\Exception\LogicException;
 use Kirby\Filesystem\F;
+use Kirby\Image\Darkroom;
+use Kirby\Toolkit\BlockCollectionAccess;
 use Kirby\Uuid\Uuid;
 use Kirby\Uuid\Uuids;
 
@@ -36,6 +38,7 @@ trait FileActions
 	 *
 	 * @throws \Kirby\Exception\LogicException
 	 */
+	#[BlockCollectionAccess]
 	public function changeName(
 		string $name,
 		bool $sanitize = true,
@@ -90,6 +93,8 @@ trait FileActions
 			$newFile->parent()->files()->remove($oldFile->id());
 			$newFile->parent()->files()->set($newFile->id(), $newFile);
 
+			$newFile->uuid()?->populate();
+
 			return $newFile;
 		});
 	}
@@ -97,6 +102,7 @@ trait FileActions
 	/**
 	 * Changes the file's sorting number in the meta file
 	 */
+	#[BlockCollectionAccess]
 	public function changeSort(int $sort): static
 	{
 		// skip if the sort number stays the same
@@ -119,7 +125,7 @@ trait FileActions
 					$file->version('changes')->update(['sort' => $sort]);
 				}
 
-				return $file->save(['sort' => $sort]);
+				return $file->save(['sort' => $sort], 'default');
 			}
 		);
 	}
@@ -127,6 +133,7 @@ trait FileActions
 	/**
 	 * @return $this|static
 	 */
+	#[BlockCollectionAccess]
 	public function changeTemplate(string|null $template): static
 	{
 		if ($template === $this->template()) {
@@ -175,6 +182,7 @@ trait FileActions
 	/**
 	 * Copy the file to the given page
 	 */
+	#[BlockCollectionAccess]
 	public function copy(Page $page): static
 	{
 		F::copy($this->root(), $page->root() . '/' . $this->filename());
@@ -189,6 +197,7 @@ trait FileActions
 		// overwrite with new UUID (remove old, add new)
 		if (Uuids::enabled() === true) {
 			$copy = $copy->save(['uuid' => Uuid::generate()]);
+			$copy->uuid()->populate();
 		}
 
 		return $copy;
@@ -204,6 +213,7 @@ trait FileActions
 	 * @throws \Kirby\Exception\InvalidArgumentException
 	 * @throws \Kirby\Exception\LogicException
 	 */
+	#[BlockCollectionAccess]
 	public static function create(array $props, bool $move = false): static
 	{
 		$props = static::normalizeProps($props);
@@ -218,11 +228,13 @@ trait FileActions
 		$upload   = $file->assetFactory($props['source']);
 		$existing = null;
 
-		// merge the content with the defaults
-		$props['content'] = [
-			...$file->createDefaultContent(),
-			...$props['content'],
-		];
+		// check the rules before any user input is passed
+		// through the field classes
+		FileRules::create($file, $upload);
+
+		// merge the content with the defaults and run it through
+		// the fields to apply their save handlers
+		$props['content'] = $file->createContent($props['content']);
 
 		// reuse the existing content if the uploaded file
 		// is identical to an existing file
@@ -260,8 +272,11 @@ trait FileActions
 		// inject the content
 		$file->setContent($props['content']);
 
-		// inject the translations
-		$file->setTranslations($props['translations'] ?? null);
+		// inject the translations and run their content through
+		// the fields to apply their save handlers
+		$file->setTranslations(
+			$file->createTranslations($props['translations'] ?? null)
+		);
 
 		// if the format is different from the original,
 		// we need to already rename it so that the correct file rules
@@ -286,11 +301,13 @@ trait FileActions
 				// @codeCoverageIgnoreEnd
 			}
 
+			// store the content first, manipulate() works on a fresh clone
+			$file->changeStorage($storage);
+
 			// resize the file on upload if configured
 			$file = $file->manipulate($create);
 
-			// store the content if necessary
-			$file->changeStorage($storage);
+			$file->uuid()?->populate();
 
 			// return a fresh clone
 			return $file->clone();
@@ -301,6 +318,7 @@ trait FileActions
 	 * Deletes the file. The store is used to
 	 * manipulate the filesystem or whatever you prefer.
 	 */
+	#[BlockCollectionAccess]
 	public function delete(): bool
 	{
 		return $this->commit('delete', ['file' => $this], function ($file) {
@@ -329,12 +347,17 @@ trait FileActions
 	/**
 	 * Resizes/crops the original file with Kirby's thumb handler
 	 */
+	#[BlockCollectionAccess]
 	public function manipulate(array|null $options = []): static
 	{
 		// nothing to process
 		if (empty($options) === true || $this->isResizable() === false) {
 			return $this;
 		}
+
+		// apply the options on top of the defaults
+		// instead of the global thumb settings
+		$options = [...Darkroom::defaultOptions(), ...$options];
 
 		// generate image file and overwrite it in place
 		$this->kirby()->thumb($this->root(), $this->root(), $options);
@@ -351,6 +374,11 @@ trait FileActions
 
 	protected static function normalizeProps(array $props): array
 	{
+		// Prevent injecting blueprint as this always must be derived from
+		// the template/model name and blueprint object in the app,
+		// never directly be supplied by the caller
+		unset($props['blueprint']);
+
 		if (isset($props['source'], $props['parent']) === false) {
 			throw new InvalidArgumentException(
 				message: 'Please provide the "source" and "parent" props for the File'
@@ -361,9 +389,8 @@ trait FileActions
 		$template = $props['template'] ?? 'default';
 
 		// prefer the filename from the props
-		$filename   = $props['filename'] ?? null;
-		$filename ??= basename($props['source']);
-		$filename   = F::safeName($props['filename']);
+		$filename = $props['filename'] ?? basename($props['source']);
+		$filename = F::safeName($filename);
 
 		return [
 			...$props,
@@ -380,6 +407,7 @@ trait FileActions
 	 *
 	 * @return $this
 	 */
+	#[BlockCollectionAccess]
 	public function publish(): static
 	{
 		Media::publish($this, $this->mediaRoot());
@@ -396,6 +424,7 @@ trait FileActions
 	 * @param bool $move If set to `true`, the source will be deleted
 	 * @throws \Kirby\Exception\LogicException
 	 */
+	#[BlockCollectionAccess]
 	public function replace(string $source, bool $move = false): static
 	{
 		$file = $this->clone();
@@ -433,6 +462,7 @@ trait FileActions
 	 *
 	 * @return $this
 	 */
+	#[BlockCollectionAccess]
 	public function unpublish(bool $onlyMedia = false): static
 	{
 		// unpublish media files
@@ -452,6 +482,7 @@ trait FileActions
 	 *
 	 * @throws \Kirby\Exception\InvalidArgumentException If the input array contains invalid values
 	 */
+	#[BlockCollectionAccess]
 	public function update(
 		array|null $input = null,
 		string|null $languageCode = null,

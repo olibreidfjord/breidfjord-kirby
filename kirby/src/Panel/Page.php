@@ -6,6 +6,7 @@ use Kirby\Cms\File as CmsFile;
 use Kirby\Cms\ModelWithContent;
 use Kirby\Filesystem\Asset;
 use Kirby\Panel\Ui\Buttons\ViewButtons;
+use Kirby\Panel\Ui\Item\PageItem;
 use Kirby\Toolkit\I18n;
 
 /**
@@ -30,14 +31,18 @@ class Page extends Model
 	 */
 	public function breadcrumb(): array
 	{
-		$parents = $this->model->parents()->flip()->merge($this->model);
-
-		return $parents->values(
-			fn ($parent) => [
-				'label' => $parent->title()->toString(),
-				'link'  => $parent->panel()->url(true),
-			]
+		$breadcrumb = $this->model->parents()->flip()->values(
+			fn ($parent) => $parent->panel()->crumb()
 		);
+
+		// the page itself is never redacted,
+		// as its view is already open
+		$breadcrumb[] = [
+			'label' => $this->model->title()->toString(),
+			'link'  => $this->url(true),
+		];
+
+		return $breadcrumb;
 	}
 
 	/**
@@ -49,10 +54,32 @@ class Page extends Model
 		return ViewButtons::view($this)->defaults(
 			'open',
 			'preview',
+			'-',
 			'settings',
 			'languages',
 			'status'
 		)->render();
+	}
+
+	/**
+	 * Single breadcrumb entry for the page. The title of a page
+	 * that the user must not see gets redacted.
+	 *
+	 * @since 5.6.0
+	 */
+	public function crumb(): array
+	{
+		if ($this->model->isListable() === false) {
+			return [
+				'label' => '–',
+				'title' => I18n::translate('protected')
+			];
+		}
+
+		return [
+			'label' => $this->model->title()->toString(),
+			'link'  => $this->url(true),
+		];
 	}
 
 	/**
@@ -196,12 +223,14 @@ class Page extends Model
 	 * Returns the setup for a dropdown option
 	 * which is used in the changes dropdown
 	 * for example.
+	 *
+	 * @deprecated 5.1.4 Use the Kirby\Panel\Ui\Item\PageItem class instead
 	 */
 	public function dropdownOption(): array
 	{
-		return [
-			'text' => $this->model->title()->value(),
-		] + parent::dropdownOption();
+		return (new PageItem(page: $this->model))->props() + [
+			'icon' => 'page'
+		];
 	}
 
 	/**
@@ -254,13 +283,18 @@ class Page extends Model
 	 */
 	public function pickerData(array $params = []): array
 	{
-		$params['text'] ??= '{{ page.title }}';
+		$item = new PageItem(
+			page: $this->model,
+			image: $params['image'] ?? null,
+			info: $params['info'] ?? null,
+			layout: $params['layout'] ?? null,
+			text: $params['text'] ?? null,
+		);
 
 		return [
-			...parent::pickerData($params),
-			'dragText'    => $this->dragText(),
-			'hasChildren' => $this->model->hasChildren(),
-			'url'         => $this->model->url()
+			...$item->props(),
+			'hasChildren' => $this->model->children()->findBy('isListable', true) !== null,
+			'sortable'    => true
 		];
 	}
 

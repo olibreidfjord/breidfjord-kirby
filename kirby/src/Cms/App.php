@@ -36,6 +36,7 @@ use Kirby\Toolkit\LazyValue;
 use Kirby\Toolkit\Locale;
 use Kirby\Toolkit\Str;
 use Kirby\Uuid\Uuid;
+use Kirby\Uuid\Uuids;
 use Throwable;
 
 /**
@@ -102,8 +103,11 @@ class App
 		$this->core   = new Core($this);
 		$this->events = new Events($this);
 
-		// start with a fresh version cache
+		// start with fresh caches
+		Snippet::$cache = [];
 		VersionCache::reset();
+		ModelPermissions::$cache = [];
+		Uuids::$enabled = null;
 
 		// register all roots to be able to load stuff afterwards
 		$this->bakeRoots($props['roots'] ?? []);
@@ -420,11 +424,21 @@ class App
 	public function contentToken(object|null $model, string $value): string
 	{
 		$default = $this->root('content');
+		$default = realpath($default) ?: $default;
 
 		if ($model !== null && method_exists($model, 'id') === true) {
 			$default .= '/' . $model->id();
 		}
 
+		// The content path is used as the default salt intentionally: there is
+		// no install step during which a random salt could be generated and
+		// persisted. Kirby goes live the moment files are present on the server,
+		// so there is no defined point at which to write a one-time secret.
+		// Config files are typically kept in version control and cannot be
+		// written by the system without causing merge conflicts. No value in
+		// $_SERVER is both universally available across hosting environments and
+		// stable enough to serve as a salt. Sites with security requirements
+		// must set the content.salt option to a secret random value.
 		$salt = $this->option('content.salt', $default);
 
 		if ($salt instanceof Closure) {
@@ -443,15 +457,15 @@ class App
 		array $arguments = [],
 		string $contentType = 'html'
 	): array {
-		$name = basename(strtolower($name));
+		$name = strtolower($name);
 		$data = [];
 
 		// always use the site controller as defaults, if available
-		$site   = $this->controllerLookup('site', $contentType);
-		$site ??= $this->controllerLookup('site');
-
-		if ($site !== null) {
-			$data = (array)$site->call($this, $arguments);
+		// (unless the controller is a snippet controller)
+		if (strpos($name, '/') === false) {
+			$site   = $this->controllerLookup('site', $contentType);
+			$site ??= $this->controllerLookup('site');
+			$data   = (array)$site?->call($this, $arguments) ?? [];
 		}
 
 		// try to find a specific representation controller
@@ -460,14 +474,10 @@ class App
 		// let's try the html controller instead
 		$controller ??= $this->controllerLookup($name);
 
-		if ($controller !== null) {
-			return [
-				...$data,
-				...(array)$controller->call($this, $arguments)
-			];
-		}
-
-		return $data;
+		return [
+			...$data,
+			...(array)$controller?->call($this, $arguments) ?? []
+		];
 	}
 
 	/**
@@ -482,7 +492,11 @@ class App
 		}
 
 		// controller from site root
-		$controller   = Controller::load($this->root('controllers') . '/' . $name . '.php', $this->root('controllers'));
+		$controller = Controller::load(
+			file: $this->root('controllers') . '/' . $name . '.php',
+			in:   $this->root('controllers')
+		);
+
 		// controller from extension
 		$controller ??= $this->extension('controllers', $name);
 
@@ -544,6 +558,15 @@ class App
 	}
 
 	/**
+	 * Checks if CORS support is enabled
+	 * @since 5.2.0
+	 */
+	public function isCorsEnabled(): bool
+	{
+		return $this->option('cors', false) !== false;
+	}
+
+	/**
 	 * Returns the current language, if set by `static::setCurrentLanguage`
 	 */
 	public function currentLanguage(): Language|null
@@ -580,22 +603,25 @@ class App
 		$visitor   = $this->visitor();
 
 		foreach ($visitor->acceptedLanguages() as $acceptedLang) {
-			$closure = static function ($language) use ($acceptedLang) {
-				$languageLocale = $language->locale(LC_ALL);
-				$acceptedLocale = $acceptedLang->locale();
+			$acceptedCode   = $acceptedLang->code();
+			$acceptedLocale = $acceptedLang->locale();
 
-				return
-					$languageLocale === $acceptedLocale ||
-					$acceptedLocale === Str::substr($languageLocale, 0, 2);
-			};
+			$match = fn (Language $language, int $precision) =>
+				Str::substr($language->locale(LC_ALL), 0, $precision) ===
+				Str::substr($acceptedLocale, 0, $precision);
 
-			if ($language = $languages->filter($closure)?->first()) {
+			// Find exact locale matches (e.g. en_GB => en_GB)
+			if ($language = $languages->filter(fn ($language) => $match($language, 5))?->first()) {
 				return $language;
 			}
-		}
 
-		foreach ($visitor->acceptedLanguages() as $acceptedLang) {
-			if ($language = $languages->findBy('code', $acceptedLang->code())) {
+			// Find exact code matches
+			if ($language = $languages->findBy('code', $acceptedCode)) {
+				return $language;
+			}
+
+			// Find broad locale matches (e.g. en_GB => en)
+			if ($language = $languages->filter(fn ($language) => $match($language, 2))?->first()) {
 				return $language;
 			}
 		}
@@ -768,15 +794,7 @@ class App
 
 		// Responses
 		if ($input instanceof Response) {
-			$data = $input->toArray();
-
-			// inject headers from the global response configuration
-			// lazily (only if they are not already set);
-			// the case-insensitive nature of headers will be
-			// handled by PHP's `header()` function
-			$data['headers'] = [...$response->headers(), ...$data['headers']];
-
-			return new Response($data);
+			return $response->send($input);
 		}
 
 		// Pages
@@ -846,7 +864,7 @@ class App
 		$data['site']   ??= $data['kirby']->site();
 		$data['parent'] ??= $data['site']->page();
 
-		return (new KirbyTag($type, $value, $attr, $data, $this->options))->render();
+		return (new KirbyTag($type, $value, $attr, $data))->render();
 	}
 
 	/**
@@ -861,9 +879,10 @@ class App
 		$data['parent'] ??= $data['site']->page();
 
 		$options = $this->options;
+		$debug   = ($options['debug'] ?? false) === true;
 
 		$text = $this->apply('kirbytags:before', compact('text', 'data', 'options'));
-		$text = KirbyTags::parse($text, $data, $options);
+		$text = KirbyTags::parse($text, $data, debug: $debug);
 		$text = $this->apply('kirbytags:after', compact('text', 'data', 'options'));
 
 		return $text;
@@ -1024,7 +1043,7 @@ class App
 
 		// load the main config options
 		$root    = $this->root('config');
-		$options = F::load($root . '/config.php', [], allowOutput: false);
+		$options = F::load($root . '/config.php', [], allowOutput: false, cache: true);
 
 		// merge into one clean options array
 		return $this->options = array_replace_recursive(Config::$data, $options);
@@ -1039,7 +1058,7 @@ class App
 		$root = $this->root('config');
 
 		// first load `config/env.php` to access its `url` option
-		$envOptions = F::load($root . '/env.php', [], allowOutput: false);
+		$envOptions = F::load($root . '/env.php', [], allowOutput: false, cache: true);
 
 		// use the option from the main `config.php`,
 		// but allow the `env.php` to override it
@@ -1253,7 +1272,7 @@ class App
 		// search for a draft if the page cannot be found
 		if (!$page && $draft = $site->draft($path)) {
 			if (
-				$this->user() ||
+				($this->user() && $draft->isAccessible()) ||
 				$draft->renderVersionFromRequest() !== null
 			) {
 				$page = $draft;
@@ -1303,6 +1322,17 @@ class App
 
 		// try to resolve clean URLs to files for pages and drafts
 		if ($page = $site->findPageOrDraft($id)) {
+			// don't leak files on draft pages through clean URLs:
+			// only serve them to an authenticated user with access
+			// permission or a request with a valid preview token
+			if (
+				$page->isDraft() === true &&
+				($this->user() && $page->isAccessible()) === false &&
+				$page->renderVersionFromRequest() === null
+			) {
+				return null;
+			}
+
 			return $this->resolveFile($page->file($filename));
 		}
 

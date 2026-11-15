@@ -3,7 +3,13 @@
 namespace Kirby\Panel;
 
 use Kirby\Cms\Collection;
+use Kirby\Cms\File;
+use Kirby\Cms\Page;
+use Kirby\Cms\User;
 use Kirby\Content\Changes;
+use Kirby\Panel\Ui\Item\FileItem;
+use Kirby\Panel\Ui\Item\PageItem;
+use Kirby\Panel\Ui\Item\UserItem;
 
 /**
  * Manages the Panel dialog for content changes in
@@ -28,7 +34,21 @@ class ChangesDialog
 	 */
 	public function files(): array
 	{
-		return $this->items($this->changes->files());
+		return $this->items($this->changes->files()->filter('isListable', true));
+	}
+
+	/**
+	 * Helper method to return item props for a single given model
+	 */
+	public function item(File|Page|User $model): array
+	{
+		$item = match (true) {
+			$model instanceof File => new FileItem(file: $model),
+			$model instanceof Page => new PageItem(page: $model),
+			$model instanceof User => new UserItem(user: $model),
+		};
+
+		return $item->props();
 	}
 
 	/**
@@ -36,9 +56,7 @@ class ChangesDialog
 	 */
 	public function items(Collection $models): array
 	{
-		return $models->values(
-			fn ($model) => $model->panel()->dropdownOption()
-		);
+		return $models->values($this->item(...));
 	}
 
 	/**
@@ -65,7 +83,7 @@ class ChangesDialog
 	 */
 	public function pages(): array
 	{
-		return $this->items($this->changes->pages());
+		return $this->items($this->changes->pages()->filter('isListable', true));
 	}
 
 	/**
@@ -73,6 +91,6 @@ class ChangesDialog
 	 */
 	public function users(): array
 	{
-		return $this->items($this->changes->users());
+		return $this->items($this->changes->users()->filter('isListable', true));
 	}
 }

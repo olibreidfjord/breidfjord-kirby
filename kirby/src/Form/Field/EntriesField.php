@@ -10,6 +10,7 @@ use Kirby\Form\Mixin\EmptyState;
 use Kirby\Form\Mixin\Max;
 use Kirby\Form\Mixin\Min;
 use Kirby\Toolkit\A;
+use Kirby\Toolkit\BlockCollectionAccess;
 use Kirby\Toolkit\Str;
 
 /**
@@ -31,6 +32,7 @@ class EntriesField extends FieldClass
 	protected array $field;
 	protected Form $form;
 	protected bool  $sortable = true;
+	protected mixed $value = [];
 
 	public function __construct(array $params = [])
 	{
@@ -57,6 +59,7 @@ class EntriesField extends FieldClass
 	 * @psalm-suppress MethodSignatureMismatch
 	 * @todo Remove psalm suppress after https://github.com/vimeo/psalm/issues/8673 is fixed
 	 */
+	#[BlockCollectionAccess]
 	public function fill(mixed $value): static
 	{
 		$this->value = Data::decode($value ?? '', 'yaml');
@@ -133,7 +136,7 @@ class EntriesField extends FieldClass
 	public function toFormValue(): mixed
 	{
 		$form  = $this->form();
-		$value = parent::toFormValue() ?? [];
+		$value = parent::toFormValue() ?? $this->emptyValue();
 
 		return A::map(
 			$value,

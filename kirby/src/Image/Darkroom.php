@@ -3,8 +3,10 @@
 namespace Kirby\Image;
 
 use Exception;
+use Kirby\Filesystem\F;
 use Kirby\Image\Darkroom\GdLib;
 use Kirby\Image\Darkroom\ImageMagick;
+use Kirby\Image\Darkroom\Imagick;
 
 /**
  * A wrapper around resizing and cropping
@@ -18,9 +20,16 @@ use Kirby\Image\Darkroom\ImageMagick;
  */
 class Darkroom
 {
+	/**
+	 * Output formats the driver can write with all frames
+	 * of an animated image (others only get the first frame)
+	 */
+	protected static array $animatableTypes = [];
+
 	public static array $types = [
-		'gd' => GdLib::class,
-		'im' => ImageMagick::class
+		'gd'      => GdLib::class,
+		'imagick' => Imagick::class,
+		'im'      => ImageMagick::class
 	];
 
 	public function __construct(
@@ -30,25 +39,25 @@ class Darkroom
 	}
 
 	/**
-	 * Creates a new Darkroom instance for the given
-	 * type/driver
+	 * Creates a new Darkroom instance
+	 * for the given type/driver
 	 *
 	 * @throws \Exception
 	 */
-	public static function factory(string $type, array $settings = []): object
+	public static function factory(string $type, array $settings = []): static
 	{
 		if (isset(static::$types[$type]) === false) {
 			throw new Exception(message: 'Invalid Darkroom type');
 		}
 
-		$class = static::$types[$type];
-		return new $class($settings);
+		return new static::$types[$type]($settings);
 	}
 
 	/**
-	 * Returns the default thumb settings
+	 * Returns the default thumb options
+	 * without any driver-specific settings
 	 */
-	protected function defaults(): array
+	public static function defaultOptions(): array
 	{
 		return [
 			'blur'        => false,
@@ -65,11 +74,24 @@ class Darkroom
 	}
 
 	/**
+	 * Returns the default thumb settings
+	 */
+	protected function defaults(): array
+	{
+		return static::defaultOptions();
+	}
+
+	/**
 	 * Normalizes all thumb options
 	 */
 	protected function options(array $options = []): array
 	{
-		$options = [...$this->settings, ...$options];
+		$options = [
+			...$this->settings,
+			...$options,
+			// ensure quality isn't unset by provided options
+			'quality' => $options['quality'] ?? $this->settings['quality']
+		];
 
 		// normalize the crop option
 		if ($options['crop'] === true) {
@@ -81,7 +103,7 @@ class Darkroom
 			$options['blur'] = 10;
 		}
 
-		// normalize the greyscale option
+		// normalize the grayscale option
 		if (isset($options['greyscale']) === true) {
 			$options['grayscale'] = $options['greyscale'];
 			unset($options['greyscale']);
@@ -98,9 +120,40 @@ class Darkroom
 			$options['sharpen'] = 50;
 		}
 
-		$options['quality'] ??= $this->settings['quality'];
-
 		return $options;
+	}
+
+	/**
+	 * Calculates the dimensions to downscale the image to
+	 * before cropping, so that it still covers the thumb size
+	 * without a full-resolution intermediate copy
+	 */
+	protected function downscale(array $options): Dimensions
+	{
+		$dimensions = new Dimensions(
+			$options['sourceWidth'],
+			$options['sourceHeight']
+		);
+
+		$ratioThumb = Focus::ratio($options['width'], $options['height']);
+
+		if ($ratioThumb > $dimensions->ratio()) {
+			return $dimensions->fitWidth($options['width'], true);
+		}
+
+		return $dimensions->fitHeight($options['height'], true);
+	}
+
+	/**
+	 * Checks if the output format can keep
+	 * all frames of an animated image
+	 *
+	 * @since 5.6.2
+	 */
+	protected function isAnimatable(string $file, array $options): bool
+	{
+		$format = $options['format'] ?? F::extension($file);
+		return in_array(strtolower($format), static::$animatableTypes, true);
 	}
 
 	/**

@@ -11,6 +11,7 @@ use Kirby\Exception\LogicException;
 use Kirby\Exception\NotFoundException;
 use Kirby\Form\Fields;
 use Kirby\Http\Uri;
+use Kirby\Toolkit\BlockCollectionAccess;
 
 /**
  * The Version class handles all actions for a single
@@ -71,6 +72,7 @@ class Version
 	 *
 	 * @internal
 	 */
+	#[BlockCollectionAccess]
 	public function contentFile(Language|string $language = 'default'): string
 	{
 		return $this->model->storage()->contentFile(
@@ -94,6 +96,7 @@ class Version
 	 *
 	 * @param array<string, string> $fields Content fields
 	 */
+	#[BlockCollectionAccess]
 	public function create(
 		array $fields,
 		Language|string $language = 'default'
@@ -121,6 +124,7 @@ class Version
 	/**
 	 * Deletes a version for a specific language
 	 */
+	#[BlockCollectionAccess]
 	public function delete(Language|string $language = 'default'): void
 	{
 		if ($language === '*') {
@@ -267,6 +271,7 @@ class Version
 	/**
 	 * Returns the lock object for the version
 	 */
+	#[BlockCollectionAccess]
 	public function lock(Language|string $language = 'default'): Lock
 	{
 		return Lock::for($this, $language);
@@ -302,6 +307,7 @@ class Version
 	 *
 	 * @throws \Kirby\Exception\NotFoundException If the version does not exist
 	 */
+	#[BlockCollectionAccess]
 	public function move(
 		Language|string $fromLanguage,
 		VersionId|null $toVersionId = null,
@@ -396,6 +402,7 @@ class Version
 	 * of draft and version previews
 	 * @unstable
 	 */
+	#[BlockCollectionAccess]
 	public function previewToken(): string
 	{
 		if ($this->model instanceof Site) {
@@ -413,7 +420,12 @@ class Version
 			throw new LogicException('Invalid model type');
 		}
 
-		return $this->previewTokenFromUrl($this->model->url());
+		// bind the token to the custom preview URL so it still matches
+		// when the version is rendered, otherwise use the page URL
+		$preview = $this->model->blueprint()->preview();
+		$url     = is_string($preview) === true ? $preview : $this->model->url();
+
+		return $this->previewTokenFromUrl($url);
 	}
 
 	/**
@@ -424,9 +436,9 @@ class Version
 	{
 		// get rid of all modifiers after the path
 		$uri = new Uri($url);
-		$uri->fragment = null;
-		$uri->params   = null;
-		$uri->query    = null;
+		$uri->setFragment(null);
+		$uri->setParams(null);
+		$uri->setQuery(null);
 
 		$data = [
 			'url'       => $uri->toString(),
@@ -446,6 +458,7 @@ class Version
 	 * It will copy all fields over to the "latest" version and delete
 	 * this version afterwards.
 	 */
+	#[BlockCollectionAccess]
 	public function publish(Language|string $language = 'default'): void
 	{
 		$language = Language::ensure($language);
@@ -454,7 +467,17 @@ class Version
 		VersionRules::publish($this, $language);
 
 		$latest  = $this->sibling('latest')->read($language) ?? [];
-		$changes = $this->read($language) ?? [];
+		$changes = $this->read($language);
+
+		// the rules above have checked that the version exists, but a
+		// parallel request can still discard it before it is read here,
+		// and a file that is just being created reads back empty. Neither
+		// must be mistaken for "every field was removed" below
+		if ($changes === null || $changes === []) {
+			throw new NotFoundException(
+				message: 'The changes version has no content to publish'
+			);
+		}
 
 		// overwrite all fields that are not in the `changes` version
 		// with a null value. The ModelWithContent::update method will merge
@@ -482,17 +505,20 @@ class Version
 	 *
 	 * @return array<string, string>|null
 	 */
+	#[BlockCollectionAccess]
 	public function read(Language|string $language = 'default'): array|null
 	{
 		$language = Language::ensure($language);
 
 		try {
-			// make sure that the version exists
-			VersionRules::read($this, $language);
-
+			// serve fields from the cache without checking the disk
+			// again, so one request sees one state of the version
 			$fields = VersionCache::get($this, $language);
 
 			if ($fields === null) {
+				// make sure that the version exists
+				VersionRules::read($this, $language);
+
 				$fields = $this->model->storage()->read($this->id, $language);
 				$fields = $this->prepareFieldsAfterRead($fields, $language);
 
@@ -514,6 +540,7 @@ class Version
 	 *
 	 * @throws \Kirby\Exception\NotFoundException If the version does not exist
 	 */
+	#[BlockCollectionAccess]
 	public function replace(
 		array $fields,
 		Language|string $language = 'default'
@@ -537,6 +564,7 @@ class Version
 	/**
 	 * Convenience wrapper around ::create, ::replace and ::update.
 	 */
+	#[BlockCollectionAccess]
 	public function save(
 		array $fields,
 		Language|string $language = 'default',
@@ -571,6 +599,7 @@ class Version
 	 *
 	 * @throws \Kirby\Exception\NotFoundException If the version does not exist
 	 */
+	#[BlockCollectionAccess]
 	public function touch(Language|string $language = 'default'): void
 	{
 		$language = Language::ensure($language);
@@ -581,12 +610,42 @@ class Version
 	}
 
 	/**
+	 * Removes the lock from the changes version without discarding changes
+	 */
+	public function unlock(Language|string $language = 'default'): void
+	{
+		$language = Language::ensure($language);
+
+		if ($this->exists($language) === false) {
+			return;
+		}
+
+		$fields = $this->read($language);
+
+		// only remove the lock if the current user holds it
+		if (($fields['lock'] ?? null) !== $this->model->kirby()->user()?->id()) {
+			return;
+		}
+
+		unset($fields['lock']);
+
+		$this->model->storage()->update(
+			versionId: $this->id,
+			language:  $language,
+			fields:    $fields
+		);
+
+		VersionCache::remove($this, $language);
+	}
+
+	/**
 	 * Updates the content fields of an existing version
 	 *
 	 * @param array<string, string> $fields Content fields
 	 *
 	 * @throws \Kirby\Exception\NotFoundException If the version does not exist
 	 */
+	#[BlockCollectionAccess]
 	public function update(
 		array $fields,
 		Language|string $language = 'default'
@@ -596,10 +655,20 @@ class Version
 		// check if updating is allowed
 		VersionRules::update($this, $fields, $language);
 
+		// a parallel request has deleted the version since the rules
+		// checked it: the merge would write a partial version
+		$previous = $this->read($language);
+
+		if ($previous === null) {
+			throw new NotFoundException(
+				key: 'version.removed'
+			);
+		}
+
 		// merge the previous state with the new state to always
 		// update to a complete version
 		$fields = [
-			...$this->read($language),
+			...$previous,
 			...$fields
 		];
 
@@ -618,6 +687,7 @@ class Version
 	 * Returns the preview URL with authentication for drafts and versions
 	 * @unstable
 	 */
+	#[BlockCollectionAccess]
 	public function url(): string|null
 	{
 		if (
@@ -676,10 +746,10 @@ class Version
 	protected function urlWithQueryParams(string $baseUrl, string $token): string
 	{
 		$uri = new Uri($baseUrl);
-		$uri->query->_token = $token;
+		$uri->query()->_token = $token;
 
 		if ($this->id->is('changes') === true) {
-			$uri->query->_version = 'changes';
+			$uri->query()->_version = 'changes';
 		}
 
 		return $uri->toString();

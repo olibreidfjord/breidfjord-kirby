@@ -10,6 +10,7 @@ use Kirby\Cms\System\UpdateStatus;
 use Kirby\Data\Data;
 use Kirby\Exception\InvalidArgumentException;
 use Kirby\Toolkit\A;
+use Kirby\Toolkit\BlockCollectionAccess;
 use Kirby\Toolkit\Str;
 use Kirby\Toolkit\V;
 use Throwable;
@@ -60,7 +61,7 @@ class Plugin
 		if ($info = $extends['info'] ?? null) {
 			Helpers::deprecated('Plugin "' . $name . '": Passing an `info` array inside the `extends` array has been deprecated. Pass the individual entries directly as named `info` argument.', 'plugin-extends-root');
 
-			if (empty($info) === false && is_array($info) === true) {
+			if (is_array($info) === true && $info !== []) {
 				$this->info = [...$info, ...$this->info];
 			}
 
@@ -158,12 +159,18 @@ class Plugin
 	 */
 	public function link(): string|null
 	{
-		$info     = $this->info();
-		$homepage = $info['homepage'] ?? null;
-		$docs     = $info['support']['docs'] ?? null;
-		$source   = $info['support']['source'] ?? null;
+		// Prefer link to plugin directory
+		$status = $this->updateStatus()?->status();
 
-		$link = $homepage ?? $docs ?? $source;
+		if ($status !== 'error' && $status !== null) {
+			return 'https://plugins.getkirby.com/' . $this->name();
+		}
+
+		// Fallback to plugin info
+		$info   = $this->info();
+		$link   = $info['homepage'] ?? null;
+		$link ??= $info['support']['docs'] ?? null;
+		$link ??= $info['support']['source'] ?? null;
 
 		return V::url($link) ? $link : null;
 	}
@@ -183,6 +190,7 @@ class Plugin
 	/**
 	 * Returns the path to the plugin's composer.json
 	 */
+	#[BlockCollectionAccess]
 	public function manifest(): string
 	{
 		return $this->root() . '/composer.json';
@@ -191,6 +199,7 @@ class Plugin
 	/**
 	 * Returns the root where plugin assets are copied to
 	 */
+	#[BlockCollectionAccess]
 	public function mediaRoot(): string
 	{
 		return $this->kirby()->root('media') . '/plugins/' . $this->name();
@@ -231,6 +240,7 @@ class Plugin
 	/**
 	 * Returns the root where the plugin files are stored
 	 */
+	#[BlockCollectionAccess]
 	public function root(): string
 	{
 		return $this->root;
@@ -239,6 +249,7 @@ class Plugin
 	/**
 	 * Returns all available plugin metadata
 	 */
+	#[BlockCollectionAccess]
 	public function toArray(): array
 	{
 		return [
@@ -324,7 +335,7 @@ class Plugin
 		try {
 			// try to get version from "vendor/composer/installed.php",
 			// this is the most reliable source for the version
-			$version = InstalledVersions::getPrettyVersion($name);
+			$version = $name !== null ? InstalledVersions::getPrettyVersion($name) : null;
 		} catch (Throwable) {
 			$version = null;
 		}
