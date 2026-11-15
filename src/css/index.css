@@ -336,6 +336,21 @@
   transition: opacity 0.4s cubic-bezier(0.4, 0, 0.2, 1), transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
+/* Nothing may push the page wider than the screen. `clip`, unlike
+   `hidden`, does not create a scroll container, so sticky and fixed
+   elements keep working. */
+html,
+body {
+  overflow-x: clip;
+}
+
+/* Below 768 px, intro headlines run at 75% of their desktop size
+   (72 px -> 54 px, 60 px -> 45 px). */
+@media (width < 48rem) {
+  .section-intro-heading .text-7xl { font-size: 3.375rem; }
+  .section-intro-heading .text-6xl { font-size: 2.8125rem; }
+}
+
 /* Breidfjord typography */
 body {
   font-family: 'Bellefair', serif;

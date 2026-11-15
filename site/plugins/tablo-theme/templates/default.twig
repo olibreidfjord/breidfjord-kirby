@@ -14,7 +14,7 @@
 
 {% if site.hero.isNotEmpty %}
 <div class="midnight-header{{ page.isHomePage ? ' hero-entrance' : ' is-light' }}" data-js="midnightHeader">
-  <header class="py-4 pl-6 flex flex-row justify-between items-center gap-8">
+  <header class="py-4 md:px-4 flex flex-row justify-between items-center gap-8">
     {% include '@snippets/site-title.twig' %}
     {%~ if site.mainMenu.isNotEmpty %}
     <nav class="hidden lg:block text-metadata underline-offset-8 **:decoration-2">
@@ -36,7 +36,7 @@
 </div>
 {% else %}
 <div class="site-nav-wrap">
-  <header class="py-4 px-6 flex flex-row justify-between items-center gap-8">
+  <header class="py-4 md:px-4 flex flex-row justify-between items-center gap-8">
     {% include '@snippets/site-title.twig' %}
     {%~ if site.mainMenu.isNotEmpty %}
     <nav class="hidden lg:block text-metadata underline-offset-8 **:decoration-2">
