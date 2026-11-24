@@ -13,6 +13,7 @@ fieldsets:
     label: Widgets
     type: group
     fieldsets:
+      - about
       - people
       - posts
       - projects

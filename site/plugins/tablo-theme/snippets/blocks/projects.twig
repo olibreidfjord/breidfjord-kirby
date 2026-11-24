@@ -1,23 +1,65 @@
-{% with { projects: projects ?? site.find('projects').children().listed } %}
-<div class="grid grid-cols-1 lg:grid-cols-12 gap-x-6 gap-y-16">
-  {%~ for project in projects %}
-  <div class="gallery-item" style="
-    --gallery-span: {{ project.layout_span.or(6) }};
-    --gallery-offset: {{ project.layout_offset.or(0) }};
-    --gallery-pull: {{ project.layout_pull.or(0) }}rem;
-    --gallery-z: {{ project.layout_depth.or(1) }};
-  ">
-    {%~ embed '@snippets/grid-item.twig' with {
-      project: project,
-      image:   project.getCoverImage,
-      url:     project.url,
-      overlay: true,
-    } only ~%}
-      {%- block after -%}
-      {% include '@snippets/category-tile-caption.twig' with { title: project.title, description: project.description } %}
-      {%- endblock -%}
-    {%~ endembed ~%}
+{#
+  Featured works (home). Categories come from the block's picker, in the
+  order picked; with nothing picked, every listed category shows.
+
+  Wide screens with a fine pointer: featured-scroll.js adds .is-pinned, so
+  the section pins while scrolling down moves the row sideways. Touch
+  screens, reduced motion and no JavaScript get a plain sideways-scrolling
+  row. Covers are cropped square around the focus point set in the panel.
+#}
+{% set picked = (block is defined and block.projects.isNotEmpty) ? block.projects.toPages : null %}
+{% set projects = projects ?? picked ?? site.find('projects').children().listed %}
+{% set works = site.find('projects') %}
+{% set heading = (block is defined and block.heading.isNotEmpty) ? block.heading.value : 'Featured works' %}
+<section class="featured" data-featured aria-label="{{ heading }}">
+  <div class="featured-sticky">
+    <div class="featured-head">
+      <h2 class="text-4xl uppercase tracking-[0.7px]">{{ heading }}</h2>
+      {%~ if works %}
+      <a class="group inline-flex flex-row items-center gap-4 min-h-11 text-2xl uppercase tracking-[0.5px]" href="{{ works.url }}">
+        <span class="group-hover:underline">All {{ works.title | lower }}</span>
+        <svg class="text-accent" aria-hidden="true" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+      {%~ endif %}
+    </div>
+    <div class="featured-viewport" data-featured-viewport>
+      <ul class="featured-track" data-featured-track>
+        {%~ for project in projects %}
+        {%~ set cover = project.getCoverImage %}
+        <li class="featured-tile">
+          <a class="group flex flex-col" href="{{ project.url }}">
+            <div class="grid-image-wrap relative overflow-hidden bg-current/5 aspect-square">
+              {%~ if cover and cover.type == 'image' %}
+              {%~ set thumb = cover.thumb({ width: 720, height: 720, crop: true, format: 'webp' }) %}
+              <img
+                class="w-full h-full object-cover"
+                src="{{ thumb.url }}"
+                srcset="{{ cover.srcset({
+                  '480w':  { width: 480,  height: 480,  crop: true, format: 'webp' },
+                  '720w':  { width: 720,  height: 720,  crop: true, format: 'webp' },
+                  '960w':  { width: 960,  height: 960,  crop: true, format: 'webp' },
+                  '1200w': { width: 1200, height: 1200, crop: true, format: 'webp' },
+                }) }}"
+                sizes="(min-width: 1024px) 31vw, 80vw"
+                width="720"
+                height="720"
+                alt=""
+                loading="{{ loop.index > 3 ? 'lazy' : 'eager' }}"
+                decoding="async"
+              >
+              {%~ endif %}
+              <div class="grid-hover-overlay" aria-hidden="true">
+                <span class="grid-hover-label">View</span>
+              </div>
+            </div>
+            <h3 class="mt-6 text-2xl leading-[30px] uppercase tracking-[0.5px] text-white">{{ project.title }}</h3>
+            {%~ if project.description.isNotEmpty %}
+            <p class="mt-1 font-copy text-sm uppercase tracking-[1.7px] text-[#aeaeae]">{{ project.description }}</p>
+            {%~ endif %}
+          </a>
+        </li>
+        {%~ endfor %}
+      </ul>
+    </div>
   </div>
-  {%~ endfor %}
-</div>
-{% endwith %}
+</section>

@@ -1,0 +1,42 @@
+{#
+  Short about block (home): photo left, text right, on the same two-column
+  grid as the page intro so the text lines up with the lead paragraph.
+  Put it in a full-width layout row.
+#}
+{% set photo = block.image.toFile %}
+<div class="about-block max-w-7xl mr-auto grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+  <div class="lg:flex lg:justify-end">
+    {%~ if photo %}
+    {%~ set thumb = photo.thumb({ width: 864, format: 'webp' }) %}
+    <img
+      class="w-full h-auto lg:max-w-[27rem]"
+      src="{{ thumb.url }}"
+      srcset="{{ photo.srcset({
+        '432w':  { width: 432,  format: 'webp' },
+        '864w':  { width: 864,  format: 'webp' },
+        '1296w': { width: 1296, format: 'webp' },
+      }) }}"
+      sizes="(min-width: 1024px) 27rem, 100vw"
+      width="{{ thumb.width }}"
+      height="{{ thumb.height }}"
+      alt="{{ photo.alt }}"
+      loading="lazy"
+      decoding="async"
+    >
+    {%~ endif %}
+  </div>
+  <div class="flex flex-col gap-4 lg:max-w-[33rem]">
+    {%~ if block.heading.isNotEmpty %}
+    <h2 class="text-4xl uppercase tracking-[0.7px]">{{ block.heading }}</h2>
+    {%~ endif %}
+    {%~ if block.text.isNotEmpty %}
+    <div class="about-text">{{ block.text.value | raw }}</div>
+    {%~ endif %}
+    {%~ if block.link.isNotEmpty %}
+    <a class="group mt-4 self-start inline-flex flex-row items-center gap-3 min-h-11 font-copy text-sm uppercase tracking-[1.7px]" href="{{ block.link.toUrl }}">
+      <span class="group-hover:underline">{{ block.linkText.or('Read more') }}</span>
+      <svg class="text-accent" aria-hidden="true" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+    {%~ endif %}
+  </div>
+</div>

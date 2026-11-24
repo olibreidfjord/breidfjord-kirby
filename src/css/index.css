@@ -84,9 +84,7 @@
 
 /* Works overview tile caption — sized off the same tokens as the nav/action
    UI text (--text-action: 24px, --text-metadata: 20px), not the .copy
-   heading scale. Scoped to .masonry-item so the homepage's curated
-   .gallery-item tiles (same category-tile-caption.twig markup) are sized
-   separately below. */
+   heading scale. */
 .masonry-item h2 {
   font-size: var(--text-action);
 }
@@ -95,48 +93,9 @@
   font-size: var(--text-metadata);
 }
 
-/* Homepage curated grid tile caption — larger title than the works overview */
-.gallery-item h2 {
-  font-size: var(--text-4xl);
-}
-
-/* Gallery-hang works listing — mobile: plain single-column stack */
-.gallery-item {
-  grid-column: 1 / -1;
-}
-
-@variant lg {
-  .gallery-item {
-    position: relative;
-    grid-column: calc(var(--gallery-offset, 0) + 1) / span var(--gallery-span, 6);
-    margin-top: var(--gallery-pull, 0rem);
-    z-index: var(--gallery-z, 1);
-  }
-}
-
-/* Gallery item fade — toggled by IntersectionObserver in index.js */
-.gallery-item {
-  opacity: 0;
-  transform: translateY(1rem);
-  transition: opacity 0.6s cubic-bezier(0.4, 0, 0.2, 1), transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.gallery-item.is-visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .gallery-item {
-    opacity: 1;
-    transform: none;
-    transition: none;
-  }
-}
-
 /* Section-intro fade — heading + body stagger in as the block enters the
    viewport, toggled by IntersectionObserver in index.js (same pattern as
-   .gallery-item above). */
+   the gallery fades). */
 .section-intro-heading,
 .section-intro-body {
   opacity: 0;
@@ -165,7 +124,7 @@
 
 /* Masonry item fade — very subtle stagger as items enter the viewport,
    toggled by IntersectionObserver in index.js (same pattern as
-   .gallery-item / .section-intro above). Lighter than those: smaller
+   .section-intro above). Lighter than those: smaller
    offset, shorter duration, since a page can have dozens of these. */
 .masonry-item {
   opacity: 0;
@@ -409,6 +368,78 @@ html {
 .midnight-header.is-light nav:has([aria-current="page"]) a:not([aria-current="page"]):not(:hover):not(:focus-visible),
 .site-nav-wrap nav:has([aria-current="page"]) a:not([aria-current="page"]):not(:hover):not(:focus-visible) {
   opacity: 0.6;
+}
+
+/* Featured works (home). Default, no-JS, touch and reduced motion: a row
+   that scrolls sideways. featured-scroll.js adds .is-pinned on wide
+   screens with a fine pointer: the section pins while scrolling down
+   moves the row sideways (speed set in featured-scroll.js). */
+.featured-head {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem 2rem;
+  margin-bottom: 2.5rem;
+}
+.featured-viewport {
+  margin-right: -1rem;
+  padding-bottom: 1rem;
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-accent) transparent;
+}
+.featured-track {
+  display: flex;
+  gap: 1.5rem;
+  width: max-content;
+  margin: 0;
+  padding: 0 1rem 0 0;
+  list-style: none;
+}
+.featured-tile {
+  flex: none;
+  width: min(80vw, 22rem);
+  scroll-snap-align: start;
+}
+@variant md {
+  .featured-viewport { margin-right: -2rem; }
+  .featured-track { gap: 3rem; padding-right: 2rem; }
+}
+@variant lg {
+  .featured-tile { width: clamp(18rem, 31vw, 30rem); }
+}
+.featured.is-pinned .featured-sticky {
+  /* Sized to its content; featured-scroll.js sets `top` so it pins centred
+     on screen, never closer than 6rem to the top (the fixed header). */
+  position: sticky;
+  top: 6rem;
+}
+.featured.is-pinned .featured-viewport {
+  padding-bottom: 0;
+  overflow: hidden;
+  scroll-snap-type: none;
+}
+.featured.is-pinned .featured-track {
+  will-change: transform;
+}
+.featured.is-pinned .featured-tile {
+  /* Never taller than the screen allows, so the whole tile and caption fit. */
+  width: min(clamp(18rem, 31vw, 30rem), calc(100svh - 19rem));
+}
+
+/* About block (home) */
+.about-text p {
+  font-family: 'Lato', sans-serif;
+  font-size: 22px;
+  line-height: 31px;
+  font-weight: 300;
+  color: #aeaeae;
+}
+.about-text p + p {
+  margin-top: 1rem;
 }
 
 /* Breidfjord typography */

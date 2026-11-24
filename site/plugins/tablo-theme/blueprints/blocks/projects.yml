@@ -3,6 +3,10 @@ icon: lucide-building-2
 preview: fields
 wysiwyg: true
 fields:
+  heading:
+    label: Heading
+    type: text
+    default: Featured works
   projects:
     label: Projects
     type: pages

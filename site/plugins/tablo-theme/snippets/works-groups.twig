@@ -1,0 +1,50 @@
+{#
+  Works index, grouped. Each category carries a "group" field (project
+  blueprint); groups show in the fixed order below, categories inside a
+  group in panel order. Categories with no group come last, without a
+  heading, so nothing disappears before groups are assigned.
+#}
+{% set groups = {
+  'stained-glass': 'Stained glass',
+  'paintings': 'Paintings',
+  'textiles-sculptures-exhibitions': 'Textiles, sculptures and exhibitions',
+  'drawings': 'Drawings',
+} %}
+{% set all = site.find('projects').children().listed %}
+{% set sets = [] %}
+{% for key, label in groups %}
+  {% set members = [] %}
+  {% for project in all %}
+    {% if project.group.value == key %}{% set members = members|merge([project]) %}{% endif %}
+  {% endfor %}
+  {% if members is not empty %}{% set sets = sets|merge([{ label: label, members: members }]) %}{% endif %}
+{% endfor %}
+{% set rest = [] %}
+{% for project in all %}
+  {% if project.group.value not in groups|keys %}{% set rest = rest|merge([project]) %}{% endif %}
+{% endfor %}
+{% if rest is not empty %}{% set sets = sets|merge([{ label: null, members: rest }]) %}{% endif %}
+
+<div class="flex flex-col gap-24">
+  {%~ for grp in sets %}
+  <div>
+    {%~ if grp.label %}
+    <div class="mb-8 flex flex-row items-center gap-6">
+      <h2 class="font-copy text-sm uppercase tracking-[1.7px] text-[#aeaeae]">{{ grp.label }}</h2>
+      <div class="h-px flex-1 bg-accent"></div>
+    </div>
+    {%~ endif %}
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-8 gap-y-12 items-start">
+      {%~ for project in grp.members %}
+      <a class="flex flex-col" href="{{ project.url }}">
+        {%~ include '@snippets/grid-item.twig' with { image: project.getCoverImage } only ~%}
+        <h3 class="mt-4 text-2xl leading-[30px] uppercase tracking-[0.5px] text-white">{{ project.title }}</h3>
+        {%~ if project.description.isNotEmpty and project.description.value|lower != (grp.label ?? '')|lower %}
+        <p class="mt-1 font-copy text-sm uppercase tracking-[1.7px] text-[#aeaeae]">{{ project.description }}</p>
+        {%~ endif %}
+      </a>
+      {%~ endfor %}
+    </div>
+  </div>
+  {%~ endfor %}
+</div>

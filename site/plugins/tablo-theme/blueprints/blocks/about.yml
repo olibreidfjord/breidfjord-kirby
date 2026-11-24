@@ -1,0 +1,32 @@
+name: About
+icon: lucide-user-round
+preview: fields
+wysiwyg: true
+fields:
+  image:
+    label: Photo
+    type: files
+    multiple: false
+    query: page.images
+    layout: cards
+    width: 1/3
+  heading:
+    label: Heading
+    type: text
+    default: About
+    width: 2/3
+  text:
+    label: Text
+    type: writer
+    help: A few sentences. The full story lives on the About page.
+  link:
+    label: Link
+    type: link
+    options:
+      - page
+    width: 1/2
+  linkText:
+    label: Link text
+    type: text
+    default: Read more
+    width: 1/2

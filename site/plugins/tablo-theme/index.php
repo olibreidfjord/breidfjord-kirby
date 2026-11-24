@@ -22,6 +22,7 @@ Kirby::plugin('tablo/theme', [
     ],
     'blueprints' => [
         'site'                   => __DIR__ . '/blueprints/site.yml',
+        'blocks/about'           => __DIR__ . '/blueprints/blocks/about.yml',
         'blocks/descriptions'    => __DIR__ . '/blueprints/blocks/descriptions.yml',
         'blocks/gallery'         => __DIR__ . '/blueprints/blocks/gallery.yml',
         'blocks/heading'         => __DIR__ . '/blueprints/blocks/heading.yml',

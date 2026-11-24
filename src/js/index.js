@@ -5,6 +5,7 @@ import { initMasonry } from "./masonry";
 import { initSmoothScroll } from "./smooth-scroll";
 import { initHeroParallax } from "./hero-parallax";
 import { initLightbox } from "./lightbox";
+import { initFeaturedScroll } from "./featured-scroll";
 
 // Page
 
@@ -64,6 +65,13 @@ document.addEventListener('DOMContentLoaded', function () {
   initLightbox()
 })
 
+// Featured works pinned row (home)
+document.addEventListener('turbo:load', initFeaturedScroll)
+document.addEventListener('DOMContentLoaded', function () {
+  if (typeof Turbo !== 'undefined') return
+  initFeaturedScroll()
+})
+
 // Midnight header
 function initMidnightHeader() {
   const header = document.querySelector('[data-js="midnightHeader"]')
@@ -92,7 +100,7 @@ document.addEventListener('DOMContentLoaded', function () {
   initMidnightHeader()
 })
 
-// Fade-in-on-scroll — shared by .gallery-item and .section-intro (each
+// Fade-in-on-scroll — shared by .section-intro and .masonry-item (each
 // selector's own CSS drives what actually fades/staggers; this just
 // toggles the trigger class via IntersectionObserver).
 function initFadeObserver(selector) {
@@ -114,7 +122,6 @@ function initFadeObserver(selector) {
 }
 
 function initFades() {
-  initFadeObserver('.gallery-item')
   initFadeObserver('.section-intro')
   initFadeObserver('.masonry-item')
 }
