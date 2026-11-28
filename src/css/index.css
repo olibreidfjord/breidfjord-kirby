@@ -2,6 +2,8 @@
 
 @import "tailwindcss";
 
+@import "./fonts.css";
+
 @import "./debug.css";
 @import "./buttons.css";
 @import "./copy.css";
